@@ -1,0 +1,18 @@
+{
+  "name": "hypergraph-desktop",
+  "productName": "Hypergraph",
+  "version": "0.0.0",
+  "description": "Hypergraph Desktop app",
+  "license": "MIT",
+  "repository": "hypergraph-xyz/desktop",
+  "scripts": {
+    "test": "prettier-standard '**/*.js' && standard",
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^7.1.1",
+    "prettier-standard": "^15.0.1",
+    "standard": "^14.3.1"
+  }
+}
