@@ -6,13 +6,15 @@
   "license": "MIT",
   "repository": "hypergraph-xyz/desktop",
   "scripts": {
-    "test": "prettier-standard '**/*.js' && standard",
+    "test": "prettier-standard '**/*.js' && standard && tap --no-cov",
     "start": "electron ."
   },
   "dependencies": {},
   "devDependencies": {
     "electron": "^7.1.1",
     "prettier-standard": "^15.0.1",
-    "standard": "^14.3.1"
+    "spectron": "^9.0.0",
+    "standard": "^14.3.1",
+    "tap": "^14.9.2"
   }
 }

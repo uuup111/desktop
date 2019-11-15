@@ -27,7 +27,11 @@ app.on('second-instance', () => {
   mainWindow.show()
 })
 
-app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit())
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin' || process.env.CI) {
+    app.quit()
+  }
+})
 
 app.on('activate', async () => {
   if (!mainWindow) mainWindow = await createMainWindow()
