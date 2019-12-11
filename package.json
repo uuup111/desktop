@@ -6,12 +6,15 @@
   "license": "MIT",
   "repository": "hypergraph-xyz/desktop",
   "scripts": {
-    "test": "prettier-standard '**/*.js' && standard && tap --no-cov",
-    "start": "electron ."
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir",
+    "start": "electron .",
+    "test": "prettier-standard '**/*.js' && standard && tap --no-cov"
   },
   "dependencies": {},
   "devDependencies": {
     "electron": "^7.1.1",
+    "electron-builder": "^21.2.0",
     "prettier-standard": "^15.0.1",
     "spectron": "^9.0.0",
     "standard": "^14.3.1",
