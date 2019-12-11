@@ -9,7 +9,7 @@
     "dist": "electron-builder",
     "pack": "electron-builder --dir",
     "start": "electron .",
-    "test": "prettier-standard '**/*.js' && standard && tap --no-cov"
+    "test": "prettier-standard && standard && tap --no-cov"
   },
   "dependencies": {},
   "devDependencies": {

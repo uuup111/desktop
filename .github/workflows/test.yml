@@ -4,13 +4,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: sudo apt-get install xvfb
-    - name: npm install and test
-      run: |
-        npm ci
-        xvfb-run --auto-servernum npm test
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: sudo apt-get install xvfb
+      - name: npm install and test
+        run: |
+          npm ci
+          xvfb-run --auto-servernum npm test
