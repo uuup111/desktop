@@ -28,7 +28,7 @@ module.exports = {
 
   target: 'electron-renderer',
 
-  entry: `${__dirname}/src/index.js`,
+  entry: `${__dirname}/app/index.js`,
 
   node: {
     __dirname: false,
