@@ -3,7 +3,7 @@
 const { spawn } = require('child_process')
 const webpack = require('webpack')
 
-const port = process.env.PORT || 1212
+const port = 1212
 const publicPath = `http://localhost:${port}/dist`
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 
   output: {
     path: `${__dirname}/static`,
-    publicPath: `http://localhost:${port}/dist/`,
+    publicPath,
     filename: 'bundle.js'
   },
 
@@ -41,7 +41,13 @@ module.exports = {
   devServer: {
     port,
     publicPath,
+    noInfo: true,
     contentBase: `${__dirname}/static`,
+    watchOptions: {
+      aggregateTimeout: 300,
+      ignored: /node_modules/,
+      poll: 100
+    },
     before () {
       console.log('Starting Main Process...')
       spawn('npm', ['run', 'start:main'], {
