@@ -1,6 +1,7 @@
 'use strict'
 
 const { spawn } = require('child_process')
+const webpack = require('webpack')
 
 const port = process.env.PORT || 1212
 const publicPath = `http://localhost:${port}/dist`
@@ -29,6 +30,8 @@ module.exports = {
   target: 'electron-renderer',
 
   entry: `${__dirname}/app/index.js`,
+
+  plugins: [new webpack.EnvironmentPlugin({ NODE_ENV: 'development' })],
 
   node: {
     __dirname: false,
