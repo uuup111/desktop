@@ -1,7 +1,6 @@
 'use strict'
 
 const { app, BrowserWindow } = require('electron')
-const { join } = require('path')
 
 let mainWindow
 
@@ -10,12 +9,16 @@ const createMainWindow = async () => {
     title: app.name,
     show: false,
     width: 600,
-    height: 400
+    height: 400,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   win.on('ready-to-show', () => win.show())
   win.on('closed', () => (mainWindow = undefined))
-  await win.loadFile(join(__dirname, 'static', 'index.html'))
+  if (!process.env.CI) win.webContents.openDevTools()
+  await win.loadURL(`file://${__dirname}/static/index.html`)
   return win
 }
 
