@@ -23,6 +23,7 @@
     "babel-loader": "^8.0.6",
     "electron": "^7.1.1",
     "electron-builder": "^21.2.0",
+    "electron-devtools-installer": "^2.2.4",
     "prettier-standard": "^15.0.1",
     "spectron": "^9.0.0",
     "standard": "^14.3.1",
