@@ -8,6 +8,7 @@
   "scripts": {
     "dist": "electron-builder",
     "pack": "electron-builder --dir",
+    "release": "np --no-publish --no-yarn --no-release-draft",
     "start": "webpack-dev-server --config=webpack.config.js",
     "start:main": "electron .",
     "test": "prettier-standard && standard && tap --no-cov",
@@ -33,6 +34,7 @@
     "electron": "^7.1.1",
     "electron-builder": "^21.2.0",
     "electron-devtools-installer": "^2.2.4",
+    "np": "^5.2.1",
     "prettier-standard": "^15.0.1",
     "spectron": "^9.0.0",
     "standard": "^14.3.1",
