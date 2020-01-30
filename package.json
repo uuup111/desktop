@@ -8,7 +8,7 @@
   "scripts": {
     "dist": "electron-builder",
     "pack": "electron-builder --dir",
-    "release": "np --no-publish --no-yarn --no-release-draft",
+    "release": "np --no-publish --no-yarn",
     "start": "webpack-dev-server --config=webpack.config.js",
     "start:main": "electron .",
     "test": "prettier-standard && standard && tap --no-cov",
