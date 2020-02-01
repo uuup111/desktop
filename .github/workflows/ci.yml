@@ -12,16 +12,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: sudo apt-get install xvfb
-        if: startsWith(matrix.os, 'ubuntu')
       - name: npm install
         run: npm ci
       - name: npm test
-        run: xvfb-run --auto-servernum npm test
-        if: startsWith(matrix.os, 'ubuntu')
-      - name: npm test
-        run: npm test
-        if: startsWith(matrix.os, 'windows') || startsWith(matrix.os, 'macos')
+        uses: GabrielBB/xvfb-action@v1.0
+        with:
+          run: npm test
       - name: build and release
         uses: samuelmeuli/action-electron-builder@v1
         with:
