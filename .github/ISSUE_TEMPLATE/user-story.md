@@ -13,10 +13,10 @@ I want to
 so that 
 
 **Workflow**
-[ ] Design
-[ ] Clickthrough
-[ ] Code
-[ ] Test
+- [ ] Design
+- [ ] Clickthrough
+- [ ] Code
+- [ ] Test
 
 **Acceptance criteria**
 -
