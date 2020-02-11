@@ -16,6 +16,16 @@
         "ideas",
         "maintenance"
       ]
+    },
+    {
+      "login": "psobrakseaton",
+      "name": "Patch Sobrak-Seaton",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/28573875?v=4",
+      "profile": "http://sobrakseaton.com",
+      "contributions": [
+        "design",
+        "a11y"
+      ]
     }
   ],
   "contributorsPerLine": 7,
