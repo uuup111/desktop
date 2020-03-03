@@ -12,6 +12,22 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+      - name: cache node modules on mac & linux
+        if: startsWith(matrix.os, 'macos') || startsWith(matrix.os, 'ubuntu')
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: cache node modules on windows
+        if: startsWith(matrix.os, 'windows')
+        uses: actions/cache@v1
+        with:
+          path: ~\AppData\Roaming\npm-cache
+          key: ${{ runner.os }}-node-${{ hashFiles('**\package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: npm install
         run: npm ci
       - name: npm test
