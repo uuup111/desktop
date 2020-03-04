@@ -22,7 +22,11 @@ const createMainWindow = async () => {
   win.on('ready-to-show', () => win.show())
   win.on('closed', () => (mainWindow = undefined))
   if (!process.env.CI) win.webContents.openDevTools()
-  await win.loadURL(`file://${__dirname}/static/index.html`)
+  if (app.isPackaged) {
+    await win.loadFile('build/index.html')
+  } else {
+    await win.loadURL('http://localhost:1212/dist/index.html')
+  }
   return win
 }
 

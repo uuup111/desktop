@@ -1,62 +1,68 @@
 'use strict'
 
 const { spawn } = require('child_process')
-const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const port = 1212
-const publicPath = `http://localhost:${port}/dist`
+module.exports = (_, { mode }) => {
+  const port = 1212
+  const publicPath =
+    mode === 'production' ? './' : `http://localhost:${port}/dist`
 
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
         }
-      }
-    ]
-  },
-
-  output: {
-    path: `${__dirname}/static`,
-    publicPath,
-    filename: 'bundle.js'
-  },
-
-  mode: 'development',
-
-  target: 'electron-renderer',
-
-  entry: `${__dirname}/app/index.js`,
-
-  plugins: [new webpack.EnvironmentPlugin({ NODE_ENV: 'development' })],
-
-  node: {
-    __dirname: false,
-    __filename: false
-  },
-
-  devServer: {
-    port,
-    publicPath,
-    noInfo: true,
-    contentBase: `${__dirname}/static`,
-    watchOptions: {
-      aggregateTimeout: 300,
-      ignored: /node_modules/,
-      poll: 100
+      ]
     },
-    before () {
-      console.log('Starting Main Process...')
-      spawn('npm', ['run', 'start:main'], {
-        shell: true,
-        env: process.env,
-        stdio: 'inherit'
+
+    output: {
+      path: `${__dirname}/build`,
+      publicPath,
+      filename: 'bundle.js'
+    },
+
+    plugins: [
+      new HtmlWebpackPlugin({
+        inject: true,
+        template: `${__dirname}/static/index.html`
       })
-        .on('close', code => process.exit(code))
-        .on('error', err => console.error(err))
+    ],
+
+    target: 'electron-renderer',
+
+    entry: `${__dirname}/app/index.js`,
+
+    node: {
+      __dirname: false,
+      __filename: false
+    },
+
+    devServer: {
+      port,
+      publicPath,
+      noInfo: true,
+      contentBase: `${__dirname}/static`,
+      watchOptions: {
+        aggregateTimeout: 300,
+        ignored: /node_modules/,
+        poll: 100
+      },
+      before () {
+        console.log('Starting Main Process...')
+        spawn('npm', ['run', 'start:main'], {
+          shell: true,
+          env: process.env,
+          stdio: 'inherit'
+        })
+          .on('close', code => process.exit(code))
+          .on('error', err => console.error(err))
+      }
     }
   }
 }

@@ -6,21 +6,23 @@
   "license": "MIT",
   "repository": "hypergraph-xyz/desktop",
   "scripts": {
+    "build": "webpack -p",
     "dist": "electron-builder",
     "pack": "electron-builder --dir",
     "release": "np --no-publish --no-yarn",
-    "start": "webpack-dev-server --config=webpack.config.js",
+    "start": "webpack-dev-server",
     "start:main": "electron .",
     "test": "prettier-standard && standard && tap --no-cov",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "electron-devtools-installer": "^2.2.4",
+    "html-webpack-plugin": "^3.2.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-spring": "^8.0.27",
-    "styled-components": "^4.4.1",
-    "electron-devtools-installer": "^2.2.4"
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
@@ -44,6 +46,10 @@
     "webpack-dev-server": "^3.9.0"
   },
   "build": {
+    "files": [
+      "**/*",
+      "build/**/*"
+    ],
     "linux": {
       "target": "AppImage"
     }
