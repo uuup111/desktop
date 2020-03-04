@@ -46,7 +46,9 @@ app.on('activate', async () => {
 
 const main = async () => {
   await app.whenReady()
-  if (!process.env.CI) await installExtension(REACT_DEVELOPER_TOOLS)
+  if (!process.env.CI && process.platform !== 'win32') {
+    await installExtension(REACT_DEVELOPER_TOOLS)
+  }
   mainWindow = await createMainWindow()
 }
 
