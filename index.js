@@ -1,6 +1,6 @@
 'use strict'
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS
@@ -18,6 +18,7 @@ const createMainWindow = async () => {
       nodeIntegration: true
     }
   })
+  Menu.setApplicationMenu(null)
 
   win.on('ready-to-show', () => win.show())
   win.on('closed', () => (mainWindow = undefined))
