@@ -31,6 +31,8 @@ export const Button = styled(Cell).attrs({
         : props.color || purple
       : black};
   vertical-align: top;
+  font-family: Roboto;
+  letter-spacing: 0.05em;
 
   font-size: 16px;
   color: ${props => (props.emphasis === 'top' ? white : green)};
