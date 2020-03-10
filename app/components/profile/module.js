@@ -21,6 +21,7 @@ const Content = styled.div`
   top: 32px;
   right: 192px;
   bottom: 32px;
+  overflow: hidden;
 `
 const Title = styled.div`
   font-size: 24px;
