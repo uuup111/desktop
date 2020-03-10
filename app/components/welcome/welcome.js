@@ -162,37 +162,6 @@ const dialogs = [
       </Dialog>
     )
   },
-  ({ page, next, previous, setEmail }) => {
-    const [valid, setValid] = useState(true)
-    return (
-      <Dialog>
-        <Back page={page} onClick={previous} />
-        <Illustration />
-        <Heading>We don't need your email...</Heading>
-        <p>
-          But we'd like it! We hope you're into Hypergraph and our organisation,
-          Liberate Science. If you want to stay up-to-date with our activities
-          or get involved in our community, drop your e-mail address here! 📫
-        </p>
-        <Form
-          onSubmit={e => {
-            e.preventDefault()
-            setEmail(e.target.email.value)
-            next()
-          }}
-        >
-          <Label htmlFor='name'>Email (optional)</Label>
-          <Input
-            name='email'
-            type='email'
-            placeholder='Email...'
-            onInput={e => setValid(/^$|^.+@.+\..+$/.test(e.target.value))}
-          />
-          <StyledButton disabled={!valid}>Next</StyledButton>
-        </Form>
-      </Dialog>
-    )
-  },
   ({ page, next, previous }) => (
     <Dialog>
       <Back page={page} onClick={previous} />
@@ -213,7 +182,6 @@ const dialogs = [
 const Welcome = ({ p2p, setProfile }) => {
   const [page, setPage] = useState(0)
   const [name, setName] = useState()
-  const [, setEmail] = useState()
 
   const next = async e => {
     if (e) e.preventDefault()
@@ -234,8 +202,7 @@ const Welcome = ({ p2p, setProfile }) => {
         next,
         previous,
         page,
-        setName,
-        setEmail
+        setName
       })}
     </Overlay>
   )
