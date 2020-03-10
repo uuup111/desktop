@@ -23,7 +23,11 @@ const App = () => {
   return (
     <Layout>
       {!loading &&
-        (profile ? <Profile p2p={p2p} profile={profile} /> : <Welcome />)}
+        (profile ? (
+          <Profile p2p={p2p} profile={profile} />
+        ) : (
+          <Welcome p2p={p2p} setProfile={setProfile} />
+        ))}
     </Layout>
   )
 }

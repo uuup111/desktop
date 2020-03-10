@@ -4,9 +4,8 @@ import { purple, black } from '../../lib/colors'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from './module'
 import Footer from './footer'
-import P2P from '@p2pcommons/sdk-js'
 import { encode } from 'dat-encoding'
-import { Row, Cell, Button } from '../layout/grid'
+import { Row, Cell } from '../layout/grid'
 
 const Container = styled.div`
   margin-top: 48px;
@@ -95,7 +94,6 @@ const Profile = ({ p2p, profile }) => {
     <Container>
       <TopStickyRow top={16}>
         <Title>{profile.rawJSON.title}</Title>
-        <Button>Edit profile</Button>
       </TopStickyRow>
       <Header>
         <Avatar />
@@ -104,7 +102,6 @@ const Profile = ({ p2p, profile }) => {
       <StickyRow top={80}>
         <Spacer />
         <Title>Content</Title>
-        <Button>Add content +</Button>
       </StickyRow>
       {modules.map(mod => (
         <Module

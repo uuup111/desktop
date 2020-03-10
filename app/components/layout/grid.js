@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { black, green, purple, white } from '../../lib/colors'
+import { black, green, purple, white, gray } from '../../lib/colors'
 
 const rowHeight = 62
 
@@ -16,6 +16,7 @@ export const Cell = styled.div`
   overflow: hidden;
   height: 100%;
   min-width: 128px;
+  text-align: center;
 `
 export const Button = styled(Cell).attrs({
   as: 'button'
@@ -23,18 +24,26 @@ export const Button = styled(Cell).attrs({
   border-left-width: 0px;
   border-top-width: 0px;
   border-bottom-width: 0px;
-  background-color: ${black};
+  background-color: ${props =>
+    props.emphasis === 'top'
+      ? props.disabled
+        ? gray
+        : props.color || purple
+      : black};
   vertical-align: top;
 
   font-size: 16px;
-  color: ${green};
+  color: ${props => (props.emphasis === 'top' ? white : green)};
+  height: 64px;
 
   :hover {
     color: ${white};
-    background-color: ${green};
+    background-color: ${props =>
+      props.emphasis === 'top' ? (props.disabled ? gray : black) : green};
   }
 
   :active {
-    background-color: ${black};
+    background-color: ${props =>
+      props.emphasis === 'top' ? props.color || purple : black};
   }
 `
