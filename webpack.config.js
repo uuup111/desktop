@@ -2,6 +2,7 @@
 
 const { spawn } = require('child_process')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = (_, { mode }) => {
   const port = 1212
@@ -16,6 +17,21 @@ module.exports = (_, { mode }) => {
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader'
+          }
+        },
+        {
+          test: /\.svg$/,
+          exclude: /node_modules/,
+          use: {
+            loader: '@svgr/webpack',
+            options: {}
+          }
+        },
+        {
+          test: /\.ttf$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'file-loader'
           }
         }
       ]
@@ -33,6 +49,8 @@ module.exports = (_, { mode }) => {
         template: `${__dirname}/static/index.html`
       })
     ],
+
+    externals: [nodeExternals()],
 
     target: 'electron-renderer',
 

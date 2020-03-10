@@ -5,24 +5,28 @@ const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS
 } = require('electron-devtools-installer')
+const debug = require('electron-debug')
 
+debug({ isEnabled: true, showDevTools: false })
 let mainWindow
 
 const createMainWindow = async () => {
   const win = new BrowserWindow({
     title: app.name,
     show: false,
-    width: 600,
-    height: 400,
+    width: 1440,
+    height: 920,
+    minWidth: 820,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    titleBarStyle: 'hiddenInset'
   })
   Menu.setApplicationMenu(null)
 
   win.on('ready-to-show', () => win.show())
   win.on('closed', () => (mainWindow = undefined))
-  if (!process.env.CI) win.webContents.openDevTools()
+  if (!app.isPackaged && !process.env.CI) win.webContents.openDevTools()
   if (app.isPackaged) {
     await win.loadFile('build/index.html')
   } else {
