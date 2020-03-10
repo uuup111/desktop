@@ -57,19 +57,17 @@ const Description = styled.div`
   -webkit-line-clamp: 3;
 `
 
-const Profile = () => {
-  const [profile, setProfile] = useState()
+const Profile = ({ p2p, profile }) => {
   const [modules, setModules] = useState()
   const [authors, setAuthors] = useState()
 
   useEffect(() => {
     ;(async () => {
-      const p2p = new P2P()
-      const profiles = await p2p.listProfiles()
-      const profile = profiles.find(profile => profile.metadata.isWritable)
-      setProfile(profile)
+      const [profiles, contents] = await Promise.all([
+        p2p.listProfiles(),
+        p2p.listContent()
+      ])
 
-      const contents = await p2p.listContent()
       const modules = contents.filter(mod =>
         mod.rawJSON.authors.find(author => {
           const [key] = author.split('+')
@@ -91,7 +89,7 @@ const Profile = () => {
     })()
   }, [])
 
-  if (!profile || !modules || !authors) return null
+  if (!modules || !authors) return null
 
   return (
     <Container>
