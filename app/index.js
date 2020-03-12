@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import Layout from './components/layout/layout'
 import Profile from './components/profile/profile'
+import ProfileContent from './components/profile/content'
 import Welcome from './components/welcome/welcome'
 import Workspace from './components/workspace/workspace'
 import P2P from '@p2pcommons/sdk-js'
@@ -43,8 +44,11 @@ const App = () => {
         <Route path='/' exact>
           <Workspace p2p={p2p} />
         </Route>
-        <Route path='/profile'>
+        <Route path='/profile' exact>
           <Profile p2p={p2p} profile={profile} />
+        </Route>
+        <Route path='/profile/:key'>
+          <ProfileContent p2p={p2p} profile={profile} />
         </Route>
       </Switch>
     </Container>

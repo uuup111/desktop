@@ -77,9 +77,10 @@ const Module = ({
   authors,
   description,
   isPublished,
-  pad
+  pad,
+  onClick
 }) => (
-  <Container pad={pad}>
+  <Container pad={pad} onClick={onClick}>
     <Attributes>
       <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
       <Attribute>v.{version}</Attribute>

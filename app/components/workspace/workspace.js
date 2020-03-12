@@ -4,6 +4,8 @@ import Module from '../module/module'
 import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
 
+const { alert } = window
+
 export default ({ p2p }) => {
   const [modules, setModules] = useState()
   const [authors, setAuthors] = useState()

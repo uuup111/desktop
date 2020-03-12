@@ -4,7 +4,7 @@ import { black, green, purple, white, gray } from '../../lib/colors'
 const rowHeight = 64
 
 export const Row = styled.div`
-  border-top: 2px solid ${purple};
+  border-top: ${props => (props.noBorderTop ? 0 : 2)}px solid ${purple};
   border-bottom: 2px solid ${purple};
   height: ${rowHeight}px;
   white-space: nowrap;

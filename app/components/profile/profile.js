@@ -6,6 +6,7 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow } from '../layout/grid'
+import { useHistory } from 'react-router-dom'
 
 const Spacer = styled.div`
   display: inline-block;
@@ -37,6 +38,7 @@ const Description = styled.div`
 const Profile = ({ p2p, profile }) => {
   const [modules, setModules] = useState()
   const [authors, setAuthors] = useState()
+  const history = useHistory()
 
   useEffect(() => {
     ;(async () => {
@@ -78,8 +80,6 @@ const Profile = ({ p2p, profile }) => {
     })()
   }, [])
 
-  if (!modules || !authors) return null
-
   return (
     <>
       <TopRow>
@@ -93,24 +93,34 @@ const Profile = ({ p2p, profile }) => {
         <Spacer />
         <Title>Content</Title>
       </StickyRow>
-      {modules.map(mod => (
-        <Module
-          key={mod.rawJSON.url}
-          subtype={mod.rawJSON.subtype}
-          version={mod.metadata.version}
-          title={mod.rawJSON.title}
-          authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
-          description={mod.rawJSON.description}
-          isPublished
-        />
-      ))}
-      <Footer
-        title={
-          modules.length
-            ? `That’s all of ${profile.rawJSON.title}’s content 😎`
-            : 'No content yet... 🤔'
-        }
-      />
+      {modules && authors && (
+        <>
+          {modules.map(mod => {
+            const url = `/profile/${encode(mod.rawJSON.url)}`
+            return (
+              <Module
+                key={mod.rawJSON.url}
+                subtype={mod.rawJSON.subtype}
+                version={mod.metadata.version}
+                title={mod.rawJSON.title}
+                authors={mod.rawJSON.authors.map(
+                  url => authors[url].rawJSON.title
+                )}
+                description={mod.rawJSON.description}
+                isPublished
+                onClick={() => history.push(url)}
+              />
+            )
+          })}
+          <Footer
+            title={
+              modules.length
+                ? `That’s all of ${profile.rawJSON.title}’s content 😎`
+                : 'No content yet... 🤔'
+            }
+          />
+        </>
+      )}
     </>
   )
 }
