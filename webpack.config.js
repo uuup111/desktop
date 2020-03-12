@@ -50,7 +50,11 @@ module.exports = (_, { mode }) => {
       })
     ],
 
-    externals: [nodeExternals()],
+    externals: [
+      nodeExternals({
+        whitelist: [/^@babel/]
+      })
+    ],
 
     target: 'electron-renderer',
 
