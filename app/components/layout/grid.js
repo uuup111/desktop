@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 import { black, green, purple, white, gray } from '../../lib/colors'
 
-const rowHeight = 62
+const rowHeight = 64
 
 export const Row = styled.div`
   border-top: 2px solid ${purple};
   border-bottom: 2px solid ${purple};
   height: ${rowHeight}px;
   white-space: nowrap;
+  line-height: ${rowHeight}px;
 `
 export const Cell = styled.div`
   border-right: 2px solid ${purple};
