@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { TopStickyRow, Title } from '../layout/grid'
 import Module from '../module/module'
 import { encode } from 'dat-encoding'
+import Footer from '../footer/footer'
 
 export default ({ p2p }) => {
   const [modules, setModules] = useState()
@@ -34,17 +35,24 @@ export default ({ p2p }) => {
     <>
       <TopStickyRow top={16}>
         <Title>Workspace</Title>
-        {modules.map(mod => (
-          <Module
-            key={mod.rawJSON.url}
-            subtype={mod.rawJSON.subtype}
-            version={mod.metadata.version}
-            title={mod.rawJSON.title}
-            authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
-            description={mod.rawJSON.description}
-          />
-        ))}
       </TopStickyRow>
+      {modules.map(mod => (
+        <Module
+          key={mod.rawJSON.url}
+          subtype={mod.rawJSON.subtype}
+          version={mod.metadata.version}
+          title={mod.rawJSON.title}
+          authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
+          description={mod.rawJSON.description}
+        />
+      ))}
+      <Footer
+        title={
+          modules.length
+            ? 'TODO'
+            : "Nothing here yet! Click the 'Add content' button above to get started ☝️ "
+        }
+      />
     </>
   )
 }

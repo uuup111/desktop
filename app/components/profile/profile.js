@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { purple } from '../../lib/colors'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
-import Footer from './footer'
+import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopStickyRow } from '../layout/grid'
 
