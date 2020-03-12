@@ -40,7 +40,8 @@ const Heading = styled.div`
   margin-bottom: 24px;
 `
 const StyledButton = styled(Button).attrs({
-  emphasis: 'top'
+  emphasis: 'top',
+  autoFocus: true
 })`
   border: 2px solid ${props => (props.disabled ? gray : props.color || purple)};
 `
@@ -156,6 +157,7 @@ const dialogs = [
             placeholder='Name...'
             required
             onInput={e => setValid(e.target.value !== '')}
+            autoFocus
           />
           <StyledButton disabled={!valid}>Next</StyledButton>
         </Form>
