@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Layout from './components/layout/layout'
 import Profile from './components/profile/profile'
 import Welcome from './components/welcome/welcome'
-import Workbench from './components/workbench/workbench'
+import Workspace from './components/workspace/workspace'
 import P2P from '@p2pcommons/sdk-js'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -41,7 +41,7 @@ const App = () => {
     <Container>
       <Switch>
         <Route path='/' exact>
-          <Workbench p2p={p2p} />
+          <Workspace p2p={p2p} />
         </Route>
         <Route path='/profile'>
           <Profile p2p={p2p} profile={profile} />

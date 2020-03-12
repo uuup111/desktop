@@ -52,7 +52,7 @@ const Menu = () => {
       <StyledLogo />
       <StyledRow>
         <StyledNavLink to='/' exact>
-          <StyledButton>Workbench</StyledButton>
+          <StyledButton>Workspace</StyledButton>
         </StyledNavLink>
         <StyledNavLink to='/profile'>
           <StyledButton>Profile</StyledButton>

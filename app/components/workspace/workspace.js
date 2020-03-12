@@ -33,7 +33,7 @@ export default ({ p2p }) => {
   return (
     <>
       <TopStickyRow top={16}>
-        <Title>Workbench</Title>
+        <Title>Workspace</Title>
         {modules.map(mod => (
           <Module
             key={mod.rawJSON.url}
