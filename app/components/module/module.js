@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
 import Arrow from '../arrow.svg'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
+import HexPublished from './published.svg'
+import HexUnpublished from './unpublished.svg'
 
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
@@ -15,6 +17,9 @@ const Attributes = styled.div`
   display: inline-block;
 `
 const Attribute = styled.div``
+const AttributeIcon = styled.div`
+  margin-top: 10px;
+`
 const Content = styled.div`
   position: absolute;
   left: calc(128px + 64px);
@@ -77,6 +82,9 @@ const Module = ({
     <Attributes>
       <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
       <Attribute>v.{version}</Attribute>
+      <AttributeIcon>
+        {isPublished ? <HexPublished /> : <HexUnpublished />}
+      </AttributeIcon>
     </Attributes>
     <Content>
       <Title>{title}</Title>
