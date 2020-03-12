@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TopStickyRow, Title } from '../layout/grid'
+import { TopStickyRow, Title, Button } from '../layout/grid'
 import Module from '../module/module'
 import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
@@ -50,6 +50,7 @@ export default ({ p2p }) => {
     <>
       <TopStickyRow top={16}>
         <Title>Workspace</Title>
+        <Button onClick={() => alert('Not implemented')}>Add content +</Button>
       </TopStickyRow>
       {modules.map(mod => (
         <Module
