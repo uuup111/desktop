@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TopStickyRow, Title, Button } from '../layout/grid'
+import { TopRow, Title, Button } from '../layout/grid'
 import Module from '../module/module'
 import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
@@ -48,10 +48,10 @@ export default ({ p2p }) => {
 
   return (
     <>
-      <TopStickyRow top={16}>
+      <TopRow>
         <Title>Workspace</Title>
         <Button onClick={() => alert('Not implemented')}>Add content +</Button>
-      </TopStickyRow>
+      </TopRow>
       {modules.map(mod => (
         <Module
           key={mod.rawJSON.url}

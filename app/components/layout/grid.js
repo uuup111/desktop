@@ -56,13 +56,15 @@ export const StickyRow = styled(Row)`
   background-color: ${black};
   z-index: 1;
 `
-export const TopStickyRow = styled(StickyRow)`
+export const TopRow = styled(StickyRow)`
+  top: 48px;
+
   :before {
     content: '';
     position: absolute;
-    top: -18px;
+    top: -50px;
     width: 100%;
-    height: 16px;
+    height: 48px;
     background-color: ${black};
   }
 `

@@ -5,7 +5,7 @@ import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
-import { Title, StickyRow, TopStickyRow } from '../layout/grid'
+import { Title, StickyRow, TopRow } from '../layout/grid'
 
 const Spacer = styled.div`
   display: inline-block;
@@ -82,14 +82,14 @@ const Profile = ({ p2p, profile }) => {
 
   return (
     <>
-      <TopStickyRow top={16}>
+      <TopRow>
         <Title>{profile.rawJSON.title}</Title>
-      </TopStickyRow>
+      </TopRow>
       <Header>
         <Avatar />
         <Description>{profile.rawJSON.description}</Description>
       </Header>
-      <StickyRow top={80}>
+      <StickyRow top={114}>
         <Spacer />
         <Title>Content</Title>
       </StickyRow>
