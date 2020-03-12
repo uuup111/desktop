@@ -32,9 +32,6 @@ const GlobalStyle = createGlobalStyle`
   button {
     -webkit-app-region: no-drag;
   }
-  #root {
-    overflow: hidden;
-  }
 `
 const Content = styled.div`
   margin-left: 128px;
