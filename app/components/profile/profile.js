@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { purple } from '../../lib/colors'
 import AvatarPlaceholder from './avatar-placeholder.svg'
-import Module from './module'
+import Module from '../module/module'
 import Footer from './footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopStickyRow } from '../layout/grid'
@@ -42,15 +42,27 @@ const Profile = ({ p2p, profile }) => {
     ;(async () => {
       const [profiles, contents] = await Promise.all([
         p2p.listProfiles(),
-        p2p.listContent()
+        Promise.all(
+          profile.rawJSON.contents.map(url => {
+            const [key, version] = url.split('+')
+            const download = false
+            return p2p.clone(key, version, download)
+          })
+        )
       ])
-
-      const modules = contents.filter(mod =>
-        mod.rawJSON.authors.find(author => {
-          const [key] = author.split('+')
-          return encode(key) === encode(profile.rawJSON.url)
-        })
-      )
+      const modules = contents.map(c => ({
+        rawJSON: {
+          title: c.module.title,
+          description: c.module.description,
+          url: c.module.url,
+          type: c.module.p2pcommons.type,
+          subtype: c.module.p2pcommons.subtype,
+          main: c.module.p2pcommons.main,
+          authors: c.module.p2pcommons.authors,
+          parents: c.module.p2pcommons.parents
+        },
+        metadata: c.metadata
+      }))
       setModules(modules)
 
       const authors = {}
