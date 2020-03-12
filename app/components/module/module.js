@@ -8,7 +8,7 @@ import HexUnpublished from './unpublished.svg'
 
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
-  padding: 32px 64px;
+  padding: 32px ${props => (props.pad === 'small' ? 32 : 64)}px;
   position: relative;
   height: 296px;
   box-sizing: border-box;
@@ -22,7 +22,7 @@ const AttributeIcon = styled.div`
 `
 const Content = styled.div`
   position: absolute;
-  left: calc(128px + 64px);
+  left: calc(128px + ${props => (props.pad === 'small' ? 32 : 64)}px);
   top: 32px;
   right: 192px;
   bottom: 32px;
@@ -76,9 +76,10 @@ const Module = ({
   title,
   authors,
   description,
-  isPublished
+  isPublished,
+  pad
 }) => (
-  <Container>
+  <Container pad={pad}>
     <Attributes>
       <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
       <Attribute>v.{version}</Attribute>
@@ -86,7 +87,7 @@ const Module = ({
         {isPublished ? <HexPublished /> : <HexUnpublished />}
       </AttributeIcon>
     </Attributes>
-    <Content>
+    <Content pad={pad}>
       <Title>{title}</Title>
       {isPublished ? (
         authors.map(author => <Author key={author}>{author}</Author>)

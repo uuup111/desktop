@@ -60,6 +60,7 @@ export default ({ p2p }) => {
           authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
           description={mod.rawJSON.description}
           isPublished={mod.isPublished}
+          pad='small'
         />
       ))}
       <Footer
