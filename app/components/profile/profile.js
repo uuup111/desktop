@@ -1,34 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { purple, black } from '../../lib/colors'
+import { purple } from '../../lib/colors'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from './module'
 import Footer from './footer'
 import { encode } from 'dat-encoding'
-import { Row, Cell } from '../layout/grid'
+import { Title, StickyRow, TopStickyRow } from '../layout/grid'
 
-const Container = styled.div`
-  margin-top: 48px;
-`
-const StickyRow = styled(Row)`
-  position: sticky;
-  top: ${props => props.top}px;
-  background-color: ${black};
-  z-index: 1;
-`
-const TopStickyRow = styled(StickyRow)`
-  :before {
-    content: '';
-    position: absolute;
-    top: -18px;
-    width: 100%;
-    height: 16px;
-    background-color: ${black};
-  }
-`
-const Title = styled(Cell)`
-  font-size: 40px;
-`
 const Spacer = styled.div`
   display: inline-block;
   width: 62px;
@@ -91,7 +69,7 @@ const Profile = ({ p2p, profile }) => {
   if (!modules || !authors) return null
 
   return (
-    <Container>
+    <>
       <TopStickyRow top={16}>
         <Title>{profile.rawJSON.title}</Title>
       </TopStickyRow>
@@ -120,7 +98,7 @@ const Profile = ({ p2p, profile }) => {
             : 'No content yet... 🤔'
         }
       />
-    </Container>
+    </>
   )
 }
 

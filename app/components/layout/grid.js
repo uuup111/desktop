@@ -49,3 +49,22 @@ export const Button = styled(Cell).attrs({
       props.emphasis === 'top' ? props.color || purple : black};
   }
 `
+export const StickyRow = styled(Row)`
+  position: sticky;
+  top: ${props => props.top}px;
+  background-color: ${black};
+  z-index: 1;
+`
+export const TopStickyRow = styled(StickyRow)`
+  :before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    width: 100%;
+    height: 16px;
+    background-color: ${black};
+  }
+`
+export const Title = styled(Cell)`
+  font-size: 40px;
+`
