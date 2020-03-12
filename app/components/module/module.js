@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { purple, black, white } from '../../lib/colors'
+import { purple, black, white, gray } from '../../lib/colors'
 import Arrow from '../arrow.svg'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
@@ -42,6 +42,9 @@ const Author = styled.a.attrs({
     cursor: pointer;
   }
 `
+const Unpublished = styled.p`
+  color: ${gray};
+`
 const Description = styled.div`
   overflow: hidden;
   max-height: 9em;
@@ -62,7 +65,14 @@ const RightArrow = styled(Arrow)`
   top: calc(296px / 2 - 32px / 2);
 `
 
-const Module = ({ subtype, version, title, authors, description }) => (
+const Module = ({
+  subtype,
+  version,
+  title,
+  authors,
+  description,
+  isPublished
+}) => (
   <Container>
     <Attributes>
       <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
@@ -70,9 +80,11 @@ const Module = ({ subtype, version, title, authors, description }) => (
     </Attributes>
     <Content>
       <Title>{title}</Title>
-      {authors.map(author => (
-        <Author key={author}>{author}</Author>
-      ))}
+      {isPublished ? (
+        authors.map(author => <Author key={author}>{author}</Author>)
+      ) : (
+        <Unpublished>not yet published...</Unpublished>
+      )}
       <Description>{description}</Description>
     </Content>
     <RightArrow />

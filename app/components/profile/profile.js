@@ -101,6 +101,7 @@ const Profile = ({ p2p, profile }) => {
           title={mod.rawJSON.title}
           authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
           description={mod.rawJSON.description}
+          isPublished
         />
       ))}
       <Footer

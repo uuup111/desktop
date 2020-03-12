@@ -14,6 +14,21 @@ export default ({ p2p }) => {
         p2p.listProfiles(),
         p2p.listContent()
       ])
+      for (const content of contents) {
+        content.isPublished = Boolean(
+          profiles.find(profile =>
+            Boolean(
+              profile.rawJSON.contents.find(contentUrl => {
+                const [key, version] = contentUrl.split('+')
+                return (
+                  encode(content.rawJSON.url) === encode(key) &&
+                  content.metadata.version === Number(version)
+                )
+              })
+            )
+          )
+        )
+      }
       setModules(contents)
 
       const authors = {}
@@ -44,6 +59,7 @@ export default ({ p2p }) => {
           title={mod.rawJSON.title}
           authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
           description={mod.rawJSON.description}
+          isPublished={mod.isPublished}
         />
       ))}
       <Footer
