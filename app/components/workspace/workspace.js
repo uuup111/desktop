@@ -44,33 +44,37 @@ export default ({ p2p }) => {
     })()
   }, [])
 
-  if (!modules || !authors) return null
-
   return (
     <>
       <TopRow>
         <Title>Workspace</Title>
         <Button onClick={() => alert('Not implemented')}>Add content +</Button>
       </TopRow>
-      {modules.map(mod => (
-        <Module
-          key={mod.rawJSON.url}
-          subtype={mod.rawJSON.subtype}
-          version={mod.metadata.version}
-          title={mod.rawJSON.title}
-          authors={mod.rawJSON.authors.map(url => authors[url].rawJSON.title)}
-          description={mod.rawJSON.description}
-          isPublished={mod.isPublished}
-          pad='small'
-        />
-      ))}
-      <Footer
-        title={
-          modules.length
-            ? 'TODO'
-            : "Nothing here yet! Click the 'Add content' button above to get started ☝️ "
-        }
-      />
+      {modules && authors && (
+        <>
+          {modules.map(mod => (
+            <Module
+              key={mod.rawJSON.url}
+              subtype={mod.rawJSON.subtype}
+              version={mod.metadata.version}
+              title={mod.rawJSON.title}
+              authors={mod.rawJSON.authors.map(
+                url => authors[url].rawJSON.title
+              )}
+              description={mod.rawJSON.description}
+              isPublished={mod.isPublished}
+              pad='small'
+            />
+          ))}
+          <Footer
+            title={
+              modules.length
+                ? 'TODO'
+                : "Nothing here yet! Click the 'Add content' button above to get started ☝️ "
+            }
+          />
+        </>
+      )}
     </>
   )
 }
