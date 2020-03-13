@@ -7,6 +7,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import Arrow from '../arrow.svg'
 import { shell, remote } from 'electron'
 import { promises as fs } from 'fs'
+import AdmZip from 'adm-zip'
 
 const Spacer = styled.div`
   display: inline-block;
@@ -114,6 +115,23 @@ const Content = ({ p2p, profile }) => {
           ))}
           <Description>{content.rawJSON.description}</Description>
           <Button onClick={() => shell.openItem(dir)}>Open folder</Button>
+          <Button
+            onClick={async () => {
+              const zip = new AdmZip()
+              for (const path of files) {
+                zip.addLocalFile(`${dir}/${path}`)
+              }
+              const { filePath } = await remote.dialog.showSaveDialog(
+                remote.getCurrentWindow(),
+                {
+                  defaultPath: 'module.zip'
+                }
+              )
+              if (filePath) zip.writeZip(filePath)
+            }}
+          >
+            Export .zip
+          </Button>
           <Files>
             {files &&
               files.map(path => (
