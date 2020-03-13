@@ -12,13 +12,6 @@ import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
 const { alert } = window
 
-const Spacer = styled.div`
-  display: inline-block;
-  width: 62px;
-  height: 100%;
-  border-right: 2px solid ${purple};
-  vertical-align: top;
-`
 const Container = styled.div`
   margin: 32px 64px;
 `

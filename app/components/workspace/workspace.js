@@ -59,23 +59,24 @@ export default ({ p2p }) => {
       </TopRow>
       {modules && authors && (
         <>
-          {modules.map(mod => (
-            <Module
-              key={mod.rawJSON.url}
-              subtype={mod.rawJSON.subtype}
-              version={mod.metadata.version}
-              title={mod.rawJSON.title}
-              authors={mod.rawJSON.authors.map(
-                url => authors[url].rawJSON.title
-              )}
-              description={mod.rawJSON.description}
-              isPublished={mod.isPublished}
-              pad='small'
-              onClick={() =>
-                history.push(`/content/${encode(mod.rawJSON.url)}`)
-              }
-            />
-          ))}
+          {modules.map(mod => {
+            const url = `/content/${encode(mod.rawJSON.url)}`
+            return (
+              <Module
+                key={mod.rawJSON.url}
+                subtype={mod.rawJSON.subtype}
+                version={mod.metadata.version}
+                title={mod.rawJSON.title}
+                authors={mod.rawJSON.authors.map(
+                  url => authors[url].rawJSON.title
+                )}
+                description={mod.rawJSON.description}
+                isPublished={mod.isPublished}
+                pad='small'
+                onClick={() => history.push(url)}
+              />
+            )
+          })}
           <Footer
             title={
               modules.length
