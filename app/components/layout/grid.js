@@ -9,7 +9,6 @@ export const Cell = styled.div`
   display: inline-block;
   overflow: hidden;
   height: 100%;
-  min-width: 128px;
   text-align: center;
 `
 export const Row = styled.div`
@@ -38,6 +37,7 @@ export const Button = styled(Cell).attrs({
   border-color: ${props => props.color || purple};
   color: ${white};
   margin-right: 16px;
+  min-width: 128px;
 
   :hover {
     color: ${white};

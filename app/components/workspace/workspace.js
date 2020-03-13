@@ -4,12 +4,14 @@ import Module from '../module/module'
 import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
 import { green } from '../../lib/colors'
+import { useHistory } from 'react-router-dom'
 
 const { alert } = window
 
 export default ({ p2p }) => {
   const [modules, setModules] = useState()
   const [authors, setAuthors] = useState()
+  const history = useHistory()
 
   useEffect(() => {
     ;(async () => {
@@ -69,6 +71,9 @@ export default ({ p2p }) => {
               description={mod.rawJSON.description}
               isPublished={mod.isPublished}
               pad='small'
+              onClick={() =>
+                history.push(`/content/${encode(mod.rawJSON.url)}`)
+              }
             />
           ))}
           <Footer
