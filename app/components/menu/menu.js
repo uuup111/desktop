@@ -47,7 +47,8 @@ const StyledButton = styled(Button)`
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 `
-const isWorkbench = location => /^\/$|^\/content\//.test(location.pathname)
+const isWorkbench = location =>
+  /^\/$|^\/(content\/|create)/.test(location.pathname)
 
 const Menu = () => (
   <Container>

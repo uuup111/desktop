@@ -6,8 +6,6 @@ import Footer from '../footer/footer'
 import { green } from '../../lib/colors'
 import { useHistory } from 'react-router-dom'
 
-const { alert } = window
-
 export default ({ p2p }) => {
   const [modules, setModules] = useState()
   const [authors, setAuthors] = useState()
@@ -53,7 +51,7 @@ export default ({ p2p }) => {
     <>
       <TopRow>
         <Title>Workspace</Title>
-        <Button color={green} onClick={() => alert('Not implemented')}>
+        <Button color={green} onClick={() => history.push('/create')}>
           Add content +
         </Button>
       </TopRow>

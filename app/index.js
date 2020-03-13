@@ -6,6 +6,7 @@ import ProfileContent from './components/profile/content'
 import Welcome from './components/welcome/welcome'
 import Workspace from './components/workspace/workspace'
 import WorkspaceContent from './components/workspace/content'
+import Create from './components/create/create'
 import P2P from '@p2pcommons/sdk-js'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -47,6 +48,9 @@ const App = () => {
         </Route>
         <Route path='/content/:key'>
           <WorkspaceContent p2p={p2p} profile={profile} />
+        </Route>
+        <Route path='/create'>
+          <Create p2p={p2p} />
         </Route>
         <Route path='/profile' exact>
           <Profile p2p={p2p} profile={profile} />

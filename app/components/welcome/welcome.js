@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { purple, black, green, white, gray } from '../../lib/colors'
+import { purple, black, green, gray } from '../../lib/colors'
 import { rgba } from 'polished'
 import { Button } from '../layout/grid'
 import Arrow from '../arrow.svg'
+import { Label, Input } from '../forms'
 
 const Overlay = styled.div`
   position: absolute;
@@ -53,20 +54,6 @@ const Form = styled.form`
   position: absolute;
   bottom: 32px;
   left: 32px;
-`
-const Label = styled.label`
-  font-weight: bold;
-`
-const Input = styled.input`
-  border: 2px solid ${purple};
-  background-color: ${black};
-  font-size: 32px;
-  padding: 7px 17px;
-  margin-top: 9px;
-  margin-bottom: 16px;
-  color: ${white};
-  display: block;
-  width: 440px;
 `
 
 const dialogs = [
