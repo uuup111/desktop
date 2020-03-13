@@ -102,83 +102,90 @@ const Content = ({ p2p, profile }) => {
     })()
   }, [key])
 
-  if (!content || !authors) return null
-
   return (
     <>
       <TopRow>
-        <Title>{subtypes[content.rawJSON.subtype] || 'Unknown'}</Title>
-        <Cell>v. {content.metadata.version}</Cell>
-      </TopRow>
-      <Container>
-        <BackArrow onClick={() => history.push('/')} />
-        <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
-        {authors.map(author => (
-          <Author key={author}>{author}</Author>
-        ))}
-        <Description>{content.rawJSON.description}</Description>
-        <Button onClick={() => shell.openItem(dir)}>Open folder</Button>
-        <Button
-          onClick={async () => {
-            const zip = new AdmZip()
-            for (const path of files) {
-              zip.addLocalFile(`${dir}/${path}`)
-            }
-            const { filePath } = await remote.dialog.showSaveDialog(
-              remote.getCurrentWindow(),
-              {
-                defaultPath: 'module.zip'
-              }
-            )
-            if (filePath) zip.writeZip(filePath)
-          }}
-        >
-          Export .zip
-        </Button>
-        <Files>
-          {files &&
-            files.map(path => (
-              <File key={path} onClick={() => shell.openItem(`${dir}/${path}`)}>
-                {path}
-              </File>
-            ))}
-        </Files>
-        {isPublished ? (
-          <Button
-            color={yellow}
-            onClick={async () => {
-              alert(
-                'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
-              )
-              // await p2p.publish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
-            }}
-          >
-            Unpublish
-          </Button>
-        ) : (
-          <Button
-            color={green}
-            onClick={async () => {
-              alert(
-                'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
-              )
-              // await p2p.unpublish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
-              // history.push('/')
-            }}
-          >
-            Publish
-          </Button>
+        {content && authors && (
+          <>
+            <Title>{subtypes[content.rawJSON.subtype] || 'Unknown'}</Title>
+            <Cell>v. {content.metadata.version}</Cell>
+          </>
         )}
-        <Button
-          color={red}
-          onClick={async () => {
-            await p2p.delete(content.rawJSON.url)
-            history.push('/')
-          }}
-        >
-          Delete content
-        </Button>
-      </Container>
+      </TopRow>
+      {content && authors && (
+        <Container>
+          <BackArrow onClick={() => history.push('/')} />
+          <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
+          {authors.map(author => (
+            <Author key={author}>{author}</Author>
+          ))}
+          <Description>{content.rawJSON.description}</Description>
+          <Button onClick={() => shell.openItem(dir)}>Open folder</Button>
+          <Button
+            onClick={async () => {
+              const zip = new AdmZip()
+              for (const path of files) {
+                zip.addLocalFile(`${dir}/${path}`)
+              }
+              const { filePath } = await remote.dialog.showSaveDialog(
+                remote.getCurrentWindow(),
+                {
+                  defaultPath: 'module.zip'
+                }
+              )
+              if (filePath) zip.writeZip(filePath)
+            }}
+          >
+            Export .zip
+          </Button>
+          <Files>
+            {files &&
+              files.map(path => (
+                <File
+                  key={path}
+                  onClick={() => shell.openItem(`${dir}/${path}`)}
+                >
+                  {path}
+                </File>
+              ))}
+          </Files>
+          {isPublished ? (
+            <Button
+              color={yellow}
+              onClick={async () => {
+                alert(
+                  'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
+                )
+                // await p2p.publish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
+              }}
+            >
+              Unpublish
+            </Button>
+          ) : (
+            <Button
+              color={green}
+              onClick={async () => {
+                alert(
+                  'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
+                )
+                // await p2p.unpublish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
+                // history.push('/')
+              }}
+            >
+              Publish
+            </Button>
+          )}
+          <Button
+            color={red}
+            onClick={async () => {
+              await p2p.delete(content.rawJSON.url)
+              history.push('/')
+            }}
+          >
+            Delete content
+          </Button>
+        </Container>
+      )}
     </>
   )
 }
