@@ -47,21 +47,20 @@ const StyledButton = styled(Button)`
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 `
+const isWorkbench = location => /^\/$|^\/content\//.test(location.pathname)
 
-const Menu = () => {
-  return (
-    <Container>
-      <StyledLogo />
-      <StyledRow>
-        <StyledNavLink to='/' exact>
-          <StyledButton>Workspace</StyledButton>
-        </StyledNavLink>
-        <StyledNavLink to='/profile'>
-          <StyledButton>Profile</StyledButton>
-        </StyledNavLink>
-      </StyledRow>
-    </Container>
-  )
-}
+const Menu = () => (
+  <Container>
+    <StyledLogo />
+    <StyledRow>
+      <StyledNavLink to='/' isActive={(_, location) => isWorkbench(location)}>
+        <StyledButton>Workspace</StyledButton>
+      </StyledNavLink>
+      <StyledNavLink to='/profile'>
+        <StyledButton>Profile</StyledButton>
+      </StyledNavLink>
+    </StyledRow>
+  </Container>
+)
 
 export default Menu
