@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { black, green, purple, white, gray } from '../../lib/colors'
+import { black, purple, white, gray } from '../../lib/colors'
 
 const rowHeight = 64
 

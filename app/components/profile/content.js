@@ -9,6 +9,8 @@ import { shell, remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 
+const { alert } = window
+
 const Spacer = styled.div`
   display: inline-block;
   width: 62px;
