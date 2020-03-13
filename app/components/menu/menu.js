@@ -27,6 +27,8 @@ const StyledButton = styled(Button)`
   text-align: left;
   width: 100%;
   padding-left: 12.5%;
+  border-left-width: 0;
+  border-top-width: 0;
   :hover {
     background-color: ${purple};
   }

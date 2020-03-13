@@ -3,6 +3,7 @@ import { TopRow, Title, Button } from '../layout/grid'
 import Module from '../module/module'
 import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
+import { green } from '../../lib/colors'
 
 const { alert } = window
 
@@ -50,7 +51,9 @@ export default ({ p2p }) => {
     <>
       <TopRow>
         <Title>Workspace</Title>
-        <Button onClick={() => alert('Not implemented')}>Add content +</Button>
+        <Button color={green} onClick={() => alert('Not implemented')}>
+          Add content +
+        </Button>
       </TopRow>
       {modules && authors && (
         <>
