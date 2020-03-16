@@ -49,7 +49,7 @@ const Description = styled.div`
   margin-bottom: 64px;
 `
 const Files = styled.div`
-  margin-bottom: 52px;
+  margin-bottom: 64px;
 `
 const File = styled.div`
   width: 100%;
