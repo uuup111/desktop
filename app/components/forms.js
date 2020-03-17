@@ -14,18 +14,31 @@ export const Input = styled.input`
   margin-bottom: 16px;
   color: ${white};
   display: block;
-  width: 440px;
+  width: 100%;
+  box-sizing: border-box;
 `
 export const Select = styled.select`
   display: block;
   background-color: ${black};
   color: ${white};
   border-color: ${purple};
-  font-size: 32px;
+  font-size: ${props => (props.large ? 32 : 16)}px;
   width: 100%;
-  max-width: 640px;
-  height: 64px;
+  max-width: 661px;
+  height: ${props => (props.large ? 64 : 32)}px;
   /* border-radius: 0;
   appearance: none; */
   margin-bottom: 33px;
+`
+export const Textarea = styled.textarea`
+  border: 2px solid ${purple};
+  background-color: ${black};
+  font-size: 16px;
+  padding: 7px 17px;
+  margin-bottom: 16px;
+  color: ${white};
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 192px;
 `

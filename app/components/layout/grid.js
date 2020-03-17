@@ -47,6 +47,9 @@ export const Button = styled(Cell).attrs({
           ? gray
           : black
         : props.color || purple};
+    path {
+      fill: ${white};
+    }
   }
 
   :active {
