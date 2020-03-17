@@ -16,6 +16,7 @@ export const Input = styled.input`
   display: block;
   width: 100%;
   box-sizing: border-box;
+  font-family: Roboto;
 `
 export const Select = styled.select`
   display: block;
@@ -29,6 +30,7 @@ export const Select = styled.select`
   /* border-radius: 0;
   appearance: none; */
   margin-bottom: 33px;
+  font-family: Roboto;
 `
 export const Textarea = styled.textarea`
   border: 2px solid ${purple};
@@ -41,4 +43,5 @@ export const Textarea = styled.textarea`
   width: 100%;
   box-sizing: border-box;
   height: 192px;
+  font-family: Roboto;
 `
