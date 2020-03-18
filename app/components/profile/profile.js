@@ -103,7 +103,7 @@ const Profile = ({ p2p, profile }) => {
           <Footer
             title={
               modules.length
-                ? `That’s all of ${profile.rawJSON.title}’s content 😎`
+                ? 'You’ve reached the end! ✌️'
                 : 'No content yet... 🤔'
             }
           />
