@@ -108,9 +108,9 @@ const Content = ({ p2p, profile }) => {
   return (
     <>
       <TopRow>
-        {content && authors && (
+        {content && (
           <>
-            <Title>{subtypes[content.rawJSON.subtype] || 'Unknown'}</Title>
+            <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
             <Cell>v. {content.metadata.version}</Cell>
           </>
         )}

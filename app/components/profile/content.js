@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { purple, white, green, yellow, red } from '../../lib/colors'
 import { encode } from 'dat-encoding'
-import { Title, StickyRow, TopRow, Button } from '../layout/grid'
+import { Title, StickyRow, TopRow, Button, Cell } from '../layout/grid'
 import { useParams, useHistory, Link } from 'react-router-dom'
 import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
+import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
 const { alert } = window
 
@@ -104,7 +105,12 @@ const Content = ({ p2p, profile }) => {
       </TopRow>
       <StickyRow top={116} noBorderTop>
         <Spacer />
-        <Title>Content</Title>
+        {content && (
+          <>
+            <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
+            <Cell>v. {content.metadata.version}</Cell>
+          </>
+        )}
       </StickyRow>
       {content && authors && (
         <Container>
