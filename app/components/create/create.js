@@ -12,6 +12,7 @@ import RemoveFileIcon from './remove-file.svg'
 import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
 import { useHistory } from 'react-router-dom'
+import Loading from './loading.svg'
 
 const Container = styled.div`
   margin: 32px 64px;
@@ -132,12 +133,13 @@ const Create = ({ p2p }) => {
           <Label htmlFor='description'>Description</Label>
           <Textarea name='description' />
           <Button emphasis='top' disabled={isCreating}>
-            Add content
+            {isCreating ? (
+              <Loading height='100%' width='60px' />
+            ) : (
+              'Add content'
+            )}
           </Button>
-          <Button
-            color={red}
-            onClick={() => history.push('/')}
-          >
+          <Button color={red} onClick={() => history.push('/')}>
             Cancel
           </Button>
         </Form>
