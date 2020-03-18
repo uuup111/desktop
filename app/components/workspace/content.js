@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { purple, white, green, yellow, red } from '../../lib/colors'
+import { purple, white, green, yellow, red, gray } from '../../lib/colors'
 import { encode } from 'dat-encoding'
 import { Title, TopRow, Button, Cell } from '../layout/grid'
 import { useParams, useHistory } from 'react-router-dom'
@@ -59,6 +59,11 @@ const File = styled.div`
     background-color: inherit;
   }
 `
+const Unpublished = styled.p`
+  color: ${gray};
+  font-size: 24px;
+  line-height: 28px;
+`
 
 const Content = ({ p2p, profile }) => {
   const { key } = useParams()
@@ -116,9 +121,11 @@ const Content = ({ p2p, profile }) => {
         <Container>
           <BackArrow onClick={() => history.push('/')} />
           <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
-          {authors.map(author => (
-            <Author key={author}>{author}</Author>
-          ))}
+          {isPublished ? (
+            authors.map(author => <Author key={author}>{author}</Author>)
+          ) : (
+            <Unpublished>not yet published...</Unpublished>
+          )}
           <Description>{content.rawJSON.description}</Description>
           <Button onClick={() => remote.shell.openItem(dir)}>
             Open folder
