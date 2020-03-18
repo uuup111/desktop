@@ -5,13 +5,9 @@ import Arrow from '../arrow.svg'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import HexPublished from './published.svg'
 import HexUnpublished from './unpublished.svg'
-import { Link } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
-const Container = styled(Link)`
-  display: block;
-  color: ${white};
-  cursor: default;
-
+const Container = styled.div`
   border-bottom: 2px solid ${purple};
   padding: 32px ${props => (props.pad === 'small' ? 32 : 64)}px;
   position: relative;
@@ -82,30 +78,39 @@ const Module = ({
   isPublished,
   pad,
   to
-}) => (
-  <Container pad={pad} to={to}>
-    <Attributes>
-      <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
-      <Attribute>v.{version}</Attribute>
-      <AttributeIcon>
-        {isPublished ? <HexPublished /> : <HexUnpublished />}
-      </AttributeIcon>
-    </Attributes>
-    <Content pad={pad}>
-      <Title>{title}</Title>
-      {isPublished ? (
-        authors.map(author => (
-          <Author key={author} to='/profile'>
-            {author}
-          </Author>
-        ))
-      ) : (
-        <Unpublished>not yet published...</Unpublished>
-      )}
-      <Description>{description}</Description>
-    </Content>
-    <RightArrow />
-  </Container>
-)
+}) => {
+  const history = useHistory()
+
+  return (
+    <Container
+      pad={pad}
+      onClick={e => {
+        if (e.target.tagName !== 'A') history.push(to)
+      }}
+    >
+      <Attributes>
+        <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
+        <Attribute>v.{version}</Attribute>
+        <AttributeIcon>
+          {isPublished ? <HexPublished /> : <HexUnpublished />}
+        </AttributeIcon>
+      </Attributes>
+      <Content pad={pad}>
+        <Title>{title}</Title>
+        {isPublished ? (
+          authors.map(author => (
+            <Author key={author} to='/profile'>
+              {author}
+            </Author>
+          ))
+        ) : (
+          <Unpublished>not yet published...</Unpublished>
+        )}
+        <Description>{description}</Description>
+      </Content>
+      <RightArrow />
+    </Container>
+  )
+}
 
 export default Module
