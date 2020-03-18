@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { purple, black, green, gray } from '../../lib/colors'
+import { purple, black, green } from '../../lib/colors'
 import { rgba } from 'polished'
 import { Button } from '../layout/grid'
 import Arrow from '../arrow.svg'
@@ -40,12 +40,6 @@ const Heading = styled.div`
   line-height: 37px;
   margin-bottom: 24px;
 `
-const StyledButton = styled(Button).attrs({
-  emphasis: 'top',
-  autoFocus: true
-})`
-  border: 2px solid ${props => (props.disabled ? gray : props.color || purple)};
-`
 const Back = styled(Arrow)`
   transform: rotate(270deg);
   filter: brightness(${props => (props.page === 0 ? 0 : 100)}%);
@@ -73,7 +67,9 @@ const dialogs = [
         started...
       </p>
       <Form onSubmit={next}>
-        <StyledButton>Next</StyledButton>
+        <Button emphasis='top' autoFocus>
+          Next
+        </Button>
       </Form>
     </Dialog>
   ),
@@ -93,7 +89,9 @@ const dialogs = [
         feel ready.
       </p>
       <Form onSubmit={next}>
-        <StyledButton>Next</StyledButton>
+        <Button emphasis='top' autoFocus>
+          Next
+        </Button>
       </Form>
     </Dialog>
   ),
@@ -114,7 +112,9 @@ const dialogs = [
         you go!
       </p>
       <Form onSubmit={next}>
-        <StyledButton color={green}>Create Profile</StyledButton>
+        <Button emphasis='top' autoFocus color={green}>
+          Create Profile
+        </Button>
       </Form>
     </Dialog>
   ),
@@ -146,26 +146,41 @@ const dialogs = [
             onInput={e => setValid(e.target.value !== '')}
             autoFocus
           />
-          <StyledButton disabled={!valid}>Next</StyledButton>
+          <Button emphasis='top' autoFocus disabled={!valid}>
+            Next
+          </Button>
         </Form>
       </Dialog>
     )
   },
-  ({ page, next, previous }) => (
-    <Dialog>
-      <Back page={page} onClick={previous} />
-      <Illustration />
-      <Heading>Introducing the Vault</Heading>
-      <p>
-        We'll be launching this soon! Consider this our hosting service, to make
-        sure your content stays available to everyone. Pay once and you're set.
-        No subscriptions 🎉
-      </p>
-      <Form onSubmit={next}>
-        <StyledButton>Go to workspace</StyledButton>
-      </Form>
-    </Dialog>
-  )
+  ({ page, p2p, name, setProfile, previous }) => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    return (
+      <Dialog>
+        <Back page={page} onClick={previous} />
+        <Illustration />
+        <Heading>Introducing the Vault</Heading>
+        <p>
+          We'll be launching this soon! Consider this our hosting service, to
+          make sure your content stays available to everyone. Pay once and
+          you're set. No subscriptions 🎉
+        </p>
+        <Form
+          onSubmit={async e => {
+            e.preventDefault()
+            setIsLoading(true)
+            const profile = await p2p.init({ type: 'profile', title: name })
+            setProfile(profile)
+          }}
+        >
+          <Button emphasis='top' autoFocus isLoading={isLoading}>
+            Go to workspace
+          </Button>
+        </Form>
+      </Dialog>
+    )
+  }
 ]
 
 const Welcome = ({ p2p, setProfile }) => {
@@ -174,12 +189,7 @@ const Welcome = ({ p2p, setProfile }) => {
 
   const next = async e => {
     if (e) e.preventDefault()
-    if (page + 1 === dialogs.length) {
-      const profile = await p2p.init({ type: 'profile', title: name })
-      setProfile(profile)
-    } else {
-      setPage(page + 1)
-    }
+    setPage(page + 1)
   }
   const previous = () => setPage(page - 1)
 
@@ -191,7 +201,10 @@ const Welcome = ({ p2p, setProfile }) => {
         next,
         previous,
         page,
-        setName
+        name,
+        setName,
+        p2p,
+        setProfile
       })}
     </Overlay>
   )

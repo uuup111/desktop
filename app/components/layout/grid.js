@@ -87,7 +87,11 @@ const Loading = styled(LoadingAnimation)`
   margin-left: -30px !important;
 `
 export const Button = ({ isLoading, children, ...props }) => (
-  <StyledButton {...props} isLoading={isLoading} disabled={isLoading}>
+  <StyledButton
+    {...props}
+    isLoading={isLoading}
+    disabled={props.disabled || isLoading}
+  >
     {children}
     {isLoading && <Loading height='100%' width='60px' />}
   </StyledButton>
