@@ -34,7 +34,7 @@ export const Button = styled(Cell).attrs({
   font-size: 16px;
   height: 64px;
   border: 2px solid ${purple};
-  border-color: ${props => props.color || purple};
+  border-color: ${props => (props.disabled ? gray : props.color || purple)};
   color: ${white};
   margin-right: 16px;
   min-width: 128px;
