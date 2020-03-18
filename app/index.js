@@ -50,7 +50,7 @@ const App = () => {
           <WorkspaceContent p2p={p2p} profile={profile} />
         </Route>
         <Route path='/create'>
-          <Create p2p={p2p} />
+          <Create p2p={p2p} profile={profile} />
         </Route>
         <Route path='/profile' exact>
           <Profile p2p={p2p} profile={profile} />

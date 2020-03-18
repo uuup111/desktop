@@ -41,7 +41,7 @@ const RemoveFile = styled(RemoveFileIcon)`
   top: 7px;
 `
 
-const Create = ({ p2p }) => {
+const Create = ({ p2p, profile }) => {
   const [files, setFiles] = useState([])
   const [isCreating, setIsCreating] = useState(false)
   const history = useHistory()
@@ -69,7 +69,8 @@ const Create = ({ p2p }) => {
               type: 'content',
               subtype,
               title,
-              description
+              description,
+              authors: [profile.rawJSON.url]
             })
             const dir = `${remote.app.getPath('home')}/.p2pcommons/${encode(
               url
