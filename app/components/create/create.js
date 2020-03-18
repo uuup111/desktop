@@ -11,6 +11,7 @@ import { basename } from 'path'
 import RemoveFileIcon from './remove-file.svg'
 import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
+import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   margin: 32px 64px;
@@ -42,6 +43,7 @@ const RemoveFile = styled(RemoveFileIcon)`
 
 const Create = ({ p2p }) => {
   const [files, setFiles] = useState([])
+  const history = useHistory()
 
   return (
     <>
@@ -74,7 +76,7 @@ const Create = ({ p2p }) => {
               await fs.copyFile(file, `${dir}/${basename(file)}`)
             }
             if (main) await p2p.set({ url, main: basename(main) })
-            console.log({ url })
+            history.push('/')
           }}
         >
           <Label htmlFor='subtype'>Content type</Label>
