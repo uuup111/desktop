@@ -52,7 +52,7 @@ const Create = ({ p2p }) => {
         <Title>Add Content</Title>
       </TopRow>
       <Container>
-        <BackArrow />
+        <BackArrow onClick={() => history.push('/')} />
         <Form
           onSubmit={async e => {
             e.preventDefault()
