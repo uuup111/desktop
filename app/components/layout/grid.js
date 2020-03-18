@@ -1,5 +1,7 @@
+import React from 'react'
 import styled from 'styled-components'
 import { black, purple, white, gray } from '../../lib/colors'
+import LoadingAnimation from './loading.svg'
 
 const rowHeight = 64
 
@@ -18,7 +20,7 @@ export const Row = styled.div`
   white-space: nowrap;
   line-height: ${rowHeight}px;
 `
-export const Button = styled(Cell).attrs({
+const StyledButton = styled(Cell).attrs({
   as: 'button'
 })`
   background-color: ${props =>
@@ -35,12 +37,13 @@ export const Button = styled(Cell).attrs({
   height: 64px;
   border: 2px solid ${purple};
   border-color: ${props => (props.disabled ? gray : props.color || purple)};
-  color: ${white};
+  color: ${props => (props.isLoading ? gray : white)};
   margin-right: 16px;
   min-width: 128px;
+  position: relative;
 
   :hover {
-    color: ${white};
+    color: ${props => (props.isLoading ? gray : white)};
     background-color: ${props =>
       props.emphasis === 'top'
         ? props.disabled
@@ -73,6 +76,18 @@ export const Button = styled(Cell).attrs({
     }
   }
 `
+const Loading = styled(LoadingAnimation)`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -30px !important;
+`
+export const Button = ({ isLoading, children, ...props }) => (
+  <StyledButton {...props} isLoading={isLoading} disabled={isLoading}>
+    {children}
+    {isLoading && <Loading height='100%' width='60px' />}
+  </StyledButton>
+)
 export const StickyRow = styled(Row)`
   position: sticky;
   top: ${props => props.top}px;
