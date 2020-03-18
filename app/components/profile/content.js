@@ -68,6 +68,7 @@ const Content = ({ p2p, profile, setProfile }) => {
   const [content, setContent] = useState()
   const [authors, setAuthors] = useState()
   const [files, setFiles] = useState()
+  const [isDeleting, setIsDeleting] = useState(false)
   const history = useHistory()
 
   const dir = `${remote.app.getPath('home')}/.p2pcommons/${encode(key)}`
@@ -166,7 +167,9 @@ const Content = ({ p2p, profile, setProfile }) => {
           </Button>
           <Button
             color={red}
+            isLoading={isDeleting}
             onClick={async () => {
+              setIsDeleting(true)
               await p2p.delete(content.rawJSON.url)
               history.push('/')
             }}

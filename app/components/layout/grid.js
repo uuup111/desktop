@@ -24,10 +24,10 @@ const StyledButton = styled(Cell).attrs({
   as: 'button'
 })`
   background-color: ${props =>
-    props.emphasis === 'top'
-      ? props.disabled
-        ? gray
-        : props.color || purple
+    props.disabled
+      ? gray
+      : props.emphasis === 'top'
+      ? props.color || purple
       : black};
   vertical-align: top;
   font-family: Roboto;
@@ -45,10 +45,10 @@ const StyledButton = styled(Cell).attrs({
   :hover {
     color: ${props => (props.isLoading ? gray : white)};
     background-color: ${props =>
-      props.emphasis === 'top'
-        ? props.disabled
-          ? gray
-          : black
+      props.disabled
+        ? gray
+        : props.emphasis === 'top'
+        ? black
         : props.color || purple};
     path {
       fill: ${white};
@@ -57,7 +57,11 @@ const StyledButton = styled(Cell).attrs({
 
   :active {
     background-color: ${props =>
-      props.emphasis === 'top' ? props.color || purple : black};
+      props.disabled
+        ? gray
+        : props.emphasis === 'top'
+        ? props.color || purple
+        : black};
     outline: none;
   }
 
