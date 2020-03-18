@@ -5,7 +5,7 @@ import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Button } from '../layout/grid'
 import { useParams, useHistory } from 'react-router-dom'
 import Arrow from '../arrow.svg'
-import { shell, remote } from 'electron'
+import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 
@@ -116,7 +116,9 @@ const Content = ({ p2p, profile }) => {
             <Author key={author}>{author}</Author>
           ))}
           <Description>{content.rawJSON.description}</Description>
-          <Button onClick={() => shell.openItem(dir)}>Open folder</Button>
+          <Button onClick={() => remote.shell.openItem(dir)}>
+            Open folder
+          </Button>
           <Button
             onClick={async () => {
               const zip = new AdmZip()
@@ -139,7 +141,7 @@ const Content = ({ p2p, profile }) => {
               files.map(path => (
                 <File
                   key={path}
-                  onClick={() => shell.openItem(`${dir}/${path}`)}
+                  onClick={() => remote.shell.openItem(`${dir}/${path}`)}
                 >
                   {path}
                 </File>
