@@ -43,6 +43,7 @@ const RemoveFile = styled(RemoveFileIcon)`
 
 const Create = ({ p2p }) => {
   const [files, setFiles] = useState([])
+  const [isCreating, setIsCreating] = useState(false)
   const history = useHistory()
 
   return (
@@ -55,6 +56,7 @@ const Create = ({ p2p }) => {
         <Form
           onSubmit={async e => {
             e.preventDefault()
+            setIsCreating(true)
 
             const subtype = e.target.subtype.value
             const title = e.target.title.value
@@ -129,7 +131,9 @@ const Create = ({ p2p }) => {
           <Input type='text' name='title' required />
           <Label htmlFor='description'>Description</Label>
           <Textarea name='description' />
-          <Button emphasis='top'>Add content</Button>
+          <Button emphasis='top' disabled={isCreating}>
+            Add content
+          </Button>
         </Form>
       </Container>
     </>
