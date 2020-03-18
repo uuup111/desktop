@@ -156,11 +156,8 @@ const Content = ({ p2p, profile }) => {
           <Button
             color={yellow}
             onClick={async () => {
-              alert(
-                'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
-              )
-              // await p2p.unpublish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
-              // history.push('/')
+              await p2p.unpublish(`dat://${key}+${content.metadata.version}`, profile.rawJSON.url)
+              history.push(`/content/${key}`)
             }}
           >
             Unpublish
