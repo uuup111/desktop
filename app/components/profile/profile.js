@@ -53,16 +53,7 @@ const Profile = ({ p2p, profile }) => {
         )
       ])
       const modules = contents.map(c => ({
-        rawJSON: {
-          title: c.module.title,
-          description: c.module.description,
-          url: c.module.url,
-          type: c.module.p2pcommons.type,
-          subtype: c.module.p2pcommons.subtype,
-          main: c.module.p2pcommons.main,
-          authors: c.module.p2pcommons.authors,
-          parents: c.module.p2pcommons.parents
-        },
+        rawJSON: c.module,
         metadata: c.metadata
       }))
       setModules(modules)
