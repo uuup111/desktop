@@ -70,7 +70,7 @@ export default ({ p2p }) => {
                 description={mod.rawJSON.description}
                 isPublished={mod.isPublished}
                 pad='small'
-                to={() => `/content/${encode(mod.rawJSON.url)}`}
+                to={`/content/${encode(mod.rawJSON.url)}`}
               />
             )
           })}
