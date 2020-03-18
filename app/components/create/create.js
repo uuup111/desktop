@@ -116,7 +116,7 @@ const Create = ({ p2p }) => {
           </Files>
           <Label htmlFor='main'>Main file</Label>
           <Select name='main'>
-            <option>No main</option>
+            <option value=''>No main</option>
             {files.map(file => (
               <option value={file} key={file}>
                 {basename(file)}
