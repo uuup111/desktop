@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { purple, white, green, yellow, red } from '../../lib/colors'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Button } from '../layout/grid'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
@@ -29,9 +29,7 @@ const ModuleTitle = styled.div`
   line-height: 37px;
   margin: 32px 0;
 `
-const Author = styled.a.attrs({
-  href: '#'
-})`
+const Author = styled(Link)`
   text-decoration: none;
   color: ${white};
   border-bottom: 2px solid ${purple};
@@ -113,7 +111,9 @@ const Content = ({ p2p, profile }) => {
           <BackArrow onClick={() => history.push('/profile')} />
           <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
           {authors.map(author => (
-            <Author key={author}>{author}</Author>
+            <Author key={author} to='/profile'>
+              {author}
+            </Author>
           ))}
           <Description>{content.rawJSON.description}</Description>
           <Button onClick={() => remote.shell.openItem(dir)}>

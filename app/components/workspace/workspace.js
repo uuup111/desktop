@@ -58,7 +58,6 @@ export default ({ p2p }) => {
       {modules && authors && (
         <>
           {modules.map(mod => {
-            const url = `/content/${encode(mod.rawJSON.url)}`
             return (
               <Module
                 key={mod.rawJSON.url}
@@ -71,7 +70,7 @@ export default ({ p2p }) => {
                 description={mod.rawJSON.description}
                 isPublished={mod.isPublished}
                 pad='small'
-                onClick={() => history.push(url)}
+                to={() => `/content/${encode(mod.rawJSON.url)}`}
               />
             )
           })}

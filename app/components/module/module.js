@@ -5,8 +5,13 @@ import Arrow from '../arrow.svg'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import HexPublished from './published.svg'
 import HexUnpublished from './unpublished.svg'
+import { Link } from 'react-router-dom'
 
-const Container = styled.div`
+const Container = styled(Link)`
+  display: block;
+  color: ${white};
+  cursor: default;
+
   border-bottom: 2px solid ${purple};
   padding: 32px ${props => (props.pad === 'small' ? 32 : 64)}px;
   position: relative;
@@ -32,9 +37,7 @@ const Title = styled.div`
   font-size: 24px;
   line-height: 28px;
 `
-const Author = styled.a.attrs({
-  href: '#'
-})`
+const Author = styled(Link)`
   text-decoration: none;
   color: ${white};
   border-bottom: 2px solid ${purple};
@@ -78,9 +81,9 @@ const Module = ({
   description,
   isPublished,
   pad,
-  onClick
+  to
 }) => (
-  <Container pad={pad} onClick={onClick}>
+  <Container pad={pad} to={to}>
     <Attributes>
       <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
       <Attribute>v.{version}</Attribute>
@@ -91,7 +94,11 @@ const Module = ({
     <Content pad={pad}>
       <Title>{title}</Title>
       {isPublished ? (
-        authors.map(author => <Author key={author}>{author}</Author>)
+        authors.map(author => (
+          <Author key={author} to='/profile'>
+            {author}
+          </Author>
+        ))
       ) : (
         <Unpublished>not yet published...</Unpublished>
       )}

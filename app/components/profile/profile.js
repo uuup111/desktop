@@ -6,7 +6,6 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow } from '../layout/grid'
-import { useHistory } from 'react-router-dom'
 
 const Spacer = styled.div`
   display: inline-block;
@@ -38,7 +37,6 @@ const Description = styled.div`
 const Profile = ({ p2p, profile }) => {
   const [modules, setModules] = useState()
   const [authors, setAuthors] = useState()
-  const history = useHistory()
 
   useEffect(() => {
     ;(async () => {
@@ -87,7 +85,6 @@ const Profile = ({ p2p, profile }) => {
       {modules && authors && (
         <>
           {modules.map(mod => {
-            const url = `/profile/${encode(mod.rawJSON.url)}`
             return (
               <Module
                 key={mod.rawJSON.url}
@@ -99,7 +96,7 @@ const Profile = ({ p2p, profile }) => {
                 )}
                 description={mod.rawJSON.description}
                 isPublished
-                onClick={() => history.push(url)}
+                to={`/profile/${encode(mod.rawJSON.url)}`}
               />
             )
           })}
