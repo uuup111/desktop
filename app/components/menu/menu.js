@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Logo from './logo.svg'
 import { white, purple, black } from '../../lib/colors'
 import { Row, Button } from '../layout/grid'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   width: 128px;
@@ -50,18 +50,22 @@ const StyledNavLink = styled(NavLink)`
 const isWorkbench = location =>
   /^\/$|^\/(content\/|create)/.test(location.pathname)
 
-const Menu = () => (
-  <Container>
-    <StyledLogo />
-    <StyledRow>
-      <StyledNavLink to='/' isActive={(_, location) => isWorkbench(location)}>
-        <StyledButton>Workspace</StyledButton>
-      </StyledNavLink>
-      <StyledNavLink to='/profile'>
-        <StyledButton>Profile</StyledButton>
-      </StyledNavLink>
-    </StyledRow>
-  </Container>
-)
+const Menu = () => {
+  const history = useHistory()
+
+  return (
+    <Container>
+      <StyledLogo onClick={() => history.push('/')} />
+      <StyledRow>
+        <StyledNavLink to='/' isActive={(_, location) => isWorkbench(location)}>
+          <StyledButton>Workspace</StyledButton>
+        </StyledNavLink>
+        <StyledNavLink to='/profile'>
+          <StyledButton>Profile</StyledButton>
+        </StyledNavLink>
+      </StyledRow>
+    </Container>
+  )
+}
 
 export default Menu
