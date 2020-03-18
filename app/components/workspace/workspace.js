@@ -78,7 +78,7 @@ export default ({ p2p }) => {
           <Footer
             title={
               modules.length
-                ? 'TODO'
+                ? 'You’ve reached the end! ✌️'
                 : "Nothing here yet! Click the 'Add content' button above to get started ☝️ "
             }
           />
