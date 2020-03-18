@@ -159,7 +159,7 @@ const dialogs = [
 
     return (
       <Dialog>
-        <Back page={page} onClick={previous} />
+        <Back page={page} onClick={() => !isLoading && previous()} />
         <Illustration />
         <Heading>Introducing the Vault</Heading>
         <p>
