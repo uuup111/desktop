@@ -118,8 +118,8 @@ const dialogs = [
       </Form>
     </Dialog>
   ),
-  ({ page, next, previous, setName }) => {
-    const [valid, setValid] = useState(false)
+  ({ page, next, previous, name, setName }) => {
+    const [valid, setValid] = useState(name !== '')
     return (
       <Dialog>
         <Back page={page} onClick={previous} />
@@ -145,6 +145,7 @@ const dialogs = [
             required
             onInput={e => setValid(e.target.value !== '')}
             autoFocus
+            defaultValue={name}
           />
           <Button emphasis='top' autoFocus disabled={!valid}>
             Next
