@@ -6,7 +6,7 @@ import { Label, Select, Input, Textarea } from '../forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import AddFile from './add-file.svg'
 import { remote } from 'electron'
-import { purple } from '../../lib/colors'
+import { purple, red } from '../../lib/colors'
 import { basename } from 'path'
 import RemoveFileIcon from './remove-file.svg'
 import { promises as fs } from 'fs'
@@ -133,6 +133,12 @@ const Create = ({ p2p }) => {
           <Textarea name='description' />
           <Button emphasis='top' disabled={isCreating}>
             Add content
+          </Button>
+          <Button
+            color={red}
+            onClick={() => history.push('/')}
+          >
+            Cancel
           </Button>
         </Form>
       </Container>
