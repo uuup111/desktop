@@ -10,8 +10,6 @@ import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
-const { alert } = window
-
 const Container = styled.div`
   margin: 32px 64px;
 `
@@ -62,7 +60,7 @@ const File = styled.div`
 const Unpublished = styled.p`
   color: ${gray};
   font-size: 24px;
-  line-height: 28px;
+  line-height: 38px;
 `
 
 const Content = ({ p2p, profile }) => {
@@ -162,10 +160,11 @@ const Content = ({ p2p, profile }) => {
             <Button
               color={yellow}
               onClick={async () => {
-                alert(
-                  'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
+                await p2p.unpublish(
+                  `dat://${key}+${content.metadata.version}`,
+                  profile.rawJSON.url
                 )
-                // await p2p.publish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
+                setIsPublished(false)
               }}
             >
               Unpublish
@@ -174,11 +173,11 @@ const Content = ({ p2p, profile }) => {
             <Button
               color={green}
               onClick={async () => {
-                alert(
-                  'Not implemented because of https://github.com/p2pcommons/sdk-js/issues/134'
+                await p2p.publish(
+                  `dat://${key}+${content.metadata.version}`,
+                  profile.rawJSON.url
                 )
-                // await p2p.unpublish(`${content.rawJSON.url}+${content.metadata.version}`, profile.rawJSON.url)
-                // history.push('/')
+                setIsPublished(true)
               }}
             >
               Publish
