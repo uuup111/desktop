@@ -47,7 +47,11 @@ const App = () => {
           <Workspace p2p={p2p} />
         </Route>
         <Route path='/content/:key'>
-          <WorkspaceContent p2p={p2p} profile={profile} />
+          <WorkspaceContent
+            p2p={p2p}
+            profile={profile}
+            setProfile={setProfile}
+          />
         </Route>
         <Route path='/create'>
           <Create p2p={p2p} profile={profile} />
@@ -56,7 +60,7 @@ const App = () => {
           <Profile p2p={p2p} profile={profile} />
         </Route>
         <Route path='/profile/:key'>
-          <ProfileContent p2p={p2p} profile={profile} />
+          <ProfileContent p2p={p2p} profile={profile} setProfile={setProfile} />
         </Route>
       </Switch>
     </Container>

@@ -63,7 +63,7 @@ const File = styled.div`
   }
 `
 
-const Content = ({ p2p, profile }) => {
+const Content = ({ p2p, profile, setProfile }) => {
   const { key } = useParams()
   const [content, setContent] = useState()
   const [authors, setAuthors] = useState()
@@ -154,7 +154,11 @@ const Content = ({ p2p, profile }) => {
           <Button
             color={yellow}
             onClick={async () => {
-              await p2p.unpublish(`dat://${key}+${content.metadata.version}`, profile.rawJSON.url)
+              await p2p.unpublish(
+                `dat://${key}+${content.metadata.version}`,
+                profile.rawJSON.url
+              )
+              setProfile(await p2p.get(profile.rawJSON.url))
               history.push(`/content/${key}`)
             }}
           >

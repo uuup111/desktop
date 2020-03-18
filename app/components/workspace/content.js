@@ -63,7 +63,7 @@ const Unpublished = styled.p`
   line-height: 38px;
 `
 
-const Content = ({ p2p, profile }) => {
+const Content = ({ p2p, profile, setProfile }) => {
   const { key } = useParams()
   const [content, setContent] = useState()
   const [authors, setAuthors] = useState()
@@ -96,7 +96,7 @@ const Content = ({ p2p, profile }) => {
       )
       setIsPublished(isPublished)
     })()
-  }, [key])
+  }, [key, profile])
 
   useEffect(() => {
     ;(async () => {
@@ -164,7 +164,7 @@ const Content = ({ p2p, profile }) => {
                   `dat://${key}+${content.metadata.version}`,
                   profile.rawJSON.url
                 )
-                setIsPublished(false)
+                setProfile(await p2p.get(profile.rawJSON.url))
               }}
             >
               Unpublish
@@ -177,7 +177,7 @@ const Content = ({ p2p, profile }) => {
                   `dat://${key}+${content.metadata.version}`,
                   profile.rawJSON.url
                 )
-                setIsPublished(true)
+                setProfile(await p2p.get(profile.rawJSON.url))
               }}
             >
               Publish
