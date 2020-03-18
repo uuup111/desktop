@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Arrow from '../arrow.svg'
+import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 const Container = styled.div`
   text-align: center;
@@ -26,12 +27,24 @@ const scrollToTop = () => {
   document.documentElement.scrollTop = 0
 }
 
-const Footer = ({ title }) => (
-  <Container>
-    <Title>{title}</Title>
-    Cooperatively made with 💜 in Berlin by Liberate Science GmbH
-    <UpArrow onClick={scrollToTop} />
-  </Container>
-)
+const Footer = ({ title }) => {
+  const [upArrowVisible, setUpArrowVisible] = useState(false)
+
+  useScrollPosition(
+    ({ currPos: { y } }) => {
+      const isVisible = y < 48
+      if (isVisible !== upArrowVisible) setUpArrowVisible(isVisible)
+    },
+    [upArrowVisible]
+  )
+
+  return (
+    <Container>
+      <Title>{title}</Title>
+      Cooperatively made with 💜 in Berlin by Liberate Science GmbH
+      {upArrowVisible && <UpArrow onClick={scrollToTop} />}
+    </Container>
+  )
+}
 
 export default Footer
