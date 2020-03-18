@@ -10,8 +10,6 @@ import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
-const { alert } = window
-
 const Spacer = styled.div`
   display: inline-block;
   width: 62px;
