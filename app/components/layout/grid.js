@@ -55,6 +55,7 @@ export const Button = styled(Cell).attrs({
   :active {
     background-color: ${props =>
       props.emphasis === 'top' ? props.color || purple : black};
+    outline: none;
   }
 
   ${Row} > & {
