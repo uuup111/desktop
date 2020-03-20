@@ -107,7 +107,7 @@ const Content = ({ p2p, profile, setProfile }) => {
         {content && (
           <>
             <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
-            <Cell>v. {content.metadata.version}</Cell>
+            <Cell>v{content.metadata.version}</Cell>
           </>
         )}
       </StickyRow>

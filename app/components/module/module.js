@@ -90,7 +90,7 @@ const Module = ({
     >
       <Attributes>
         <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
-        <Attribute>v.{version}</Attribute>
+        <Attribute>v{version}</Attribute>
         <AttributeIcon>
           {isPublished ? <HexPublished /> : <HexUnpublished />}
         </AttributeIcon>
