@@ -33,7 +33,7 @@ const Title = styled.div`
   font-size: 24px;
   line-height: 28px;
 `
-const Author = styled(Link)`
+const PublishedAuthor = styled(Link)`
   text-decoration: none;
   color: ${white};
   border-bottom: 2px solid ${purple};
@@ -46,8 +46,11 @@ const Author = styled(Link)`
     cursor: pointer;
   }
 `
-const Unpublished = styled.p`
+const UnpublishedAuthor = styled.span`
   color: ${gray};
+  margin: 16px 0;
+  display: inline-block;
+  margin-bottom: 2px;
 `
 const Description = styled.div`
   overflow: hidden;
@@ -97,14 +100,14 @@ const Module = ({
       </Attributes>
       <Content pad={pad}>
         <Title>{title}</Title>
-        {isPublished ? (
-          authors.map(author => (
-            <Author key={author} to='/profile'>
+        {authors.map(author =>
+          isPublished ? (
+            <PublishedAuthor key={author} to='/profile'>
               {author}
-            </Author>
-          ))
-        ) : (
-          <Unpublished>not yet published...</Unpublished>
+            </PublishedAuthor>
+          ) : (
+            <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
+          )
         )}
         <Description>{description}</Description>
       </Content>

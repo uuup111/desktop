@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { purple, white, green, yellow, red, gray } from '../../lib/colors'
 import { encode } from 'dat-encoding'
 import { Title, TopRow, Button, Cell } from '../layout/grid'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
@@ -21,9 +21,7 @@ const ModuleTitle = styled.div`
   line-height: 37px;
   margin: 32px 0;
 `
-const Author = styled.a.attrs({
-  href: '#'
-})`
+const PublishedAuthor = styled(Link)`
   text-decoration: none;
   color: ${white};
   border-bottom: 2px solid ${purple};
@@ -35,6 +33,12 @@ const Author = styled.a.attrs({
     background-color: ${purple};
     cursor: pointer;
   }
+`
+const UnpublishedAuthor = styled.span`
+  color: ${gray};
+  display: inline-block;
+  font-size: 24px;
+  margin-bottom: 2px;
 `
 const Description = styled.div`
   margin-top: 32px;
@@ -56,11 +60,6 @@ const File = styled.div`
   :active {
     background-color: inherit;
   }
-`
-const Unpublished = styled.p`
-  color: ${gray};
-  font-size: 24px;
-  line-height: 38px;
 `
 
 const Content = ({ p2p, profile, setProfile }) => {
@@ -112,7 +111,7 @@ const Content = ({ p2p, profile, setProfile }) => {
         {content && (
           <>
             <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
-            <Cell>{content.metadata.version}</Cell>
+            <Cell>v{content.metadata.version}</Cell>
           </>
         )}
       </TopRow>
@@ -120,10 +119,14 @@ const Content = ({ p2p, profile, setProfile }) => {
         <Container>
           <BackArrow onClick={() => history.push('/')} />
           <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
-          {isPublished ? (
-            authors.map(author => <Author key={author}>{author}</Author>)
-          ) : (
-            <Unpublished>not yet published...</Unpublished>
+          {authors.map(author =>
+            isPublished ? (
+              <PublishedAuthor key={author} to='/profile'>
+                {author}
+              </PublishedAuthor>
+            ) : (
+              <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
+            )
           )}
           <Description>{content.rawJSON.description}</Description>
           <Button onClick={() => remote.shell.openItem(dir)}>
