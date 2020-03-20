@@ -50,7 +50,7 @@ const UnpublishedAuthor = styled.span`
   color: ${gray};
   margin: 16px 0;
   display: inline-block;
-  margin-bottom: 2px;
+  padding-bottom: 2px;
 `
 const Description = styled.div`
   overflow: hidden;
