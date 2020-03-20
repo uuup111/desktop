@@ -40,7 +40,7 @@ const Profile = ({ p2p, profile }) => {
 
   useEffect(() => {
     ;(async () => {
-      const [profiles, contents] = await Promise.all([
+      const [profiles, modules] = await Promise.all([
         p2p.listProfiles(),
         Promise.all(
           profile.rawJSON.contents.map(url => {
@@ -50,10 +50,6 @@ const Profile = ({ p2p, profile }) => {
           })
         )
       ])
-      const modules = contents.map(c => ({
-        rawJSON: c.module,
-        metadata: c.metadata
-      }))
       setModules(modules)
 
       const authors = {}
