@@ -92,6 +92,7 @@ const Profile = ({ p2p, profile }) => {
                 )}
                 description={mod.rawJSON.description}
                 isPublished
+                url={mod.rawJSON.url}
                 to={`/profile/${encode(mod.rawJSON.url)}`}
               />
             )

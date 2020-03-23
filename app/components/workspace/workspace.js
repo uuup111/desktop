@@ -69,6 +69,7 @@ export default ({ p2p }) => {
                 )}
                 description={mod.rawJSON.description}
                 isPublished={mod.isPublished}
+                url={mod.rawJSON.url}
                 pad='small'
                 to={`/content/${encode(mod.rawJSON.url)}`}
               />

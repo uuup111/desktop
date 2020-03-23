@@ -53,7 +53,7 @@ const App = () => {
             setProfile={setProfile}
           />
         </Route>
-        <Route path='/create'>
+        <Route path='/create/:parentUrl?'>
           <Create p2p={p2p} profile={profile} />
         </Route>
         <Route path='/profile' exact>

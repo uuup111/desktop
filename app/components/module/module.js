@@ -1,18 +1,47 @@
 import React from 'react'
 import styled from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
-import Arrow from '../arrow.svg'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import HexPublished from './published.svg'
 import HexUnpublished from './unpublished.svg'
 import { useHistory, Link } from 'react-router-dom'
+import Plus from './plus.svg'
+import { encode } from 'dat-encoding'
 
+const AddContentWithParent = styled(Plus)`
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  border-left: 2px solid ${purple};
+  padding: 123px 41px;
+
+  :hover {
+    background-color: ${purple};
+    path {
+      fill: ${white};
+    }
+  }
+
+  :active {
+    background-color: inherit;
+    path {
+      fill: ${white};
+    }
+  }
+`
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
   padding: 32px ${props => (props.pad === 'small' ? 32 : 64)}px;
   position: relative;
   height: 296px;
   box-sizing: border-box;
+
+  :hover {
+    ${AddContentWithParent} {
+      display: block;
+    }
+  }
 `
 const Attributes = styled.div`
   display: inline-block;
@@ -65,12 +94,6 @@ const Description = styled.div`
     background: linear-gradient(transparent, ${black});
   }
 `
-const RightArrow = styled(Arrow)`
-  transform: rotate(90deg);
-  position: absolute;
-  right: 32px;
-  top: calc(296px / 2 - 32px / 2);
-`
 
 const Module = ({
   subtype,
@@ -80,6 +103,7 @@ const Module = ({
   description,
   isPublished,
   pad,
+  url,
   to
 }) => {
   const history = useHistory()
@@ -111,7 +135,12 @@ const Module = ({
         )}
         <Description>{description}</Description>
       </Content>
-      <RightArrow />
+      <AddContentWithParent
+        onClick={e => {
+          e.stopPropagation()
+          history.push(`/create/${encode(url)}+${version}`)
+        }}
+      />
     </Container>
   )
 }

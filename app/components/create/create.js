@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { TopRow, Title, Button } from '../layout/grid'
 import Arrow from '../arrow.svg'
@@ -11,7 +11,7 @@ import { basename } from 'path'
 import RemoveFileIcon from './remove-file.svg'
 import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 const Container = styled.div`
   margin: 32px 64px;
@@ -40,11 +40,26 @@ const RemoveFile = styled(RemoveFileIcon)`
   right: 16px;
   top: 7px;
 `
+const Parent = styled.p`
+  margin-top: 0;
+  margin-bottom: 33px;
+`
 
 const Create = ({ p2p, profile }) => {
   const [files, setFiles] = useState([])
   const [isCreating, setIsCreating] = useState(false)
+  const [parent, setParent] = useState()
   const history = useHistory()
+  const { parentUrl } = useParams()
+
+  if (parentUrl) {
+    useEffect(() => {
+      ;(async () => {
+        const [key, version] = parentUrl.split('+')
+        setParent(await p2p.clone(key, version))
+      })()
+    }, [])
+  }
 
   return (
     <>
@@ -70,7 +85,8 @@ const Create = ({ p2p, profile }) => {
               subtype,
               title,
               description,
-              authors: [profile.rawJSON.url]
+              authors: [profile.rawJSON.url],
+              ...(parentUrl && { parents: [`dat://${parentUrl}`] })
             })
             const dir = `${remote.app.getPath('home')}/.p2pcommons/${encode(
               url
@@ -82,6 +98,14 @@ const Create = ({ p2p, profile }) => {
             history.push('/')
           }}
         >
+          {parent && (
+            <>
+              <Label htmlFor='parent'>Parent</Label>
+              <Parent>
+                {parent.rawJSON.title} (v{parent.metadata.version})
+              </Parent>
+            </>
+          )}
           <Label htmlFor='subtype'>Content type</Label>
           <Select large name='subtype'>
             {Object.entries(subtypes).map(([id, text]) => (
