@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
@@ -95,18 +95,39 @@ const Description = styled.div`
   }
 `
 
-const Module = ({
-  subtype,
-  version,
-  title,
-  authors,
-  description,
-  isPublished,
-  pad,
-  url,
-  to
-}) => {
+const Module = ({ p2p, mod, pad, to }) => {
   const history = useHistory()
+  const [isPublished, setIsPublished] = useState(false)
+  const [authors, setAuthors] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      const profiles = await p2p.listProfiles()
+
+      setIsPublished(
+        Boolean(
+          profiles.find(profile =>
+            Boolean(
+              profile.rawJSON.contents.find(contentUrl => {
+                const [key, version] = contentUrl.split('+')
+                return (
+                  encode(mod.rawJSON.url) === encode(key) &&
+                  mod.metadata.version === Number(version)
+                )
+              })
+            )
+          )
+        )
+      )
+
+      const authors = []
+      for (const url of mod.rawJSON.authors) {
+        const [key] = url.split('+')
+        authors.push(profiles.find(p => encode(p.rawJSON.url) === encode(key)))
+      }
+      setAuthors(authors)
+    })()
+  }, [mod])
 
   return (
     <Container
@@ -116,29 +137,33 @@ const Module = ({
       }}
     >
       <Attributes>
-        <Attribute>{subtypes[subtype] || 'Unknown'}</Attribute>
-        <Attribute>v{version}</Attribute>
+        <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
+        <Attribute>v{mod.metadata.version}</Attribute>
         <AttributeIcon>
           {isPublished ? <HexPublished /> : <HexUnpublished />}
         </AttributeIcon>
       </Attributes>
       <Content pad={pad}>
-        <Title>{title}</Title>
+        <Title>{mod.rawJSON.title}</Title>
         {authors.map(author =>
           isPublished ? (
-            <PublishedAuthor key={author} to='/profile'>
-              {author}
+            <PublishedAuthor key={author.rawJSON.url} to='/profile'>
+              {author.rawJSON.title}
             </PublishedAuthor>
           ) : (
-            <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
+            <UnpublishedAuthor key={author.rawJSON.url}>
+              {author.rawJSON.title}
+            </UnpublishedAuthor>
           )
         )}
-        <Description>{description}</Description>
+        <Description>{mod.rawJSON.description}</Description>
       </Content>
       <AddContentWithParent
         onClick={e => {
           e.stopPropagation()
-          history.push(`/create/${encode(url)}+${version}`)
+          history.push(
+            `/create/${encode(mod.rawJSON.url)}+${mod.metadata.version}`
+          )
         }}
       />
     </Container>

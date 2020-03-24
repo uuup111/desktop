@@ -36,32 +36,17 @@ const Description = styled.div`
 
 const Profile = ({ p2p, profile }) => {
   const [modules, setModules] = useState()
-  const [authors, setAuthors] = useState()
 
   useEffect(() => {
     ;(async () => {
-      const [profiles, modules] = await Promise.all([
-        p2p.listProfiles(),
-        Promise.all(
-          profile.rawJSON.contents.map(url => {
-            const [key, version] = url.split('+')
-            const download = false
-            return p2p.clone(key, version, download)
-          })
-        )
-      ])
+      const modules = await Promise.all(
+        profile.rawJSON.contents.map(url => {
+          const [key, version] = url.split('+')
+          const download = false
+          return p2p.clone(key, version, download)
+        })
+      )
       setModules(modules)
-
-      const authors = {}
-      for (const mod of modules) {
-        for (const url of mod.rawJSON.authors) {
-          const [key] = url.split('+')
-          authors[url] = profiles.find(
-            p => encode(p.rawJSON.url) === encode(key)
-          )
-        }
-      }
-      setAuthors(authors)
     })()
   }, [])
 
@@ -78,21 +63,14 @@ const Profile = ({ p2p, profile }) => {
         <Spacer />
         <Title>Content</Title>
       </StickyRow>
-      {modules && authors && (
+      {modules && (
         <>
           {modules.map(mod => {
             return (
               <Module
                 key={mod.rawJSON.url}
-                subtype={mod.rawJSON.subtype}
-                version={mod.metadata.version}
-                title={mod.rawJSON.title}
-                authors={mod.rawJSON.authors.map(
-                  url => authors[url].rawJSON.title
-                )}
-                description={mod.rawJSON.description}
-                isPublished
-                url={mod.rawJSON.url}
+                p2p={p2p}
+                mod={mod}
                 to={`/profile/${encode(mod.rawJSON.url)}`}
               />
             )
