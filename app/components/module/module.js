@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
+import styled, { css } from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import HexPublished from './published.svg'
@@ -7,41 +7,68 @@ import HexUnpublished from './unpublished.svg'
 import { useHistory, Link } from 'react-router-dom'
 import Plus from './plus.svg'
 import { encode } from 'dat-encoding'
+import RightArrow from './right-arrow.svg'
 
-const AddContentWithParent = styled(Plus)`
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  border-left: 2px solid ${purple};
-  padding: 123px 41px;
-
-  :hover {
-    background-color: ${purple};
-    path {
-      fill: ${white};
-    }
-  }
-
-  :active {
-    background-color: inherit;
-    path {
-      fill: ${white};
-    }
-  }
-`
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
   padding: 32px ${props => (props.pad === 'small' ? 32 : 64)}px;
   position: relative;
   height: 296px;
   box-sizing: border-box;
+`
+const actionStyle = css`
+  position: absolute;
+  display: none;
+  border-color: ${props => props.disabled ? gray : purple};
+  border-style: solid;
+  border-width: 0;
 
-  :hover {
-    ${AddContentWithParent} {
-      display: block;
-    }
+  ${props => props.disabled && `
+    background-color: ${gray};
+  `}
+
+  ${Container}:hover & {
+    display: block;
   }
+
+  ${props => !props.disabled && `
+    :hover {
+      background-color: ${purple};
+      path {
+        fill: ${white};
+      }
+    }
+
+    :active {
+      background-color: inherit;
+      path {
+        fill: ${white};
+      }
+    }
+  `}
+`
+const AddContentWithParent = styled(Plus)`
+  ${actionStyle}
+  right: 0;
+  bottom: 0;
+  border-left-width: 2px
+  border-top-width: 2px;
+  padding: 72px 41px;
+`
+const GoToChild = styled(RightArrow)`
+  ${actionStyle}
+  top: 0;
+  right: 0;
+  border-left-width: 2px;
+  padding: 33px 15px;
+`
+const GoToParent = styled(RightArrow)`
+  ${actionStyle}
+  top: 0;
+  right: 66px;
+  border-right-width: 2px;
+  padding: 33px 15px;
+  transform: rotate(180deg);
 `
 const Attributes = styled.div`
   display: inline-block;
@@ -96,6 +123,7 @@ const Description = styled.div`
 `
 
 const Module = ({
+  p2p,
   subtype,
   version,
   title,
@@ -104,7 +132,10 @@ const Module = ({
   isPublished,
   pad,
   url,
-  to
+  parent,
+  child,
+  to,
+  update
 }) => {
   const history = useHistory()
 
@@ -135,6 +166,45 @@ const Module = ({
         )}
         <Description>{description}</Description>
       </Content>
+      <GoToParent disabled={!parent} onClick={async e => {
+        e.stopPropagation()
+        if (!parent) return
+        const mod = await p2p.get(parent)
+        update({
+          p2p,
+          subtype: mod.rawJSON.subtype,
+          version: mod.metadata.version,
+          title: mod.rawJSON.title,
+          authors,
+          description: mod.rawJSON.description,
+          isPublished: true,
+          pad,
+          url: mod.rawJSON.url,
+          parent: mod.rawJSON.parents[0],
+          to,
+          child: url,
+          update
+        })
+      }} />
+      <GoToChild disabled={!child} onClick={async e => {
+        e.stopPropagation()
+        if (!child) return
+        const mod = await p2p.get(child)
+        update({
+          p2p,
+          subtype: mod.rawJSON.subtype,
+          version: mod.metadata.version,
+          title: mod.rawJSON.title,
+          authors,
+          description: mod.rawJSON.description,
+          isPublished: true,
+          pad,
+          url: mod.rawJSON.url,
+          parent: mod.rawJSON.parents[0],
+          to,
+          update
+        })
+      }}/>
       <AddContentWithParent
         onClick={e => {
           e.stopPropagation()
@@ -145,4 +215,9 @@ const Module = ({
   )
 }
 
-export default Module
+const ModuleWithParentNavigation = props => {
+  const [mod, setMod] = useState(props)
+  return <Module {...mod} update={setMod} />
+}
+
+export default ModuleWithParentNavigation

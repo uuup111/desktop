@@ -84,6 +84,7 @@ const Profile = ({ p2p, profile }) => {
             return (
               <Module
                 key={mod.rawJSON.url}
+                p2p={p2p}
                 subtype={mod.rawJSON.subtype}
                 version={mod.metadata.version}
                 title={mod.rawJSON.title}
@@ -93,6 +94,7 @@ const Profile = ({ p2p, profile }) => {
                 description={mod.rawJSON.description}
                 isPublished
                 url={mod.rawJSON.url}
+                parent={mod.rawJSON.parents[0]}
                 to={`/profile/${encode(mod.rawJSON.url)}`}
               />
             )

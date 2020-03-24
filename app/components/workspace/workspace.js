@@ -61,6 +61,7 @@ export default ({ p2p }) => {
             return (
               <Module
                 key={mod.rawJSON.url}
+                p2p={p2p}
                 subtype={mod.rawJSON.subtype}
                 version={mod.metadata.version}
                 title={mod.rawJSON.title}
@@ -71,6 +72,7 @@ export default ({ p2p }) => {
                 isPublished={mod.isPublished}
                 url={mod.rawJSON.url}
                 pad='small'
+                parent={mod.rawJSON.parents[0]}
                 to={`/content/${encode(mod.rawJSON.url)}`}
               />
             )
