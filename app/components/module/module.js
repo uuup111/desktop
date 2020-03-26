@@ -138,7 +138,6 @@ const Module = ({ p2p, mod, pad, to }) => {
     >
       <Attributes>
         <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
-        <Attribute>v{mod.metadata.version}</Attribute>
         <AttributeIcon>
           {isPublished ? <HexPublished /> : <HexUnpublished />}
         </AttributeIcon>

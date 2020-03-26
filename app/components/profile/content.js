@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { purple } from '../../lib/colors'
-import { Title, StickyRow, TopRow, Cell } from '../layout/grid'
+import { Title, StickyRow, TopRow } from '../layout/grid'
 import { useParams } from 'react-router-dom'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import Content from '../content/content'
@@ -34,7 +34,6 @@ const ProfileContent = ({ p2p, profile, setProfile }) => {
         {content && (
           <>
             <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
-            <Cell>v{content.metadata.version}</Cell>
           </>
         )}
       </StickyRow>

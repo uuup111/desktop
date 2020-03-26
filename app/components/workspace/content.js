@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Title, TopRow, Cell } from '../layout/grid'
+import { Title, TopRow } from '../layout/grid'
 import { useParams } from 'react-router-dom'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import Content from '../content/content'
@@ -20,7 +20,6 @@ const WorkspaceContent = ({ p2p, profile, setProfile }) => {
         {content && (
           <>
             <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
-            <Cell>v{content.metadata.version}</Cell>
           </>
         )}
       </TopRow>

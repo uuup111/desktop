@@ -101,9 +101,7 @@ const Create = ({ p2p, profile }) => {
           {parent && (
             <>
               <Label htmlFor='parent'>Parent</Label>
-              <Parent>
-                {parent.rawJSON.title} (v{parent.metadata.version})
-              </Parent>
+              <Parent>{parent.rawJSON.title}</Parent>
             </>
           )}
           <Label htmlFor='subtype'>Content type</Label>
