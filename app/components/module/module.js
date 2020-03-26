@@ -19,11 +19,13 @@ const Container = styled.div`
 const actionStyle = css`
   position: absolute;
   display: none;
-  border-color: ${props => props.disabled ? gray : purple};
+  border-color: ${props => (props.disabled ? gray : purple)};
   border-style: solid;
   border-width: 0;
 
-  ${props => props.disabled && `
+  ${props =>
+    props.disabled &&
+    `
     background-color: ${gray};
   `}
 
@@ -31,7 +33,9 @@ const actionStyle = css`
     display: block;
   }
 
-  ${props => !props.disabled && `
+  ${props =>
+    !props.disabled &&
+    `
     :hover {
       background-color: ${purple};
       path {
@@ -133,7 +137,7 @@ const Module = ({
   pad,
   url,
   parent,
-  child,
+  children = [],
   to,
   update
 }) => {
@@ -166,45 +170,52 @@ const Module = ({
         )}
         <Description>{description}</Description>
       </Content>
-      <GoToParent disabled={!parent} onClick={async e => {
-        e.stopPropagation()
-        if (!parent) return
-        const mod = await p2p.get(parent)
-        update({
-          p2p,
-          subtype: mod.rawJSON.subtype,
-          version: mod.metadata.version,
-          title: mod.rawJSON.title,
-          authors,
-          description: mod.rawJSON.description,
-          isPublished: true,
-          pad,
-          url: mod.rawJSON.url,
-          parent: mod.rawJSON.parents[0],
-          to,
-          child: url,
-          update
-        })
-      }} />
-      <GoToChild disabled={!child} onClick={async e => {
-        e.stopPropagation()
-        if (!child) return
-        const mod = await p2p.get(child)
-        update({
-          p2p,
-          subtype: mod.rawJSON.subtype,
-          version: mod.metadata.version,
-          title: mod.rawJSON.title,
-          authors,
-          description: mod.rawJSON.description,
-          isPublished: true,
-          pad,
-          url: mod.rawJSON.url,
-          parent: mod.rawJSON.parents[0],
-          to,
-          update
-        })
-      }}/>
+      <GoToParent
+        disabled={!parent}
+        onClick={async e => {
+          e.stopPropagation()
+          if (!parent) return
+          const mod = await p2p.get(parent)
+          update({
+            p2p,
+            subtype: mod.rawJSON.subtype,
+            version: mod.metadata.version,
+            title: mod.rawJSON.title,
+            authors,
+            description: mod.rawJSON.description,
+            isPublished: true,
+            pad,
+            url: mod.rawJSON.url,
+            parent: mod.rawJSON.parents[0],
+            to,
+            children: [url, ...children],
+            update
+          })
+        }}
+      />
+      <GoToChild
+        disabled={!children.length}
+        onClick={async e => {
+          e.stopPropagation()
+          if (!children.length) return
+          const mod = await p2p.get(children[0])
+          update({
+            p2p,
+            subtype: mod.rawJSON.subtype,
+            version: mod.metadata.version,
+            title: mod.rawJSON.title,
+            authors,
+            description: mod.rawJSON.description,
+            isPublished: true,
+            pad,
+            url: mod.rawJSON.url,
+            parent: mod.rawJSON.parents[0],
+            children: children.slice(1),
+            to,
+            update
+          })
+        }}
+      />
       <AddContentWithParent
         onClick={e => {
           e.stopPropagation()
