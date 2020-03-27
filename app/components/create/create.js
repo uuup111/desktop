@@ -44,6 +44,9 @@ const Parent = styled.p`
   margin-top: 0;
   margin-bottom: 33px;
 `
+const Info = styled.p`
+  margin-bottom: 32px;
+`
 
 const Create = ({ p2p, profile }) => {
   const [files, setFiles] = useState([])
@@ -113,6 +116,11 @@ const Create = ({ p2p, profile }) => {
             ))}
           </Select>
           <Label htmlFor='files'>Upload files</Label>
+          <Info>
+            These files are copied to Hypergraph. If you want to work on them
+            further, you can choose to work using Hypergraph’s copies or
+            reimport the files into Hypergraph when you’re done.
+          </Info>
           <Button
             onClick={async e => {
               e.preventDefault()
