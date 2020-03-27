@@ -8,6 +8,7 @@ import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
+import { Label } from '../forms'
 
 const Container = styled.div`
   margin: 32px 64px;
@@ -182,6 +183,7 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
             )
           )}
           <Description>{content.rawJSON.description}</Description>
+          <Label>Files</Label>
           <Files>
             {files &&
               files.map(path => (
