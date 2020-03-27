@@ -65,6 +65,10 @@ const StyledButton = styled(Cell).attrs({
     outline: none;
   }
 
+  :focus {
+    outline: none;
+  }
+
   ${Row} > & {
     border-left-width: 0px;
     border-top-width: 0px;
