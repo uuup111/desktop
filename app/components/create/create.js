@@ -64,6 +64,10 @@ const Create = ({ p2p, profile }) => {
     }, [])
   }
 
+  useEffect(() => {
+    document.documentElement.scrollTop = 0
+  }, [])
+
   return (
     <>
       <TopRow>
