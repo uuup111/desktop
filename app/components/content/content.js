@@ -77,6 +77,37 @@ const File = styled.div`
   }
 `
 
+const modDirectory = mod =>
+  `${remote.app.getPath('home')}/.p2pcommons/${encode(mod.rawJSON.url)}`
+
+export const OpenFolder = ({ mod }) => (
+  <Button onClick={() => remote.shell.openItem(modDirectory(mod))}>
+    Open folder
+  </Button>
+)
+
+export const ExportZip = ({ mod }) => (
+  <Button
+    onClick={async () => {
+      const zip = new AdmZip()
+      const dir = modDirectory(mod)
+      const files = await fs.readdir(dir)
+      for (const path of files) {
+        zip.addLocalFile(`${dir}/${path}`)
+      }
+      const { filePath } = await remote.dialog.showSaveDialog(
+        remote.getCurrentWindow(),
+        {
+          defaultPath: 'module.zip'
+        }
+      )
+      if (filePath) zip.writeZip(filePath)
+    }}
+  >
+    Export .zip
+  </Button>
+)
+
 const Content = ({ p2p, content, profile, setProfile, backTo }) => {
   const [authors, setAuthors] = useState()
   const [parents, setParents] = useState()
@@ -85,9 +116,7 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const history = useHistory()
 
-  const dir = `${remote.app.getPath('home')}/.p2pcommons/${encode(
-    content.rawJSON.url
-  )}`
+  const dir = modDirectory(content)
 
   useEffect(() => {
     ;(async () => {
@@ -153,26 +182,6 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
             )
           )}
           <Description>{content.rawJSON.description}</Description>
-          <Button onClick={() => remote.shell.openItem(dir)}>
-            Open folder
-          </Button>
-          <Button
-            onClick={async () => {
-              const zip = new AdmZip()
-              for (const path of files) {
-                zip.addLocalFile(`${dir}/${path}`)
-              }
-              const { filePath } = await remote.dialog.showSaveDialog(
-                remote.getCurrentWindow(),
-                {
-                  defaultPath: 'module.zip'
-                }
-              )
-              if (filePath) zip.writeZip(filePath)
-            }}
-          >
-            Export .zip
-          </Button>
           <Files>
             {files &&
               files.map(path => (

@@ -4,7 +4,7 @@ import { purple } from '../../lib/colors'
 import { Title, StickyRow, TopRow } from '../layout/grid'
 import { useParams } from 'react-router-dom'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
-import Content from '../content/content'
+import Content, { OpenFolder, ExportZip } from '../content/content'
 
 const Spacer = styled.div`
   display: inline-block;
@@ -34,6 +34,8 @@ const ProfileContent = ({ p2p, profile, setProfile }) => {
         {content && (
           <>
             <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
+            <OpenFolder mod={content} />
+            <ExportZip mod={content} />
           </>
         )}
       </StickyRow>
