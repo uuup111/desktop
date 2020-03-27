@@ -183,18 +183,22 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
             )
           )}
           <Description>{content.rawJSON.description}</Description>
-          <Label>Files</Label>
-          <Files>
-            {files &&
-              files.map(path => (
-                <File
-                  key={path}
-                  onClick={() => remote.shell.openItem(`${dir}/${path}`)}
-                >
-                  {path}
-                </File>
-              ))}
-          </Files>
+          {files && files.length > 0 && (
+            <>
+              <Label>Files</Label>
+              <Files>
+                {files &&
+                  files.map(path => (
+                    <File
+                      key={path}
+                      onClick={() => remote.shell.openItem(`${dir}/${path}`)}
+                    >
+                      {path}
+                    </File>
+                  ))}
+              </Files>
+            </>
+          )}
           {isPublished ? (
             <Button
               color={yellow}
