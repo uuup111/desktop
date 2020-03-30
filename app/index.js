@@ -9,6 +9,20 @@ import WorkspaceContent from './components/workspace/content'
 import Create from './components/create/create'
 import P2P from '@p2pcommons/sdk-js'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
+import { remote } from 'electron'
+
+const showError = message =>
+  window.alert(
+    'An unknown error has happened.\n\n' +
+      'Please send a screenshot of this window alongside a description of what ' +
+      'you were doing to feedback@libscie.org.\n\n' +
+      message
+  )
+
+if (remote.app.isPackaged) {
+  window.onerror = (_, __, ___, ____, err) => showError(err.stack)
+  window.onunhandledrejection = ev => showError(ev.reason.stack)
+}
 
 const p2p = new P2P()
 
