@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { TopRow, Title, Button } from '../layout/grid'
 import Arrow from '../arrow.svg'
-import { Label, Select, Input, Textarea } from '../forms'
+import { Label, Select, Textarea } from '../forms/forms'
+import TitleInput from '../forms/title-input'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import AddFile from './add-file.svg'
 import { remote } from 'electron'
@@ -52,6 +53,7 @@ const Create = ({ p2p, profile }) => {
   const [files, setFiles] = useState([])
   const [isCreating, setIsCreating] = useState(false)
   const [parent, setParent] = useState()
+  const [isValid, setIsValid] = useState(false)
   const history = useHistory()
   const { parentUrl } = useParams()
 
@@ -163,10 +165,10 @@ const Create = ({ p2p, profile }) => {
             ))}
           </Select>
           <Label htmlFor='title'>Title</Label>
-          <Input type='text' name='title' required />
+          <TitleInput name='title' onIsValid={setIsValid} />
           <Label htmlFor='description'>Description</Label>
           <Textarea name='description' />
-          <Button emphasis='top' isLoading={isCreating}>
+          <Button emphasis='top' isLoading={isCreating} disabled={!isValid}>
             Add content
           </Button>
           <Button color={red} onClick={() => history.push('/')}>

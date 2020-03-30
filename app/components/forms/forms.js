@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { purple, black, white } from '../lib/colors'
+import { purple, black, white } from '../../lib/colors'
 
 export const Label = styled.label`
   font-weight: bold;
@@ -10,7 +10,7 @@ export const Input = styled.input`
   border: 2px solid ${purple};
   background-color: ${black};
   font-size: 32px;
-  padding: 7px 17px;
+  padding: 11px 17px;
   margin-bottom: 16px;
   color: ${white};
   display: block;

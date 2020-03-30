@@ -8,7 +8,7 @@ import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
-import { Label } from '../forms'
+import { Label } from '../forms/forms'
 
 const Container = styled.div`
   margin: 32px 64px;

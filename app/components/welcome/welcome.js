@@ -4,7 +4,8 @@ import { purple, black, green } from '../../lib/colors'
 import { rgba } from 'polished'
 import { Button } from '../layout/grid'
 import Arrow from '../arrow.svg'
-import { Label, Input } from '../forms'
+import { Label } from '../forms/forms'
+import TitleInput from '../forms/title-input'
 
 const Overlay = styled.div`
   position: absolute;
@@ -29,7 +30,7 @@ const Dialog = styled.div`
   box-sizing: border-box;
 `
 const Illustration = styled.div`
-  margin-top: 32px;
+  margin-top: 22px;
   margin-bottom: 32px;
   background-color: rgba(255, 255, 255, 0.1);
   width: 100%;
@@ -120,7 +121,7 @@ const dialogs = [
     </Dialog>
   ),
   ({ page, next, previous, name, setName }) => {
-    const [valid, setValid] = useState(name !== '')
+    const [isValid, setIsValid] = useState(Boolean(name))
     return (
       <Dialog>
         <Back page={page} onClick={previous} />
@@ -134,21 +135,18 @@ const dialogs = [
         <Form
           onSubmit={e => {
             e.preventDefault()
-            setName(e.target.name.value)
+            setName(e.target.title.value)
             next()
           }}
         >
           <Label htmlFor='name'>Full Name (required)</Label>
-          <Input
-            name='name'
-            type='text'
+          <TitleInput
             placeholder='Name...'
-            required
-            onInput={e => setValid(e.target.value !== '')}
+            onIsValid={setIsValid}
             autoFocus
             defaultValue={name}
           />
-          <Button emphasis='top' autoFocus disabled={!valid}>
+          <Button emphasis='top' autoFocus disabled={!isValid}>
             Next
           </Button>
         </Form>
