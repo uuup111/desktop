@@ -48,6 +48,7 @@ const Form = styled.form`
   position: absolute;
   bottom: 32px;
   left: 32px;
+  right: 32px;
 `
 
 const dialogs = [
