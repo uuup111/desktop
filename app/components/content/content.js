@@ -236,7 +236,9 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
             isLoading={isDeleting}
             onClick={async () => {
               setIsDeleting(true)
+              await p2p.unpublish(content.rawJSON.url, profile.rawJSON.url)
               await p2p.delete(content.rawJSON.url)
+              setProfile(await p2p.get(profile.rawJSON.url))
               history.push('/')
             }}
           >
