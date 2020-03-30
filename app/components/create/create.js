@@ -109,7 +109,7 @@ const Create = ({ p2p, profile }) => {
         >
           {parent && (
             <>
-              <Label htmlFor='parent'>Parent</Label>
+              <Label htmlFor='parent'>Follows from</Label>
               <Parent>{parent.rawJSON.title}</Parent>
             </>
           )}
