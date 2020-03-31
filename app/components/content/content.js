@@ -9,15 +9,14 @@ import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
-import unit from '../../lib/unit'
 
 const Container = styled.div`
-  margin: ${unit(2)} ${unit(4)};
+  margin: 2rem 4rem;
 `
 const BackArrow = styled(Arrow)`
   transform: rotate(270deg);
   display: block;
-  margin-bottom: ${unit(2)};
+  margin-bottom: 2rem;
 `
 const Parent = styled(Link)`
   text-decoration: none;
@@ -25,7 +24,7 @@ const Parent = styled(Link)`
   border-bottom: 2px solid ${purple};
   display: inline-block;
   -webkit-app-region: no-drag;
-  margin-bottom: ${unit(2)};
+  margin-bottom: 2rem;
 
   :hover {
     background-color: ${purple};
@@ -33,9 +32,9 @@ const Parent = styled(Link)`
   }
 `
 const ModuleTitle = styled.div`
-  font-size: ${unit(2)};
+  font-size: 2rem;
   line-height: 1.25;
-  margin-bottom: ${unit(2)};
+  margin-bottom: 2rem;
 `
 const PublishedAuthor = styled(Link)`
   text-decoration: none;
@@ -43,7 +42,7 @@ const PublishedAuthor = styled(Link)`
   border-bottom: 2px solid ${purple};
   display: inline-block;
   -webkit-app-region: no-drag;
-  font-size: ${unit(1.5)};
+  font-size: 1.5rem;
 
   :hover {
     background-color: ${purple};
@@ -53,23 +52,23 @@ const PublishedAuthor = styled(Link)`
 const UnpublishedAuthor = styled.span`
   color: ${gray};
   display: inline-block;
-  font-size: ${unit(1.5)};
+  font-size: 1.5rem;
   margin-bottom: 2px;
 `
 const Description = styled.div`
-  margin-top: ${unit(2)};
-  margin-bottom: ${unit(4)};
+  margin-top: 2rem;
+  margin-bottom: 4rem;
 `
 const Files = styled.div`
-  margin-bottom: ${unit(4)};
+  margin-bottom: 4rem;
 `
 const File = styled.div`
   width: 100%;
   border: 2px solid ${green};
   line-height: 2;
-  padding-left: ${unit(1)};
-  margin-top: ${unit(1)};
-  max-width: ${unit(40)};
+  padding-left: 1rem;
+  margin-top: 1rem;
+  max-width: 40rem;
 
   :hover {
     background-color: ${green};

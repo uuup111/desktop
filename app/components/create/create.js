@@ -13,42 +13,41 @@ import RemoveFileIcon from './remove-file.svg'
 import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
 import { useHistory, useParams } from 'react-router-dom'
-import unit from '../../lib/unit'
 
 const Container = styled.div`
-  margin: ${unit(2)} ${unit(4)};
-  max-width: ${unit(40)};
+  margin: 2rem 4rem;
+  max-width: 40rem;
 `
 const BackArrow = styled(Arrow)`
   transform: rotate(270deg);
 `
 const Form = styled.form`
-  margin-top: ${unit(2)};
+  margin-top: 2rem;
 `
 const Files = styled.div`
-  margin-bottom: ${unit(2)};
+  margin-bottom: 2rem;
 `
 const File = styled.div`
   width: 100%;
   border: 2px solid ${purple};
   line-height: 2;
-  padding-left: ${unit()};
-  margin-top: ${unit()};
+  padding-left: 1rem;
+  margin-top: 1em;
   position: relative;
   box-sizing: border-box;
 `
 const RemoveFile = styled(RemoveFileIcon)`
   position: absolute;
-  right: ${unit()};
+  right: 1rem;
   top: 50%;
-  margin-top: -${unit(0.5)};
+  margin-top: -0.5rem;
 `
 const Parent = styled.p`
   margin-top: 0;
-  margin-bottom: ${unit(2)};
+  margin-bottom: 2rem;
 `
 const Info = styled.p`
-  margin-bottom: ${unit(2)};
+  margin-bottom: 2rem;
 `
 
 const Create = ({ p2p, profile }) => {

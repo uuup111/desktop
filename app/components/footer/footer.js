@@ -5,22 +5,21 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 const Container = styled.div`
   text-align: center;
-  padding-top: 96px;
-  padding-bottom: 30px;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-top: 6rem;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   font-weight: 300;
   position: relative;
 `
 const Title = styled.div`
-  font-size: 36px;
-  line-height: 42px;
-  margin-bottom: 77px;
+  font-size: 2em;
+  margin-bottom: 77px; /* TODO */
 `
 const UpArrow = styled(Arrow)`
   position: absolute;
-  right: 32px;
-  bottom: 32px;
+  right: 2rem;
+  bottom: 2rem;
   -webkit-app-region: no-drag;
 `
 const scrollToTop = () => {
