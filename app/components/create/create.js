@@ -9,7 +9,7 @@ import AddFile from './add-file.svg'
 import { remote } from 'electron'
 import { purple, red } from '../../lib/colors'
 import { basename } from 'path'
-import RemoveFileIcon from './remove-file.svg'
+import X from '../icons/x-1rem.svg'
 import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
 import { useHistory, useParams } from 'react-router-dom'
@@ -36,9 +36,9 @@ const File = styled.div`
   position: relative;
   box-sizing: border-box;
 `
-const RemoveFile = styled(RemoveFileIcon)`
+const RemoveFile = styled(X)`
   position: absolute;
-  right: 1rem;
+  right: 14px;
   top: 50%;
   margin-top: -0.5rem;
 `

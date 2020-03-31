@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { purple, black, white } from '../../lib/colors'
-import CaretDown from '../carets/caret-down-1rem.svg'
-import CaretDownLarge from '../carets/caret-down-2rem.svg'
+import CaretDown from '../icons/caret-down-1rem.svg'
+import CaretDownLarge from '../icons/caret-down-2rem.svg'
 
 export const Label = styled.label`
   font-weight: bold;
