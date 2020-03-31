@@ -34,8 +34,8 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 const Content = styled.div`
-  margin-left: 128px;
-  margin-top: 48px;
+  margin-left: 8rem;
+  margin-top: 3rem;
 `
 
 const Layout = ({ children }) => (

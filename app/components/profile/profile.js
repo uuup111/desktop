@@ -9,7 +9,7 @@ import { Title, StickyRow, TopRow } from '../layout/grid'
 
 const Spacer = styled.div`
   display: inline-block;
-  width: 62px;
+  width: 2rem;
   height: 100%;
   border-right: 2px solid ${purple};
   vertical-align: top;
@@ -18,14 +18,14 @@ const Header = styled.div`
   position: relative;
 `
 const Avatar = styled(AvatarPlaceholder)`
-  margin-left: 64px;
-  margin-top: 32px;
+  margin-left: 4rem;
+  margin-top: 2rem;
   margin-bottom: 23px;
 `
 const Description = styled.div`
   position: absolute;
   left: 206px;
-  top: 64px;
+  top: 4rem;
   right: 146px;
   overflow: hidden;
   text-overflow: ellipsis;

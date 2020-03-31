@@ -6,9 +6,9 @@ import { Row, Button } from '../layout/grid'
 import { NavLink, useHistory } from 'react-router-dom'
 
 const Container = styled.div`
-  width: 128px;
+  width: 8rem;
   border-right: 2px solid ${purple};
-  padding-top: 48px;
+  padding-top: 3rem;
   position: fixed;
   height: 100%;
   top: 0;
@@ -16,7 +16,7 @@ const Container = styled.div`
   box-sizing: border-box;
 `
 const StyledLogo = styled(Logo)`
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 `
 const StyledRow = styled(Row)`
   text-align: left;

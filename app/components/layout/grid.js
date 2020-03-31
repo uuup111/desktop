@@ -7,7 +7,7 @@ const rowHeight = 64
 
 export const Cell = styled.div`
   border-right: 2px solid ${purple};
-  padding: 0 32px;
+  padding: 0 2rem;
   display: inline-block;
   overflow: hidden;
   height: 100%;
@@ -33,13 +33,13 @@ const StyledButton = styled(Cell).attrs({
   font-family: Roboto;
   letter-spacing: 0.05em;
 
-  font-size: 16px;
-  height: 64px;
+  font-size: 1rem;
+  height: 4rem;
   border: 2px solid ${purple};
   border-color: ${props => (props.disabled ? gray : props.color || purple)};
   color: ${props => (props.isLoading ? gray : white)};
-  margin-right: 16px;
-  min-width: 128px;
+  margin-right: 1rem;
+  min-width: 8rem;
   position: relative;
 
   :hover {
@@ -107,14 +107,14 @@ export const StickyRow = styled(Row)`
   z-index: 1;
 `
 export const TopRow = styled(StickyRow)`
-  top: 48px;
+  top: 3rem;
 
   :before {
     content: '';
     position: absolute;
     top: -50px;
     width: 100%;
-    height: 48px;
+    height: 3rem;
     background-color: ${black};
   }
 `

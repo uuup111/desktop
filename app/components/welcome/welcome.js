@@ -26,7 +26,7 @@ const Dialog = styled.div`
   width: ${dialogSize}px;
   height: ${dialogSize}px;
   background-color: ${black};
-  padding: 32px;
+  padding: 2rem;
   box-sizing: border-box;
 `
 const Illustration = styled.div`

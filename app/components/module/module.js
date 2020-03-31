@@ -32,7 +32,7 @@ const AddContentWithParent = styled(Plus)`
 `
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
-  padding: 32px ${props => (props.pad === 'small' ? 32 : 64)}px;
+  padding: 2rem ${props => (props.pad === 'small' ? 2 : 4)}rem;
   position: relative;
   height: 296px;
   box-sizing: border-box;
@@ -48,25 +48,25 @@ const Attributes = styled.div`
 `
 const Attribute = styled.div``
 const AttributeIcon = styled.div`
-  margin-top: 10px;
+  margin-top: 1rem;
 `
 const Content = styled.div`
   position: absolute;
-  left: calc(128px + ${props => (props.pad === 'small' ? 32 : 64)}px);
-  top: 32px;
-  right: 192px;
-  bottom: 32px;
+  left: calc(8rem + ${props => (props.pad === 'small' ? 2 : 4)}rem);
+  top: 2rem;
+  right: 12rem;
+  bottom: 2rem;
   overflow: hidden;
 `
 const Title = styled.div`
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
 `
 const PublishedAuthor = styled(Link)`
   text-decoration: none;
   color: ${white};
   border-bottom: 2px solid ${purple};
-  margin: 16px 0;
+  margin: 1rem 0;
   display: inline-block;
   -webkit-app-region: no-drag;
 
@@ -77,7 +77,7 @@ const PublishedAuthor = styled(Link)`
 `
 const UnpublishedAuthor = styled.span`
   color: ${gray};
-  margin: 16px 0;
+  margin: 1rem 0;
   display: inline-block;
   padding-bottom: 2px;
 `

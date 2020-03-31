@@ -8,7 +8,7 @@ import Content, { OpenFolder, ExportZip } from '../content/content'
 
 const Spacer = styled.div`
   display: inline-block;
-  width: 62px;
+  width: 2rem;
   height: 100%;
   border-right: 2px solid ${purple};
   vertical-align: top;
