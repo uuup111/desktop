@@ -67,8 +67,12 @@ const File = styled.div`
   border: 2px solid ${green};
   line-height: 2;
   padding-left: 1rem;
+  padding-right: 1rem;
   margin-top: 1rem;
   max-width: 40rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   :hover {
     background-color: ${green};

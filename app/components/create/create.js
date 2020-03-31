@@ -35,12 +35,15 @@ const File = styled.div`
   margin-top: 1em;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 44px;
 `
 const RemoveFile = styled(X)`
   position: absolute;
   right: 14px;
-  top: 50%;
-  margin-top: -0.5rem;
+  top: 8px;
 `
 const Parent = styled.p`
   margin-top: 0;
