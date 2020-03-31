@@ -34,7 +34,7 @@ const Parent = styled(Link)`
 `
 const ModuleTitle = styled.div`
   font-size: ${unit(2)};
-  line-height: 37px; /* TODO */
+  line-height: 1.25;
   margin-bottom: ${unit(2)};
 `
 const PublishedAuthor = styled(Link)`
