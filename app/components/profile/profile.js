@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { purple } from '../../lib/colors'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
-import { Title, StickyRow, TopRow } from '../layout/grid'
+import { Title, StickyRow, TopRow, Spacer } from '../layout/grid'
 
-const Spacer = styled.div`
-  display: inline-block;
-  width: 2rem;
-  height: 100%;
-  border-right: 2px solid ${purple};
-  vertical-align: top;
-`
 const Header = styled.div`
   position: relative;
 `

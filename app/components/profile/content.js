@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { purple } from '../../lib/colors'
-import { Title, StickyRow, TopRow } from '../layout/grid'
+import { Title, StickyRow, TopRow, Spacer } from '../layout/grid'
 import { useParams } from 'react-router-dom'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import Content, { OpenFolder, ExportZip } from '../content/content'
-
-const Spacer = styled.div`
-  display: inline-block;
-  width: 2rem;
-  height: 100%;
-  border-right: 2px solid ${purple};
-  vertical-align: top;
-`
 
 const ProfileContent = ({ p2p, profile, setProfile }) => {
   const { key } = useParams()

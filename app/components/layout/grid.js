@@ -121,3 +121,10 @@ export const TopRow = styled(StickyRow)`
 export const Title = styled(Cell)`
   font-size: 40px;
 `
+export const Spacer = styled.div`
+  display: inline-block;
+  width: 2rem;
+  height: 100%;
+  border-right: 2px solid ${purple};
+  vertical-align: top;
+`
