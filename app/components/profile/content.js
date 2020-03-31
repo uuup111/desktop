@@ -45,7 +45,6 @@ const ProfileContent = ({ p2p, profile, setProfile }) => {
           content={content}
           profile={profile}
           setProfile={setProfile}
-          backTo='/profile'
         />
       )}
     </>

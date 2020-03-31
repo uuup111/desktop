@@ -109,7 +109,7 @@ export const ExportZip = ({ mod }) => (
   </Button>
 )
 
-const Content = ({ p2p, content, profile, setProfile, backTo }) => {
+const Content = ({ p2p, content, profile, setProfile }) => {
   const [authors, setAuthors] = useState()
   const [parents, setParents] = useState()
   const [files, setFiles] = useState()
@@ -163,7 +163,7 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
     <>
       {authors && parents && (
         <Container>
-          <BackArrow onClick={() => history.push(backTo)} />
+          <BackArrow onClick={() => history.go(-1)} />
           {parents.map(parent => (
             <Parent
               key={`${parent.rawJSON.url}+${parent.rawJSON.version}`}
@@ -210,7 +210,7 @@ const Content = ({ p2p, content, profile, setProfile, backTo }) => {
                   profile.rawJSON.url
                 )
                 setProfile(await p2p.get(profile.rawJSON.url))
-                history.push(`/content/${encode(content.rawJSON.url)}`)
+                history.replace(`/content/${encode(content.rawJSON.url)}`)
               }}
             >
               Unpublish

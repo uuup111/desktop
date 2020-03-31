@@ -31,7 +31,6 @@ const WorkspaceContent = ({ p2p, profile, setProfile }) => {
           content={content}
           profile={profile}
           setProfile={setProfile}
-          backTo='/'
         />
       )}
     </>
