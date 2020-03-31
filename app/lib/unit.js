@@ -1,1 +1,1 @@
-export default n => `${n * 16}px`
+export default (n = 1) => `${n * 16}px`
