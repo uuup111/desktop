@@ -1,4 +1,4 @@
-# desktop
+# Hypergraph Desktop <img src="https://raw.githubusercontent.com/hypergraph-xyz/design/master/hypergraph-logomark-1024-square.png" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
@@ -6,7 +6,13 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-The Hypergraph desktop application
+Hypergraph is a tool for creating and publishing research projects *as-you-go*, built upon the [p2pcommons](https://p2pcommons.com). 
+
+<img src="/docs/screenshots/screenshot-content.png" align="right" height="300" />
+
+With Hypergraph, we aim to reinvent the publication process in a way that empowers researchers to do better science. Science that is transparent, accessible to everyone and free from publication bias, time-consuming bureaucracy and centralized control.
+
+Right now, Hypergraph is in active development. The current version supports an offline *as-you-go* workflow and demonstrates some of Hypergraph's core concepts.
 
 ## Contributors ✨
 
