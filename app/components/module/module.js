@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import HexPublished from './published.svg'
@@ -32,16 +32,20 @@ const AddContentWithParent = styled(Plus)`
 `
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
-  padding: 2rem ${props => (props.pad === 'small' ? 2 : 4)}rem;
+  padding: 2rem ${props => (props.pad === 'small' ? 2 : props.pad || 4)}rem;
   position: relative;
-  height: 296px;
+  height: ${props => (props.isParent ? 136 : 296)}px;
   box-sizing: border-box;
 
-  :hover {
-    ${AddContentWithParent} {
-      display: block;
-    }
-  }
+  ${props =>
+    !props.isParent &&
+    css`
+      :hover {
+        ${AddContentWithParent} {
+          display: block;
+        }
+      }
+    `}
 `
 const Attributes = styled.div`
   display: inline-block;
@@ -52,7 +56,9 @@ const AttributeIcon = styled.div`
 `
 const Content = styled.div`
   position: absolute;
-  left: calc(8rem + ${props => (props.pad === 'small' ? 2 : 4)}rem);
+  left: calc(
+    8rem + ${props => (props.pad === 'small' ? 2 : props.pad || 4)}rem
+  );
   top: 2rem;
   right: 12rem;
   bottom: 2rem;
@@ -94,11 +100,29 @@ const Description = styled.div`
     background: linear-gradient(transparent, ${black});
   }
 `
+const ToggleParent = styled.p`
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  padding-bottom: 2px;
+  -webkit-app-region: no-drag;
 
-const Module = ({ p2p, mod, pad, to }) => {
+  :hover {
+    padding-bottom: 0;
+    border-bottom: 2px solid ${purple};
+  }
+`
+const ToggleParentArrow = styled.span`
+  width: 16px;
+  display: inline-block;
+`
+
+const Module = ({ p2p, mod, pad, to, isParent }) => {
   const history = useHistory()
   const [isPublished, setIsPublished] = useState(false)
   const [authors, setAuthors] = useState([])
+  const [showParent, setShowParent] = useState(false)
+  const [parent, setParent] = useState()
 
   useEffect(() => {
     ;(async () => {
@@ -129,43 +153,74 @@ const Module = ({ p2p, mod, pad, to }) => {
     })()
   }, [mod])
 
+  if (mod.rawJSON.parents[0]) {
+    useEffect(() => {
+      ;(async () => {
+        setParent(await p2p.get(mod.rawJSON.parents[0]))
+      })()
+    }, [mod])
+  }
+
   return (
-    <Container
-      pad={pad}
-      onClick={e => {
-        if (e.target.tagName !== 'A') history.push(to)
-      }}
-    >
-      <Attributes>
-        <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
-        <AttributeIcon>
-          {isPublished ? <HexPublished /> : <HexUnpublished />}
-        </AttributeIcon>
-      </Attributes>
-      <Content pad={pad}>
-        <Title>{mod.rawJSON.title}</Title>
-        {authors.map(author =>
-          isPublished ? (
-            <PublishedAuthor key={author.rawJSON.url} to='/profile'>
-              {author.rawJSON.title}
-            </PublishedAuthor>
-          ) : (
-            <UnpublishedAuthor key={author.rawJSON.url}>
-              {author.rawJSON.title}
-            </UnpublishedAuthor>
-          )
-        )}
-        <Description>{mod.rawJSON.description}</Description>
-      </Content>
-      <AddContentWithParent
+    <>
+      <Container
+        pad={pad}
         onClick={e => {
-          e.stopPropagation()
-          history.push(
-            `/create/${encode(mod.rawJSON.url)}+${mod.metadata.version}`
-          )
+          if (e.target.tagName !== 'A') history.push(to)
         }}
-      />
-    </Container>
+        isParent={isParent}
+      >
+        <Attributes>
+          <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
+          <AttributeIcon>
+            {isPublished ? <HexPublished /> : <HexUnpublished />}
+          </AttributeIcon>
+        </Attributes>
+        <Content pad={pad}>
+          <Title>{mod.rawJSON.title}</Title>
+          {authors.map(author =>
+            isPublished ? (
+              <PublishedAuthor key={author.rawJSON.url} to='/profile'>
+                {author.rawJSON.title}
+              </PublishedAuthor>
+            ) : (
+              <UnpublishedAuthor key={author.rawJSON.url}>
+                {author.rawJSON.title}
+              </UnpublishedAuthor>
+            )
+          )}
+          {!isParent && <Description>{mod.rawJSON.description}</Description>}
+          {!isParent && mod.rawJSON.parents[0] && (
+            <ToggleParent
+              onClick={e => {
+                e.stopPropagation()
+                setShowParent(!showParent)
+              }}
+            >
+              <ToggleParentArrow>{showParent ? '▾' : '▸'}</ToggleParentArrow>
+              Follows from
+            </ToggleParent>
+          )}
+        </Content>
+        <AddContentWithParent
+          onClick={e => {
+            e.stopPropagation()
+            history.push(
+              `/create/${encode(mod.rawJSON.url)}+${mod.metadata.version}`
+            )
+          }}
+        />
+      </Container>
+      {(showParent || isParent) && parent && (
+        <Module
+          p2p={p2p}
+          mod={parent}
+          to={`/content/${encode(parent.rawJSON.url)}`}
+          pad={isParent ? pad : pad === 'small' ? 4 : 6}
+          isParent
+        />
+      )}
+    </>
   )
 }
 
