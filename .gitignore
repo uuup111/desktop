@@ -63,3 +63,4 @@ typings/
 dist/
 build/*
 !build/icon.png
+!build/background.png
