@@ -162,11 +162,13 @@ const Create = ({ p2p, profile }) => {
           <Label htmlFor='main'>Main file</Label>
           <Select name='main'>
             <option value=''>No main</option>
-            {files.map(file => (
-              <option value={file} key={file}>
-                {basename(file)}
-              </option>
-            ))}
+            {files
+              .filter(file => basename(file).charAt(0) !== '.')
+              .map(file => (
+                <option value={file} key={file}>
+                  {basename(file)}
+                </option>
+              ))}
           </Select>
           <Label htmlFor='title'>Title</Label>
           <TitleInput name='title' onIsValid={setIsValid} />
