@@ -14,6 +14,10 @@ With Hypergraph, we aim to reinvent the publication process in a way that empowe
 
 Right now, Hypergraph is in active development. The current version supports an offline _as-you-go_ workflow and demonstrates some of Hypergraph's core concepts.
 
+## Glossary
+
+If you're interested in learning more about our terminology, the [Hypergraph glossary](https://www.notion.so/Glossary-d4bdf18fb4624c049c7a2663559ef5ad) explains many of the terms we use across Hypergraph products and documentation.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
