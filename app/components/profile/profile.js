@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Spacer } from '../layout/grid'
+import ContentEditable from 'react-contenteditable'
 
 const Header = styled.div`
   position: relative;
@@ -25,9 +26,16 @@ const Description = styled.div`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 `
+const Editable = styled(ContentEditable)`
+  :focus {
+    outline: 0;
+  }
+`
 
-const Profile = ({ p2p, profile }) => {
+const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
+  const [titleWasSaved, setTitleWasSaved] = useState(false)
+  const title = useRef(profile.rawJSON.title)
 
   useEffect(() => {
     ;(async () => {
@@ -42,10 +50,37 @@ const Profile = ({ p2p, profile }) => {
     })()
   }, [])
 
+  const onBlur = async e => {
+    if (e.target.innerText !== title.current) {
+      title.current = e.target.innerText
+      await p2p.set({ url: profile.rawJSON.url, title: e.target.innerText })
+      setTitleWasSaved(true)
+      setProfile(await p2p.get(profile.rawJSON.url))
+      setTimeout(() => setTitleWasSaved(false), 1000)
+    }
+  }
+
+  const onKeyDown = e => {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+      e.target.blur()
+    }
+    if (e.keyCode === 27) {
+      e.target.innerText = title.current
+      e.target.blur()
+    }
+  }
+
   return (
     <>
       <TopRow>
-        <Title>{profile.rawJSON.title}</Title>
+        <Title wasSaved={titleWasSaved}>
+          <Editable
+            html={title.current}
+            onBlur={onBlur}
+            onKeyDown={onKeyDown}
+          />
+        </Title>
       </TopRow>
       <Header>
         <Avatar />

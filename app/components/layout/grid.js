@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
-import { black, purple, white, gray } from '../../lib/colors'
+import styled, { keyframes, css } from 'styled-components'
+import { black, purple, white, gray, green } from '../../lib/colors'
 import LoadingAnimation from './loading.svg'
 
 const rowHeight = 64
@@ -118,8 +118,21 @@ export const TopRow = styled(StickyRow)`
     background-color: ${black};
   }
 `
+const wasSaved = keyframes`
+  from {
+    color: ${green};
+  }
+  to {
+    color: ${white};
+  }
+`
 export const Title = styled(Cell)`
   font-size: 40px;
+  ${props =>
+    props.wasSaved &&
+    css`
+      animation: ${wasSaved} 1s;
+    `}
 `
 export const Spacer = styled.div`
   display: inline-block;
