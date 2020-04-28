@@ -37,17 +37,19 @@ const Profile = ({ p2p, profile, setProfile }) => {
   const [titleWasSaved, setTitleWasSaved] = useState(false)
   const title = useRef(profile.rawJSON.title)
 
+  const fetchModules = async () => {
+    const modules = await Promise.all(
+      profile.rawJSON.contents.map(url => {
+        const [key, version] = url.split('+')
+        const download = false
+        return p2p.clone(key, version, download)
+      })
+    )
+    setModules(modules)
+  }
+
   useEffect(() => {
-    ;(async () => {
-      const modules = await Promise.all(
-        profile.rawJSON.contents.map(url => {
-          const [key, version] = url.split('+')
-          const download = false
-          return p2p.clone(key, version, download)
-        })
-      )
-      setModules(modules)
-    })()
+    fetchModules()
   }, [])
 
   const onBlur = async e => {
@@ -57,6 +59,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
       setTitleWasSaved(true)
       setProfile(await p2p.get(profile.rawJSON.url))
       setTimeout(() => setTitleWasSaved(false), 1000)
+      await fetchModules()
     }
   }
 
