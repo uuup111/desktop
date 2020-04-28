@@ -118,21 +118,8 @@ export const TopRow = styled(StickyRow)`
     background-color: ${black};
   }
 `
-const wasSaved = keyframes`
-  from {
-    color: ${green};
-  }
-  to {
-    color: ${white};
-  }
-`
 export const Title = styled(Cell)`
   font-size: 40px;
-  ${props =>
-    props.wasSaved &&
-    css`
-      animation: ${wasSaved} 1s;
-    `}
 `
 export const Spacer = styled.div`
   display: inline-block;
