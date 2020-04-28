@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Spacer } from '../layout/grid'
 import ContentEditable from 'react-contenteditable'
+import { red, yellow, green, gray, white } from '../../lib/colors'
 
 const Header = styled.div`
   position: relative;
@@ -14,6 +15,14 @@ const Avatar = styled(AvatarPlaceholder)`
   margin-left: 4rem;
   margin-top: 2rem;
   margin-bottom: 23px;
+`
+const wasSaved = keyframes`
+  from {
+    color: ${green};
+  }
+  to {
+    color: ${white};
+  }
 `
 const Description = styled.div`
   position: absolute;
@@ -25,6 +34,18 @@ const Description = styled.div`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+
+  ${props => props.isEmpty && css`
+    ::after {
+      content: 'Add description';
+      color: ${gray};
+    }
+  `}
+  ${props =>
+    props.wasSaved &&
+    css`
+      animation: ${wasSaved} 1s;
+    `}
 `
 const Editable = styled(ContentEditable)`
   :focus {
@@ -35,7 +56,9 @@ const Editable = styled(ContentEditable)`
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
   const [titleWasSaved, setTitleWasSaved] = useState(false)
+  const [descriptionWasSaved, setDescriptionWasSaved] = useState(false)
   const title = useRef(profile.rawJSON.title)
+  const description = useRef(profile.rawJSON.description)
 
   const fetchModules = async () => {
     const modules = await Promise.all(
@@ -52,7 +75,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
     fetchModules()
   }, [])
 
-  const onBlur = async e => {
+  const onTitleBlur = async e => {
     if (e.target.innerText !== title.current) {
       title.current = e.target.innerText
       await p2p.set({ url: profile.rawJSON.url, title: e.target.innerText })
@@ -63,7 +86,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
     }
   }
 
-  const onKeyDown = e => {
+  const onTitleKeyDown = e => {
     if (e.keyCode === 13) {
       e.preventDefault()
       e.target.blur()
@@ -74,20 +97,43 @@ const Profile = ({ p2p, profile, setProfile }) => {
     }
   }
 
+  const onDescriptionBlur = async e => {
+    if (e.target.innerText !== description.current) {
+      description.current = e.target.innerText
+      await p2p.set({ url: profile.rawJSON.url, description: e.target.innerText })
+      setDescriptionWasSaved(true)
+      setProfile(await p2p.get(profile.rawJSON.url))
+      setTimeout(() => setDescriptionWasSaved(false), 1000)
+    }
+  }
+
+  const onDescriptionKeyDown = e => {
+    if (e.keyCode === 27) {
+      e.target.innerText = description.current
+      e.target.blur()
+    }
+  }
+
   return (
     <>
       <TopRow>
         <Title wasSaved={titleWasSaved}>
           <Editable
             html={title.current}
-            onBlur={onBlur}
-            onKeyDown={onKeyDown}
+            onBlur={onTitleBlur}
+            onKeyDown={onTitleKeyDown}
           />
         </Title>
       </TopRow>
       <Header>
         <Avatar />
-        <Description>{profile.rawJSON.description}</Description>
+        <Description isEmpty={description.current.length === 0} wasSaved={descriptionWasSaved}>
+          <Editable
+            html={description.current}
+            onBlur={onDescriptionBlur}
+            onKeyDown={onDescriptionKeyDown}
+          />
+        </Description>
       </Header>
       <StickyRow top={114}>
         <Spacer />
