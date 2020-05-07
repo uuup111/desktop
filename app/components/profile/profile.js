@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
@@ -36,7 +36,9 @@ const StyledTextarea = styled(Textarea)`
 
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
-  const [isEditing, setIsEditing] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
+  const titleRef = useRef()
+  const descriptionRef = useRef()
 
   const fetchModules = async () => {
     const modules = await Promise.all(
@@ -49,39 +51,53 @@ const Profile = ({ p2p, profile, setProfile }) => {
     setModules(modules)
   }
 
+  const onSubmit = async e => {
+    e.preventDefault()
+    await p2p.set({
+      url: profile.rawJSON.url,
+      title: titleRef.current.value,
+      description: descriptionRef.current.value
+    })
+    setProfile(await p2p.get(profile.rawJSON.url))
+    setIsEditing(false)
+    await fetchModules()
+  }
+
   useEffect(() => {
     fetchModules()
   }, [])
 
   return (
     <>
-      <TopRow>
-        <Title>
+      <form onSubmit={onSubmit}>
+        <TopRow>
+          <Title>
+            {isEditing ? (
+              <Input ref={titleRef} defaultValue={profile.rawJSON.title} />
+            ) : (
+              profile.rawJSON.title
+            )}
+          </Title>
           {isEditing ? (
-            <Input defaultValue={profile.rawJSON.title} />
+            <>
+              <Button color={green}>Save profile</Button>
+              <Button color={gray} onClick={() => setIsEditing(false)}>Cancel</Button>
+            </>
           ) : (
-            profile.rawJSON.title
+            <Button color={green} onClick={() => setIsEditing(true)}>Edit profile</Button>
           )}
-        </Title>
-        {isEditing ? (
-          <>
-            <Button color={green}>Save profile</Button>
-            <Button color={gray} onClick={() => setIsEditing(false)}>Cancel</Button>
-          </>
-        ) : (
-          <Button color={green} onClick={() => setIsEditing(true)}>Edit profile</Button>
-        )}
-      </TopRow>
-      <Header>
-        <Avatar />
-        <Description isEditing={isEditing}>
-          {isEditing ? (
-            <StyledTextarea defaultValue={profile.rawJSON.description} />
-          ) : (
-            profile.rawJSON.description
-          )}
-        </Description>
-      </Header>
+        </TopRow>
+        <Header>
+          <Avatar />
+          <Description isEditing={isEditing}>
+            {isEditing ? (
+              <StyledTextarea ref={descriptionRef} defaultValue={profile.rawJSON.description} />
+            ) : (
+              profile.rawJSON.description
+            )}
+          </Description>
+        </Header>
+      </form>
       <StickyRow top={114}>
         <Spacer />
         <Title>Content</Title>
