@@ -5,8 +5,9 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Spacer, Button } from '../layout/grid'
-import { green, gray } from '../../lib/colors'
+import { green, red } from '../../lib/colors'
 import { Textarea, Input } from '../forms/forms'
+import AutosizeInput from 'react-input-autosize'
 
 const Header = styled.div`
   position: relative;
@@ -37,7 +38,7 @@ const StyledTextarea = styled(Textarea)`
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
   const [isEditing, setIsEditing] = useState(false)
-  const titleRef = useRef()
+  const [profileTitle, setProfileTitle] = useState(profile.rawJSON.title)
   const descriptionRef = useRef()
 
   const fetchModules = async () => {
@@ -55,7 +56,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
     e.preventDefault()
     await p2p.set({
       url: profile.rawJSON.url,
-      title: titleRef.current.value,
+      title: profileTitle,
       description: descriptionRef.current.value
     })
     setProfile(await p2p.get(profile.rawJSON.url))
@@ -73,15 +74,22 @@ const Profile = ({ p2p, profile, setProfile }) => {
         <TopRow>
           <Title>
             {isEditing ? (
-              <Input ref={titleRef} defaultValue={profile.rawJSON.title} />
+              <Input
+                as={AutosizeInput}
+                value={profileTitle}
+                onChange={e => setProfileTitle(e.target.value)}
+              />
             ) : (
               profile.rawJSON.title
             )}
           </Title>
           {isEditing ? (
             <>
-              <Button color={green}>Save profile</Button>
-              <Button color={gray} onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Button color={red} onClick={() => {
+                setProfileTitle(profile.rawJSON.title)
+                setIsEditing(false)
+              }}>Cancel</Button>
+              <Button color={green}>Save</Button>
             </>
           ) : (
             <Button color={green} onClick={() => setIsEditing(true)}>Edit profile</Button>

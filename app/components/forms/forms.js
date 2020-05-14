@@ -26,11 +26,15 @@ export const Input = styled.input`
   ${Title} > & {
     border: 0;
     display: inline-block;
-    width: 375px;
     font-size: 40px;
     margin-bottom: 0;
     padding: 0;
     line-height: 1;
+  }
+
+  /* for react-input-autosize */
+  div {
+    padding-right: 2rem;
   }
 `
 

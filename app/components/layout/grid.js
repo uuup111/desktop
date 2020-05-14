@@ -5,6 +5,13 @@ import LoadingAnimation from './loading.svg'
 
 const rowHeight = 64
 
+export const Row = styled.div`
+  border-top: ${props => (props.noBorderTop ? 0 : 2)}px solid ${purple};
+  border-bottom: 2px solid ${purple};
+  height: ${rowHeight}px;
+  white-space: nowrap;
+  line-height: ${rowHeight}px;
+`
 export const Cell = styled.div`
   border-right: 2px solid ${purple};
   padding: 0 2rem;
@@ -12,13 +19,10 @@ export const Cell = styled.div`
   overflow: hidden;
   height: 100%;
   text-align: center;
-`
-export const Row = styled.div`
-  border-top: ${props => (props.noBorderTop ? 0 : 2)}px solid ${purple};
-  border-bottom: 2px solid ${purple};
-  height: ${rowHeight}px;
-  white-space: nowrap;
-  line-height: ${rowHeight}px;
+
+  ${Row} > & {
+    border-right-width: 0;
+  }
 `
 const StyledButton = styled(Cell).attrs({
   as: 'button'
@@ -43,7 +47,7 @@ const StyledButton = styled(Cell).attrs({
   position: relative;
 
   :hover {
-    color: ${props => (props.isLoading ? gray : white)};
+    color: ${props => (props.isLoading ? gray : black)};
     background-color: ${props =>
       props.disabled
         ? gray
@@ -70,17 +74,18 @@ const StyledButton = styled(Cell).attrs({
   }
 
   ${Row} > & {
-    border-left-width: 0px;
+    float: right;
+    border-right-width: 0px;
     border-top-width: 0px;
     border-bottom-width: 0px;
     border-color: ${purple};
     color: ${props => props.color || white};
     margin-right: 0;
     :hover {
-      color: ${white};
+      color: ${black};
     }
     :active {
-      color: ${props => props.color || white};
+      color: ${props => props.color || black};
     }
   }
 `

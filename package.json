@@ -29,6 +29,7 @@
     "polished": "^3.4.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-input-autosize": "^2.2.2",
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
     "styled-components": "^4.4.1"
