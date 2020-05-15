@@ -33,10 +33,10 @@ assignees: ''
 
 <!--If applicable, add screenshots to help explain your problem.-->
 
-## Desktop
+## System
 
-- OS: <!--e.g. mac-->
-- Version: <!--e.g. 22-->
+- OS (incl. version): <!--e.g. macOS 10.15.0 -->
+- Hypergraph Desktop version: <!--e.g. 1.0.0-->
 
 ## Additional context
 
