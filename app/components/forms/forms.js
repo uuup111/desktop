@@ -28,6 +28,7 @@ export const Input = styled.input`
     display: inline-block;
     font-size: 40px;
     padding: 0;
+    outline: 0;
   }
 `
 

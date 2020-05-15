@@ -32,7 +32,6 @@ const StyledButton = styled(Button)`
   border-top-width: 0;
   :hover {
     background-color: ${purple};
-    color: ${white};
   }
   display: block;
 

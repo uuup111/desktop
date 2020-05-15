@@ -108,9 +108,6 @@ const Description = styled.div`
       animation: ${saved} 1s linear;
     `}
 `
-const StyledInput = styled(Input)`
-  outline: 0;
-`
 const StyledTextarea = styled(Textarea)`
   height: ${props => props.lines * 24}px;
   border: 0;
@@ -174,7 +171,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
               isSaved={isSaved}
             />
             {isEditing ? (
-              <StyledInput
+              <Input
                 ref={titleRef}
                 defaultValue={profile.rawJSON.title}
               />
@@ -233,7 +230,6 @@ const Profile = ({ p2p, profile, setProfile }) => {
                 p2p={p2p}
                 mod={mod}
                 to={`/profile/${encode(mod.rawJSON.url)}`}
-                pad='small'
               />
             )
           })}

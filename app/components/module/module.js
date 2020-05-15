@@ -32,7 +32,7 @@ const AddContentWithParent = styled(Plus)`
 `
 const Container = styled.div`
   border-bottom: 2px solid ${purple};
-  padding: 2rem ${props => (props.pad === 'small' ? 2 : props.pad || 4)}rem;
+  padding: 2rem ${props => props.pad || 2}rem;
   position: relative;
   height: ${props => (props.isParent ? 136 : 296)}px;
   box-sizing: border-box;
@@ -57,7 +57,7 @@ const AttributeIcon = styled.div`
 const Content = styled.div`
   position: absolute;
   left: calc(
-    8rem + ${props => (props.pad === 'small' ? 2 : props.pad || 4)}rem
+    8rem + ${props => props.pad || 2}rem
   );
   top: 2rem;
   right: 12rem;
@@ -216,7 +216,7 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
           p2p={p2p}
           mod={parent}
           to={`/content/${encode(parent.rawJSON.url)}`}
-          pad={isParent ? pad : pad === 'small' ? 4 : 6}
+          pad={isParent ? pad : 4}
           isParent
         />
       )}
