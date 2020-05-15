@@ -7,9 +7,11 @@ module.exports = {
     [require('@babel/preset-react'), { development: true }]
   ],
   plugins: [
-    ['babel-plugin-styled-components',
-    {
-      ssr: false
-    }]
+    [
+      'babel-plugin-styled-components',
+      {
+        ssr: false
+      }
+    ]
   ]
 }

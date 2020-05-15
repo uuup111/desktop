@@ -58,17 +58,23 @@ const Indicator = styled.div`
   top: 0.5rem;
   margin-left: -2px;
 
-  ${props => props.isEditing && css`
-    animation: ${editing} 2s linear;
-    border-left-color: ${yellow};
-  `}
-  ${props => props.isSaving && css`
-    animation: ${saving} 1s linear;
-    border-left-color: transparent;
-  `}
-  ${props => props.isSaved && css`
-    animation: ${saved} 1s linear;
-  `}
+  ${props =>
+    props.isEditing &&
+    css`
+      animation: ${editing} 2s linear;
+      border-left-color: ${yellow};
+    `}
+  ${props =>
+    props.isSaving &&
+    css`
+      animation: ${saving} 1s linear;
+      border-left-color: transparent;
+    `}
+  ${props =>
+    props.isSaved &&
+    css`
+      animation: ${saved} 1s linear;
+    `}
 `
 const Description = styled.div`
   position: absolute;
@@ -84,17 +90,23 @@ const Description = styled.div`
   border-left: 2px solid transparent;
   padding-left: 0.5rem !important;
   margin-left: calc(-0.5rem - 2px) !important;
-  ${props => props.isEditing && css`
-    animation: ${editing} 2s linear;
-    border-left: 2px solid ${yellow};
-  `}
-  ${props => props.isSaving && css`
-    animation: ${saving} 1s linear;
-    border-left-color: transparent;
-  `}
-  ${props => props.isSaved && css`
-    animation: ${saved} 1s linear;
-  `}
+  ${props =>
+    props.isEditing &&
+    css`
+      animation: ${editing} 2s linear;
+      border-left: 2px solid ${yellow};
+    `}
+  ${props =>
+    props.isSaving &&
+    css`
+      animation: ${saving} 1s linear;
+      border-left-color: transparent;
+    `}
+  ${props =>
+    props.isSaved &&
+    css`
+      animation: ${saved} 1s linear;
+    `}
 `
 const StyledInput = styled(Input)`
   outline: 0;
@@ -156,9 +168,16 @@ const Profile = ({ p2p, profile, setProfile }) => {
       <form onSubmit={onSubmit}>
         <TopRow>
           <Title>
-            <Indicator isEditing={isEditing} isSaving={isSaving} isSaved={isSaved} />
+            <Indicator
+              isEditing={isEditing}
+              isSaving={isSaving}
+              isSaved={isSaved}
+            />
             {isEditing ? (
-              <StyledInput ref={titleRef} defaultValue={profile.rawJSON.title} />
+              <StyledInput
+                ref={titleRef}
+                defaultValue={profile.rawJSON.title}
+              />
             ) : (
               profile.rawJSON.title
             )}
@@ -177,12 +196,18 @@ const Profile = ({ p2p, profile, setProfile }) => {
               </Button>
             </>
           ) : (
-            <Button color={green} onClick={() => setIsEditing(true)}>Edit profile</Button>
+            <Button color={green} onClick={() => setIsEditing(true)}>
+              Edit profile
+            </Button>
           )}
         </TopRow>
         <Header>
           <Avatar />
-          <Description isEditing={isEditing} isSaving={isSaving} isSaved={isSaved}>
+          <Description
+            isEditing={isEditing}
+            isSaving={isSaving}
+            isSaved={isSaved}
+          >
             {isEditing ? (
               <StyledTextarea
                 ref={descriptionRef}
