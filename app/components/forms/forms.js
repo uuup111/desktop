@@ -27,14 +27,7 @@ export const Input = styled.input`
     border: 0;
     display: inline-block;
     font-size: 40px;
-    margin-bottom: 0;
     padding: 0;
-    line-height: 1;
-  }
-
-  /* for react-input-autosize */
-  div {
-    padding-right: 2rem;
   }
 `
 
