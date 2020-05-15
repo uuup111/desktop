@@ -29,7 +29,6 @@
     "polished": "^3.4.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-input-autosize": "^2.2.2",
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
     "styled-components": "^4.4.1"
@@ -45,6 +44,7 @@
     "@storybook/react": "^5.2.8",
     "@svgr/webpack": "^5.2.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.7",
     "electron": "^7.1.1",
     "electron-builder": "^21.2.0",
     "file-loader": "^5.1.0",

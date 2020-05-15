@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { keyframes, css } from 'styled-components'
+import styled from 'styled-components'
 import { black, purple, white, gray, green } from '../../lib/colors'
 import LoadingAnimation from './loading.svg'
 
@@ -11,6 +11,7 @@ export const Row = styled.div`
   height: ${rowHeight}px;
   white-space: nowrap;
   line-height: ${rowHeight}px;
+  display: flex;
 `
 export const Cell = styled.div`
   border-right: 2px solid ${purple};
@@ -19,6 +20,7 @@ export const Cell = styled.div`
   overflow: hidden;
   height: 100%;
   text-align: center;
+  text-align: left;
 
   ${Row} > & {
     border-right-width: 0;
@@ -45,9 +47,10 @@ const StyledButton = styled(Cell).attrs({
   margin-right: 1rem;
   min-width: 8rem;
   position: relative;
+  text-align: center;
 
   :hover {
-    color: ${props => (props.isLoading ? gray : black)};
+    color: ${props => (props.isLoading ? gray : white)};
     background-color: ${props =>
       props.disabled
         ? gray
@@ -74,7 +77,6 @@ const StyledButton = styled(Cell).attrs({
   }
 
   ${Row} > & {
-    float: right;
     border-right-width: 0px;
     border-top-width: 0px;
     border-bottom-width: 0px;
@@ -82,7 +84,7 @@ const StyledButton = styled(Cell).attrs({
     color: ${props => props.color || white};
     margin-right: 0;
     :hover {
-      color: ${black};
+      color: ${white};
     }
     :active {
       color: ${props => props.color || black};
@@ -125,11 +127,5 @@ export const TopRow = styled(StickyRow)`
 `
 export const Title = styled(Cell)`
   font-size: 40px;
-`
-export const Spacer = styled.div`
-  display: inline-block;
-  width: 2rem;
-  height: 100%;
-  border-right: 2px solid ${purple};
-  vertical-align: top;
+  flex-grow: 1;
 `

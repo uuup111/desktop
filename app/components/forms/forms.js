@@ -86,4 +86,6 @@ export const Textarea = styled.textarea`
   box-sizing: border-box;
   height: 12rem;
   font-family: Roboto;
+  letter-spacing: inherit;
+  line-height: inherit;
 `

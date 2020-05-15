@@ -32,19 +32,6 @@ const GlobalStyle = createGlobalStyle`
   button, svg, [contenteditable] {
     -webkit-app-region: no-drag;
   }
-  /* for react-input-autosize */
-  input {
-    background-color: inherit;
-    color: inherit;
-    font-size: inherit;
-    border: inherit;
-    letter-spacing: inherit;
-    font-family: inherit;
-    padding: inherit;
-    :focus {
-      outline: inherit;
-    }
-  }
 `
 const Content = styled.div`
   margin-left: 8rem;
