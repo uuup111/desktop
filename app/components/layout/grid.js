@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { black, purple, white, gray, green } from '../../lib/colors'
+import { black, purple, white, gray } from '../../lib/colors'
 import LoadingAnimation from './loading.svg'
 
 const rowHeight = 64

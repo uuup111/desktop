@@ -5,7 +5,7 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Button } from '../layout/grid'
-import { green, red, yellow, white } from '../../lib/colors'
+import { green, red, yellow } from '../../lib/colors'
 import { Textarea, Input } from '../forms/forms'
 
 const Header = styled.div`
