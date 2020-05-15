@@ -47,6 +47,7 @@
     "babel-plugin-styled-components": "^1.10.7",
     "electron": "^7.1.1",
     "electron-builder": "^21.2.0",
+    "electron-builder-notarize": "^1.1.2",
     "file-loader": "^5.1.0",
     "np": "^5.2.1",
     "prettier-standard": "^16.2.1",
@@ -87,6 +88,10 @@
           "name": ""
         }
       ]
+    },
+    "afterSign": "electron-builder-notarize",
+    "mac": {
+      "hardenedRuntime": true
     }
   }
 }

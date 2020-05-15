@@ -30,11 +30,21 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.0
         with:
           run: npm test
+      - name: prepare for notarization
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
       - name: build and release
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.GH_TOKEN }}
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        env:
+          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
       - name: read package.json
         id: package
         uses: juliangruber/read-file-action@v1

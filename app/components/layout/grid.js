@@ -126,6 +126,6 @@ export const TopRow = styled(StickyRow)`
   }
 `
 export const Title = styled(Cell)`
-  font-size: 40px;
+  font-size: 2.5rem;
   flex-grow: 1;
 `
