@@ -5,7 +5,7 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Button } from '../layout/grid'
-import { green, red, yellow } from '../../lib/colors'
+import { green, red, yellow, gray } from '../../lib/colors'
 import { Textarea, Input } from '../forms/forms'
 
 const Header = styled.div`
@@ -107,6 +107,14 @@ const Description = styled.div`
   padding-left: 0.5rem !important;
   margin-left: calc(-0.5rem - 2px) !important;
   ${props =>
+    props.isEmpty &&
+    css`
+      color: ${gray};
+      :hover {
+        cursor: text;
+      }
+    `}
+  ${props =>
     props.isEditing &&
     css`
       animation: ${editing} 2s linear;
@@ -136,6 +144,7 @@ const StyledTextarea = styled(Textarea)`
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
   const [isEditing, setIsEditing] = useState()
+  const [isPopulatingDescription, setIsPopulatingDescription] = useState()
   const [isSaving, setIsSaving] = useState()
   const [isSaved, setIsSaved] = useState()
   const [isTitleInvalid, setIsTitleInvalid] = useState()
@@ -181,6 +190,12 @@ const Profile = ({ p2p, profile, setProfile }) => {
     fetchModules()
   }, [])
 
+  useEffect(() => {
+    if (!descriptionRef.current) return
+    descriptionRef.current.focus()
+    setIsPopulatingDescription(false)
+  }, [isPopulatingDescription])
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -223,6 +238,13 @@ const Profile = ({ p2p, profile, setProfile }) => {
             isEditing={isEditing}
             isSaving={isSaving}
             isSaved={isSaved}
+            isEmpty={profile.rawJSON.description.length === 0}
+            onClick={() => {
+              if (profile.rawJSON.description.length === 0 && !isEditing) {
+                setIsEditing(true)
+                setIsPopulatingDescription(true)
+              }
+            }}
           >
             {isEditing ? (
               <StyledTextarea
@@ -232,7 +254,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
                 onChange={e => setDescription(e.target.value)}
               />
             ) : (
-              profile.rawJSON.description
+              profile.rawJSON.description || 'Add a description…'
             )}
           </Description>
         </Header>
