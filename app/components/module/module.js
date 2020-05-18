@@ -56,9 +56,7 @@ const AttributeIcon = styled.div`
 `
 const Content = styled.div`
   position: absolute;
-  left: calc(
-    8rem + ${props => props.pad || 2}rem
-  );
+  left: calc(8rem + ${props => props.pad || 2}rem);
   top: 2rem;
   right: 12rem;
   bottom: 2rem;

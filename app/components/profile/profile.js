@@ -49,6 +49,17 @@ const saved = keyframes`
     border-left-color: transparent;
   }
 `
+const invalid = keyframes`
+  0% {
+    border-left-color: transparent;
+  }
+  50% {
+    border-left-color: ${red};
+  }
+  100% {
+    border-left-color: transparent;
+  }
+`
 const Indicator = styled.div`
   border-left: 2px solid transparent;
   height: 45px;
@@ -63,6 +74,11 @@ const Indicator = styled.div`
     css`
       animation: ${editing} 2s linear;
       border-left-color: ${yellow};
+    `}
+  ${props =>
+    props.isInvalid &&
+    css`
+      animation: ${invalid} 1s linear;
     `}
   ${props =>
     props.isSaving &&
@@ -122,6 +138,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
   const [isEditing, setIsEditing] = useState()
   const [isSaving, setIsSaving] = useState()
   const [isSaved, setIsSaved] = useState()
+  const [isTitleInvalid, setIsTitleInvalid] = useState()
   const [description, setDescription] = useState(profile.rawJSON.description)
   const titleRef = useRef()
   const descriptionRef = useRef()
@@ -146,9 +163,13 @@ const Profile = ({ p2p, profile, setProfile }) => {
         title: titleRef.current.value,
         description: descriptionRef.current.value
       })
-    } finally {
+    } catch (_) {
+      setIsTitleInvalid(true)
       setIsSaving(false)
+      setIsEditing(false)
+      return
     }
+    setIsSaving(false)
     setProfile(await p2p.get(profile.rawJSON.url))
     setIsEditing(false)
     setIsSaved(true)
@@ -169,12 +190,10 @@ const Profile = ({ p2p, profile, setProfile }) => {
               isEditing={isEditing}
               isSaving={isSaving}
               isSaved={isSaved}
+              isInvalid={isTitleInvalid}
             />
             {isEditing ? (
-              <Input
-                ref={titleRef}
-                defaultValue={profile.rawJSON.title}
-              />
+              <Input ref={titleRef} defaultValue={profile.rawJSON.title} />
             ) : (
               profile.rawJSON.title
             )}
