@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
-  button, svg {
+  button, svg, input, textarea {
     -webkit-app-region: no-drag;
   }
 `
