@@ -16,45 +16,12 @@ const Avatar = styled(AvatarPlaceholder)`
   margin-top: 2rem;
   margin-bottom: 23px;
 `
-const editing = keyframes`
-  0% {
-    border-left-color: transparent;
-  }
-  33% {
-    border-left-color: ${yellow};
-  }
-  66% {
-    border-left-color: transparent;
-  }
-  100% {
-    border-left-color: ${yellow};
-  }
-`
-const saving = keyframes`
-  from {
-    border-left-color: ${yellow};
-  }
-  to {
-    border-left-color: transparent;
-  }
-`
 const saved = keyframes`
   0% {
     border-left-color: transparent;
   }
   50% {
     border-left-color: ${green};
-  }
-  100% {
-    border-left-color: transparent;
-  }
-`
-const invalid = keyframes`
-  0% {
-    border-left-color: transparent;
-  }
-  50% {
-    border-left-color: ${red};
   }
   100% {
     border-left-color: transparent;
@@ -68,28 +35,27 @@ const Indicator = styled.div`
   left: -0.5rem;
   top: 0.5rem;
   margin-left: -2px;
+  transition: border-left-color 1s;
 
   ${props =>
     props.isEditing &&
     css`
-      animation: ${editing} 2s linear;
       border-left-color: ${yellow};
     `}
   ${props =>
     props.isInvalid &&
     css`
-      animation: ${invalid} 1s linear;
+      border-left-color: ${red};
     `}
   ${props =>
     props.isSaving &&
     css`
-      animation: ${saving} 1s linear;
       border-left-color: transparent;
     `}
   ${props =>
     props.isSaved &&
     css`
-      animation: ${saved} 1s linear;
+      animation: ${saved} 2s linear;
     `}
 `
 const Description = styled.div`
@@ -106,6 +72,7 @@ const Description = styled.div`
   border-left: 2px solid transparent;
   padding-left: 0.5rem !important;
   margin-left: calc(-0.5rem - 2px) !important;
+  transition: border-left-color 1s;
   ${props =>
     props.isEmpty &&
     css`
@@ -117,19 +84,17 @@ const Description = styled.div`
   ${props =>
     props.isEditing &&
     css`
-      animation: ${editing} 2s linear;
-      border-left: 2px solid ${yellow};
+      border-left-color: ${yellow};
     `}
   ${props =>
     props.isSaving &&
     css`
-      animation: ${saving} 1s linear;
       border-left-color: transparent;
     `}
   ${props =>
     props.isSaved &&
     css`
-      animation: ${saved} 1s linear;
+      animation: ${saved} 2s linear;
     `}
 `
 const StyledTextarea = styled(Textarea)`
@@ -178,6 +143,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
       setIsEditing(false)
       return
     }
+    setIsTitleInvalid(false)
     setIsSaving(false)
     setProfile(await p2p.get(profile.rawJSON.url))
     setIsEditing(false)
@@ -208,14 +174,24 @@ const Profile = ({ p2p, profile, setProfile }) => {
               isInvalid={isTitleInvalid}
             />
             {isEditing ? (
-              <Input ref={titleRef} defaultValue={profile.rawJSON.title} />
+              <Input
+                ref={titleRef}
+                defaultValue={profile.rawJSON.title}
+                onChange={e => {
+                  setIsTitleInvalid(
+                    e.target.value.length === 0 || e.target.value.length > 300
+                  )
+                }}
+              />
             ) : (
               profile.rawJSON.title
             )}
           </Title>
           {isEditing ? (
             <>
-              <Button color={green}>Save</Button>
+              <Button color={green} disabled={isTitleInvalid}>
+                Save
+              </Button>
               <Button
                 color={red}
                 onClick={() => {
