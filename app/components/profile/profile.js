@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
@@ -68,7 +68,6 @@ const Description = styled.div`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  white-space: pre;
   border-left: 2px solid transparent;
   padding-left: 0.5rem !important;
   margin-left: calc(-0.5rem - 2px) !important;
@@ -226,8 +225,15 @@ const Profile = ({ p2p, profile, setProfile }) => {
                 ref={descriptionRef}
                 defaultValue={profile.rawJSON.description}
               />
+            ) : profile.rawJSON.description ? (
+              profile.rawJSON.description.split('\n').map((line, index) => (
+                <Fragment key={index}>
+                  {line}
+                  <br />
+                </Fragment>
+              ))
             ) : (
-              profile.rawJSON.description || 'Add a description…'
+              'Add a description…'
             )}
           </Description>
         </Header>
