@@ -196,6 +196,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
                 color={red}
                 onClick={() => {
                   setIsEditing(false)
+                  setIsTitleInvalid(false)
                   setDescription(profile.rawJSON.description)
                 }}
               >

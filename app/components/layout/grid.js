@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { black, purple, white, gray } from '../../lib/colors'
 import LoadingAnimation from './loading.svg'
 
@@ -49,30 +49,28 @@ const StyledButton = styled(Cell).attrs({
   position: relative;
   text-align: center;
 
-  :hover {
-    color: ${props => (props.isLoading ? gray : white)};
-    background-color: ${props =>
+  ${props =>
       props.disabled
-        ? gray
-        : props.emphasis === 'top'
-        ? black
-        : props.color || purple};
-    path {
-      fill: ${white};
-    }
-  }
+        ? css`
+            cursor: not-allowed;
+          `
+        : css`
+            :hover {
+              color: ${props => (props.isLoading ? gray : white)};
+              background-color: ${props =>
+                props.emphasis === 'top' ? black : props.color || purple};
+              path {
+                fill: ${white};
+              }
+            }
 
-  :active {
-    background-color: ${props =>
-      props.disabled
-        ? gray
-        : props.emphasis === 'top'
-        ? props.color || purple
-        : black};
-    outline: none;
-  }
-
-  :focus {
+            :active {
+              background-color: ${props =>
+                props.emphasis === 'top' ? props.color || purple : black};
+              outline: none;
+            }
+          `}
+    :focus {
     outline: none;
   }
 
@@ -81,14 +79,21 @@ const StyledButton = styled(Cell).attrs({
     border-top-width: 0px;
     border-bottom-width: 0px;
     border-color: ${purple};
-    color: ${props => props.color || white};
+    color: ${props => (props.disabled ? gray : props.color || white)};
     margin-right: 0;
-    :hover {
-      color: ${white};
-    }
-    :active {
-      color: ${props => props.color || black};
-    }
+    ${props =>
+      props.disabled
+        ? css`
+            background-color: inherit;
+          `
+        : css`
+            :hover {
+              color: ${white};
+            }
+            :active {
+              color: ${props => props.color || black};
+            }
+          `}
   }
 `
 const Loading = styled(LoadingAnimation)`
