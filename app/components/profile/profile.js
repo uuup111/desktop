@@ -98,7 +98,7 @@ const Description = styled.div`
     `}
 `
 const StyledTextarea = styled(Textarea)`
-  height: ${props => props.lines * 24}px;
+  height: 4.5rem;
   border: 0;
   padding: 0;
   margin: 0;
@@ -113,7 +113,6 @@ const Profile = ({ p2p, profile, setProfile }) => {
   const [isSaving, setIsSaving] = useState()
   const [isSaved, setIsSaved] = useState()
   const [isTitleInvalid, setIsTitleInvalid] = useState()
-  const [description, setDescription] = useState(profile.rawJSON.description)
   const titleRef = useRef()
   const descriptionRef = useRef()
 
@@ -197,7 +196,6 @@ const Profile = ({ p2p, profile, setProfile }) => {
                 onClick={() => {
                   setIsEditing(false)
                   setIsTitleInvalid(false)
-                  setDescription(profile.rawJSON.description)
                 }}
               >
                 Cancel
@@ -226,9 +224,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
             {isEditing ? (
               <StyledTextarea
                 ref={descriptionRef}
-                value={description}
-                lines={Math.min(3, description.split(/\n/).length)}
-                onChange={e => setDescription(e.target.value)}
+                defaultValue={profile.rawJSON.description}
               />
             ) : (
               profile.rawJSON.description || 'Add a description…'
