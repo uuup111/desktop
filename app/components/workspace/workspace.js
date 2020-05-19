@@ -32,7 +32,6 @@ export default ({ p2p }) => {
                 key={mod.rawJSON.url}
                 p2p={p2p}
                 mod={mod}
-                pad='small'
                 to={`/content/${encode(mod.rawJSON.url)}`}
               />
             )

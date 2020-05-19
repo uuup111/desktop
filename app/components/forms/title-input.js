@@ -19,7 +19,7 @@ const TitleInput = styled(Input).attrs({
 })`
   margin-bottom: 8px;
 `
-export default ({ onIsValid, ...props }) => {
+export default ({ onIsValid = () => {}, ...props }) => {
   const [charCount, setCharCount] = useState(0)
 
   let color

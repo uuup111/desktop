@@ -20,6 +20,7 @@ const StyledLogo = styled(Logo)`
 `
 const StyledRow = styled(Row)`
   text-align: left;
+  display: block;
 `
 const StyledButton = styled(Button)`
   color: ${white};

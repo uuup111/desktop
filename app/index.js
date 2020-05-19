@@ -71,7 +71,7 @@ const App = () => {
           <Create p2p={p2p} profile={profile} />
         </Route>
         <Route path='/profile' exact>
-          <Profile p2p={p2p} profile={profile} />
+          <Profile p2p={p2p} profile={profile} setProfile={setProfile} />
         </Route>
         <Route path='/profile/:key'>
           <ProfileContent p2p={p2p} profile={profile} setProfile={setProfile} />

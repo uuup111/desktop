@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { purple, black, white } from '../../lib/colors'
 import CaretDown from '../icons/caret-down-1rem.svg'
 import CaretDownLarge from '../icons/caret-down-2rem.svg'
+import { Title } from '../layout/grid'
 
 export const Label = styled.label`
   font-weight: bold;
@@ -20,6 +21,15 @@ export const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   font-family: Roboto;
+  letter-spacing: 0.05rem;
+
+  ${Title} > & {
+    border: 0;
+    display: inline-block;
+    font-size: 40px;
+    padding: 0;
+    outline: 0;
+  }
 `
 
 const SelectContainer = styled.div`
@@ -70,4 +80,6 @@ export const Textarea = styled.textarea`
   box-sizing: border-box;
   height: 12rem;
   font-family: Roboto;
+  letter-spacing: inherit;
+  line-height: inherit;
 `

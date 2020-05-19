@@ -11,7 +11,7 @@ import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
 
 const Container = styled.div`
-  margin: 2rem 4rem;
+  margin: 2rem;
 `
 const BackArrow = styled(Arrow)`
   transform: rotate(270deg);

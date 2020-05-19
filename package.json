@@ -44,6 +44,7 @@
     "@storybook/react": "^5.2.8",
     "@svgr/webpack": "^5.2.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.7",
     "electron": "^7.1.1",
     "electron-builder": "^21.2.0",
     "electron-builder-notarize": "^1.1.2",
