@@ -61,6 +61,6 @@ typings/
 .next
 .DS_Store
 dist/
-build/*
-!build/icon.png
-!build/background.png
+build/bundle.js
+build/*.ttf
+build/index.html
