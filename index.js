@@ -36,7 +36,7 @@ const createMainWindow = async () => {
   return win
 }
 
-if (!app.requestSingleInstanceLock) app.quit()
+if (!app.requestSingleInstanceLock()) app.quit()
 
 app.on('second-instance', () => {
   if (!mainWindow) return
