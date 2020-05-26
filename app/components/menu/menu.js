@@ -17,6 +17,7 @@ const Container = styled.div`
 `
 const StyledLogo = styled(Logo)`
   margin-bottom: 2rem;
+  -webkit-app-region: drag;
 `
 const StyledRow = styled(Row)`
   text-align: left;

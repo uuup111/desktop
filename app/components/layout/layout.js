@@ -17,12 +17,14 @@ const GlobalStyle = createGlobalStyle`
     src: url(${RobotoLight}) format('truetype');
     font-weight: 300;
   }
+  html {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+  }
   body {
     background-color: ${black};
     color: ${white};
     margin: 0;
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
     font-family: Roboto;
     line-height: 1.5;
     letter-spacing: 0.05em;
