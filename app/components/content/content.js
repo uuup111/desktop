@@ -170,12 +170,29 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
       {renderRow(
         <>
           <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
-          <OpenFolder mod={content} />
-          <ExportZip mod={content} />
-          {!isEditing && (
-            <Button color={green} onClick={() => setIsEditing(true)}>
-              Edit content
-            </Button>
+          {isEditing ? (
+            <>
+              <Button color={green} disabled={false /* isTitleInvalid */}>
+                Save
+              </Button>
+              <Button
+                color={red}
+                onClick={() => {
+                  setIsEditing(false)
+                  setIsTitleInvalid(false)
+                }}
+              >
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <>
+              <OpenFolder mod={content} />
+              <ExportZip mod={content} />
+              <Button color={green} onClick={() => setIsEditing(true)}>
+                Edit content
+              </Button>
+            </>
           )}
         </>
       )}
