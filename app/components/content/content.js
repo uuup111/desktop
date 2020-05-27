@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { purple, white, green, yellow, red, gray } from '../../lib/colors'
 import { encode } from 'dat-encoding'
-import { Button } from '../layout/grid'
+import { Button, Title } from '../layout/grid'
 import { useHistory, Link } from 'react-router-dom'
 import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
+import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
 const Container = styled.div`
   margin: 2rem;
@@ -85,13 +86,13 @@ const File = styled.div`
 const modDirectory = mod =>
   `${remote.app.getPath('home')}/.p2pcommons/${encode(mod.rawJSON.url)}`
 
-export const OpenFolder = ({ mod }) => (
+const OpenFolder = ({ mod }) => (
   <Button onClick={() => remote.shell.openItem(modDirectory(mod))}>
     Open folder
   </Button>
 )
 
-export const ExportZip = ({ mod }) => (
+const ExportZip = ({ mod }) => (
   <Button
     onClick={async () => {
       const zip = new AdmZip()
@@ -113,7 +114,7 @@ export const ExportZip = ({ mod }) => (
   </Button>
 )
 
-const Content = ({ p2p, content, profile, setProfile }) => {
+const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [authors, setAuthors] = useState()
   const [parents, setParents] = useState()
   const [files, setFiles] = useState()
@@ -163,95 +164,100 @@ const Content = ({ p2p, content, profile, setProfile }) => {
     })()
   }, [content.rawJSON.url])
 
-  return (
+  return authors && parents ? (
     <>
-      {authors && parents && (
-        <Container>
-          <BackArrow onClick={() => history.go(-1)} />
-          {parents.map(parent => (
-            <Parent
-              key={`${parent.rawJSON.url}+${parent.rawJSON.version}`}
-              to={`/content/${encode(parent.rawJSON.url)}`}
-            >
-              {parent.rawJSON.title}
-            </Parent>
-          ))}
-          <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
-          {authors.map(author =>
-            isPublished ? (
-              <PublishedAuthor key={author} to='/profile'>
-                {author}
-              </PublishedAuthor>
-            ) : (
-              <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
-            )
-          )}
-          <Description>{content.rawJSON.description}</Description>
-          {files && files.length > 0 && (
-            <>
-              <Label>Files</Label>
-              <Files>
-                {files &&
-                  files.map(path => (
-                    <File
-                      key={path}
-                      onClick={() => remote.shell.openItem(`${dir}/${path}`)}
-                    >
-                      {path}
-                    </File>
-                  ))}
-              </Files>
-            </>
-          )}
-          {isPublished ? (
-            <Button
-              color={yellow}
-              onClick={async () => {
-                await p2p.unpublish(
-                  `dat://${encode(content.rawJSON.url)}+${
-                    content.metadata.version
-                  }`,
-                  profile.rawJSON.url
-                )
-                setProfile(await p2p.get(profile.rawJSON.url))
-                history.replace(`/content/${encode(content.rawJSON.url)}`)
-              }}
-            >
-              Unpublish
-            </Button>
+      {renderRow(
+        <>
+          <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
+          <OpenFolder mod={content} />
+          <ExportZip mod={content} />
+        </>
+      )}
+      <Container>
+        <BackArrow onClick={() => history.go(-1)} />
+        {parents.map(parent => (
+          <Parent
+            key={`${parent.rawJSON.url}+${parent.rawJSON.version}`}
+            to={`/content/${encode(parent.rawJSON.url)}`}
+          >
+            {parent.rawJSON.title}
+          </Parent>
+        ))}
+        <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
+        {authors.map(author =>
+          isPublished ? (
+            <PublishedAuthor key={author} to='/profile'>
+              {author}
+            </PublishedAuthor>
           ) : (
-            <Button
-              color={green}
-              onClick={async () => {
-                await p2p.publish(
-                  `dat://${encode(content.rawJSON.url)}+${
-                    content.metadata.version
-                  }`,
-                  profile.rawJSON.url
-                )
-                setProfile(await p2p.get(profile.rawJSON.url))
-              }}
-            >
-              Publish
-            </Button>
-          )}
+            <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
+          )
+        )}
+        <Description>{content.rawJSON.description}</Description>
+        {files && files.length > 0 && (
+          <>
+            <Label>Files</Label>
+            <Files>
+              {files &&
+                files.map(path => (
+                  <File
+                    key={path}
+                    onClick={() => remote.shell.openItem(`${dir}/${path}`)}
+                  >
+                    {path}
+                  </File>
+                ))}
+            </Files>
+          </>
+        )}
+        {isPublished ? (
           <Button
-            color={red}
-            isLoading={isDeleting}
+            color={yellow}
             onClick={async () => {
-              setIsDeleting(true)
-              await p2p.unpublish(content.rawJSON.url, profile.rawJSON.url)
-              await p2p.delete(content.rawJSON.url)
+              await p2p.unpublish(
+                `dat://${encode(content.rawJSON.url)}+${
+                  content.metadata.version
+                }`,
+                profile.rawJSON.url
+              )
               setProfile(await p2p.get(profile.rawJSON.url))
-              history.push('/')
+              history.replace(`/content/${encode(content.rawJSON.url)}`)
             }}
           >
-            Delete content
+            Unpublish
           </Button>
-        </Container>
-      )}
+        ) : (
+          <Button
+            color={green}
+            onClick={async () => {
+              await p2p.publish(
+                `dat://${encode(content.rawJSON.url)}+${
+                  content.metadata.version
+                }`,
+                profile.rawJSON.url
+              )
+              setProfile(await p2p.get(profile.rawJSON.url))
+            }}
+          >
+            Publish
+          </Button>
+        )}
+        <Button
+          color={red}
+          isLoading={isDeleting}
+          onClick={async () => {
+            setIsDeleting(true)
+            await p2p.unpublish(content.rawJSON.url, profile.rawJSON.url)
+            await p2p.delete(content.rawJSON.url)
+            setProfile(await p2p.get(profile.rawJSON.url))
+            history.push('/')
+          }}
+        >
+          Delete content
+        </Button>
+      </Container>
     </>
-  )
+  ) : null
 }
 
 export default Content
