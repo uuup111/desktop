@@ -91,7 +91,7 @@ const StyledButton = styled(Cell).attrs({
               color: ${white};
             }
             :active {
-              color: ${props => props.color || black};
+              color: ${props => props.color || white};
             }
           `}
   }
