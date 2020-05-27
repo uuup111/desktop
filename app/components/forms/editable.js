@@ -15,11 +15,15 @@ const saved = keyframes`
   }
 `
 const StyledDescription = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  ${props =>
+    props.maxRows &&
+    css`
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: ${props.maxRows};
+    `}
   border-left: 2px solid transparent;
   padding-left: 0.5rem !important;
   margin-left: calc(-0.5rem - 2px) !important;
@@ -49,7 +53,7 @@ const StyledDescription = styled.div`
     `}
 `
 const StyledTextarea = styled(Textarea)`
-  height: 4.5rem;
+  /*height: 4.5rem;*/
   border: 0;
   padding: 0;
   margin: 0;
@@ -65,6 +69,7 @@ export const Description = ({
   onClick,
   onChange,
   isFocused,
+  maxRows,
   ...props
 }) => {
   const textareaRef = useRef()
@@ -81,6 +86,7 @@ export const Description = ({
       isSaved={isSaved}
       isEmpty={value.length === 0}
       onClick={onClick}
+      maxRows={maxRows}
       {...props}
     >
       {isEditing ? (
@@ -88,6 +94,7 @@ export const Description = ({
           defaultValue={value}
           onChange={onChange}
           ref={textareaRef}
+          maxRows={maxRows}
         />
       ) : value ? (
         value.split('\n').map((line, index) => (

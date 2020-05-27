@@ -170,6 +170,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
             isSaved={isSaved}
             value={description}
             isFocused={isPopulatingDescription}
+            maxRows={3}
             onClick={() => {
               if (description.length === 0 && !isEditing) {
                 setIsEditing(true)

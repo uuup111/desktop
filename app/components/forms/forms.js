@@ -4,6 +4,7 @@ import { purple, black, white } from '../../lib/colors'
 import CaretDown from '../icons/caret-down-1rem.svg'
 import CaretDownLarge from '../icons/caret-down-2rem.svg'
 import { Title } from '../layout/grid'
+import TextareaAutosize from 'react-textarea-autosize'
 
 export const Label = styled.label`
   font-weight: bold;
@@ -68,7 +69,7 @@ export const Select = ({ large, ...props }) => (
   </SelectContainer>
 )
 
-export const Textarea = styled.textarea`
+export const Textarea = styled(TextareaAutosize)`
   border: 2px solid ${purple};
   background-color: ${black};
   font-size: 1rem;
