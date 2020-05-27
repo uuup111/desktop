@@ -120,6 +120,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [files, setFiles] = useState()
   const [isPublished, setIsPublished] = useState()
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isEditing, setIsEditing] = useState()
   const history = useHistory()
 
   const dir = modDirectory(content)
@@ -171,6 +172,11 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
           <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
           <OpenFolder mod={content} />
           <ExportZip mod={content} />
+          {!isEditing && (
+            <Button color={green} onClick={() => setIsEditing(true)}>
+              Edit content
+            </Button>
+          )}
         </>
       )}
       <Container>
