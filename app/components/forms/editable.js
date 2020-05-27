@@ -15,10 +15,6 @@ const saved = keyframes`
   }
 `
 const StyledDescription = styled.div`
-  position: absolute;
-  left: 11rem;
-  top: calc(4rem - 4px);
-  right: 146px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -61,7 +57,16 @@ const StyledTextarea = styled(Textarea)`
   resize: none;
 `
 
-export const Description = ({ isEditing, isSaving, isSaved, value, onClick, onChange, isFocused }) => {
+export const Description = ({
+  isEditing,
+  isSaving,
+  isSaved,
+  value,
+  onClick,
+  onChange,
+  isFocused,
+  ...props
+}) => {
   const textareaRef = useRef()
 
   useEffect(() => {
@@ -76,6 +81,7 @@ export const Description = ({ isEditing, isSaving, isSaved, value, onClick, onCh
       isSaved={isSaved}
       isEmpty={value.length === 0}
       onClick={onClick}
+      {...props}
     >
       {isEditing ? (
         <StyledTextarea

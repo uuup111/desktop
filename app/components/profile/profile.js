@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
@@ -59,6 +59,12 @@ const Indicator = styled.div`
       animation: ${saved} 2s linear;
     `}
 `
+const StyledDescription = styled(Description)`
+  position: absolute;
+  left: 11rem;
+  top: calc(4rem - 4px);
+  right: 146px;
+`
 
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
@@ -88,7 +94,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
       await p2p.set({
         url: profile.rawJSON.url,
         title: titleRef.current.value,
-        description: description
+        description
       })
     } catch (_) {
       setIsTitleInvalid(true)
@@ -158,7 +164,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
         </TopRow>
         <Header>
           <Avatar />
-          <Description
+          <StyledDescription
             isEditing={isEditing}
             isSaving={isSaving}
             isSaved={isSaved}

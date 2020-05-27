@@ -10,6 +10,7 @@ import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
+import { Description } from '../forms/editable'
 
 const Container = styled.div`
   margin: 2rem;
@@ -56,7 +57,7 @@ const UnpublishedAuthor = styled.span`
   font-size: 1.5rem;
   margin-bottom: 2px;
 `
-const Description = styled.div`
+const StyledDescription = styled(Description)`
   margin-top: 2rem;
   margin-bottom: 4rem;
 `
@@ -119,8 +120,12 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [parents, setParents] = useState()
   const [files, setFiles] = useState()
   const [isPublished, setIsPublished] = useState()
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState()
   const [isEditing, setIsEditing] = useState()
+  const [isSaving, setIsSaving] = useState()
+  const [isSaved, setIsSaved] = useState()
+  const [description, setDescription] = useState(content.rawJSON.description)
+  const [isPopulatingDescription, setIsPopulatingDescription] = useState()
   const history = useHistory()
 
   const dir = modDirectory(content)
@@ -172,14 +177,28 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
           <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
           {isEditing ? (
             <>
-              <Button color={green} disabled={false /* isTitleInvalid */}>
+              <Button
+                color={green}
+                onClick={async () => {
+                  setIsSaving(true)
+                  await p2p.set({
+                    url: content.rawJSON.url,
+                    description
+                  })
+                  content.rawJSON.description = description
+                  setIsSaving(false)
+                  setIsEditing(false)
+                  setIsSaved(true)
+                  setTimeout(() => setIsSaved(false), 2000)
+                }}
+              >
                 Save
               </Button>
               <Button
                 color={red}
                 onClick={() => {
+                  setDescription(content.rawJSON.description)
                   setIsEditing(false)
-                  setIsTitleInvalid(false)
                 }}
               >
                 Cancel
@@ -216,7 +235,20 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
             <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
           )
         )}
-        <Description>{content.rawJSON.description}</Description>
+        <StyledDescription
+          isEditing={isEditing}
+          isSaving={isSaving}
+          isSaved={isSaved}
+          value={description}
+          isFocused={isPopulatingDescription}
+          onClick={() => {
+            if (description.length === 0 && !isEditing) {
+              setIsEditing(true)
+              setIsPopulatingDescription(true)
+            }
+          }}
+          onChange={e => setDescription(e.target.value)}
+        />
         {files && files.length > 0 && (
           <>
             <Label>Files</Label>
