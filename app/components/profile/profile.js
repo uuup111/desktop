@@ -5,8 +5,9 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Button } from '../layout/grid'
-import { green, red, yellow, gray } from '../../lib/colors'
-import { Textarea, Input } from '../forms/forms'
+import { green, red, yellow } from '../../lib/colors'
+import { Input } from '../forms/forms'
+import { Description } from '../forms/editable'
 
 const Header = styled.div`
   position: relative;
@@ -58,52 +59,6 @@ const Indicator = styled.div`
       animation: ${saved} 2s linear;
     `}
 `
-const Description = styled.div`
-  position: absolute;
-  left: 11rem;
-  top: calc(4rem - 4px);
-  right: 146px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  border-left: 2px solid transparent;
-  padding-left: 0.5rem !important;
-  margin-left: calc(-0.5rem - 2px) !important;
-  transition: border-left-color 1s;
-  ${props =>
-    props.isEmpty &&
-    css`
-      color: ${gray};
-      :hover {
-        cursor: text;
-      }
-    `}
-  ${props =>
-    props.isEditing &&
-    css`
-      border-left-color: ${yellow};
-    `}
-  ${props =>
-    props.isSaving &&
-    css`
-      border-left-color: transparent;
-    `}
-  ${props =>
-    props.isSaved &&
-    css`
-      animation: ${saved} 2s linear;
-    `}
-`
-const StyledTextarea = styled(Textarea)`
-  height: 4.5rem;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  outline: 0;
-  resize: none;
-`
 
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
@@ -112,8 +67,8 @@ const Profile = ({ p2p, profile, setProfile }) => {
   const [isSaving, setIsSaving] = useState()
   const [isSaved, setIsSaved] = useState()
   const [isTitleInvalid, setIsTitleInvalid] = useState()
+  const [description, setDescription] = useState(profile.rawJSON.description)
   const titleRef = useRef()
-  const descriptionRef = useRef()
 
   const fetchModules = async () => {
     const modules = await Promise.all(
@@ -133,7 +88,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
       await p2p.set({
         url: profile.rawJSON.url,
         title: titleRef.current.value,
-        description: descriptionRef.current.value
+        description: description
       })
     } catch (_) {
       setIsTitleInvalid(true)
@@ -153,12 +108,6 @@ const Profile = ({ p2p, profile, setProfile }) => {
   useEffect(() => {
     fetchModules()
   }, [])
-
-  useEffect(() => {
-    if (!descriptionRef.current) return
-    descriptionRef.current.focus()
-    setIsPopulatingDescription(false)
-  }, [isPopulatingDescription])
 
   return (
     <>
@@ -193,6 +142,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
               <Button
                 color={red}
                 onClick={() => {
+                  setDescription(profile.rawJSON.description)
                   setIsEditing(false)
                   setIsTitleInvalid(false)
                 }}
@@ -212,30 +162,16 @@ const Profile = ({ p2p, profile, setProfile }) => {
             isEditing={isEditing}
             isSaving={isSaving}
             isSaved={isSaved}
-            isEmpty={profile.rawJSON.description.length === 0}
+            value={description}
+            isFocused={isPopulatingDescription}
             onClick={() => {
-              if (profile.rawJSON.description.length === 0 && !isEditing) {
+              if (description.length === 0 && !isEditing) {
                 setIsEditing(true)
                 setIsPopulatingDescription(true)
               }
             }}
-          >
-            {isEditing ? (
-              <StyledTextarea
-                ref={descriptionRef}
-                defaultValue={profile.rawJSON.description}
-              />
-            ) : profile.rawJSON.description ? (
-              profile.rawJSON.description.split('\n').map((line, index) => (
-                <Fragment key={index}>
-                  {line}
-                  <br />
-                </Fragment>
-              ))
-            ) : (
-              'Add a description…'
-            )}
-          </Description>
+            onChange={e => setDescription(e.target.value)}
+          />
         </Header>
       </form>
       <StickyRow top={114}>
