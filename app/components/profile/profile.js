@@ -7,6 +7,7 @@ import { encode } from 'dat-encoding'
 import { Title, StickyRow, TopRow, Button } from '../layout/grid'
 import { green, red, yellow, gray } from '../../lib/colors'
 import { Textarea, Input } from '../forms/forms'
+import { Indicator } from '../editing'
 
 const Header = styled.div`
   position: relative;
@@ -15,48 +16,6 @@ const Avatar = styled(AvatarPlaceholder)`
   margin-left: 2rem;
   margin-top: 2rem;
   margin-bottom: 23px;
-`
-const saved = keyframes`
-  0% {
-    border-left-color: transparent;
-  }
-  50% {
-    border-left-color: ${green};
-  }
-  100% {
-    border-left-color: transparent;
-  }
-`
-const Indicator = styled.div`
-  border-left: 2px solid transparent;
-  height: 45px;
-  display: inline-block;
-  position: relative;
-  left: -0.5rem;
-  top: 0.5rem;
-  margin-left: -2px;
-  transition: border-left-color 1s;
-
-  ${props =>
-    props.isEditing &&
-    css`
-      border-left-color: ${yellow};
-    `}
-  ${props =>
-    props.isInvalid &&
-    css`
-      border-left-color: ${red};
-    `}
-  ${props =>
-    props.isSaving &&
-    css`
-      border-left-color: transparent;
-    `}
-  ${props =>
-    props.isSaved &&
-    css`
-      animation: ${saved} 2s linear;
-    `}
 `
 const Description = styled.div`
   position: absolute;
