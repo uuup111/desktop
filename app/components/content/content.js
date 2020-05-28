@@ -190,6 +190,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
                     description
                   })
                   content.rawJSON.description = description
+                  content.rawJSON.title = title
                   setIsSaving(false)
                   setIsEditing(false)
                   setIsSaved(true)
