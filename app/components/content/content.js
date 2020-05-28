@@ -14,6 +14,7 @@ import { Description, Title } from '../forms/editable'
 
 const Container = styled.div`
   margin: 2rem;
+  margin-right: 6rem;
 `
 const BackArrow = styled(Arrow)`
   transform: rotate(270deg);
@@ -64,7 +65,6 @@ const Files = styled.div`
   margin-bottom: 4rem;
 `
 const File = styled.div`
-  width: 100%;
   border: 2px solid ${green};
   line-height: 2;
   padding-left: 1rem;
