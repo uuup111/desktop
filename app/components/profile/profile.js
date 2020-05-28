@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import styled, { css, keyframes } from 'styled-components'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import AvatarPlaceholder from './avatar-placeholder.svg'
 import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
-import { Title, StickyRow, TopRow, Button } from '../layout/grid'
-import { green, red, yellow } from '../../lib/colors'
-import { Input } from '../forms/forms'
-import { Description } from '../forms/editable'
+import { Title as TitleCell, StickyRow, TopRow, Button } from '../layout/grid'
+import { green, red } from '../../lib/colors'
+import { Description, Title } from '../forms/editable'
 
 const Header = styled.div`
   position: relative;
@@ -17,53 +16,14 @@ const Avatar = styled(AvatarPlaceholder)`
   margin-top: 2rem;
   margin-bottom: 23px;
 `
-const saved = keyframes`
-  0% {
-    border-left-color: transparent;
-  }
-  50% {
-    border-left-color: ${green};
-  }
-  100% {
-    border-left-color: transparent;
-  }
-`
-const Indicator = styled.div`
-  border-left: 2px solid transparent;
-  height: 45px;
-  display: inline-block;
-  position: relative;
-  left: -0.5rem;
-  top: 0.5rem;
-  margin-left: -2px;
-  transition: border-left-color 1s;
-
-  ${props =>
-    props.isEditing &&
-    css`
-      border-left-color: ${yellow};
-    `}
-  ${props =>
-    props.isInvalid &&
-    css`
-      border-left-color: ${red};
-    `}
-  ${props =>
-    props.isSaving &&
-    css`
-      border-left-color: transparent;
-    `}
-  ${props =>
-    props.isSaved &&
-    css`
-      animation: ${saved} 2s linear;
-    `}
-`
 const StyledDescription = styled(Description)`
   position: absolute;
   left: 11rem;
   top: calc(4rem - 4px);
   right: 146px;
+`
+const StyledTitle = styled(Title)`
+  font-size: 2.5rem;
 `
 
 const Profile = ({ p2p, profile, setProfile }) => {
@@ -74,7 +34,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
   const [isSaved, setIsSaved] = useState()
   const [isTitleInvalid, setIsTitleInvalid] = useState()
   const [description, setDescription] = useState(profile.rawJSON.description)
-  const titleRef = useRef()
+  const [title, setTitle] = useState(profile.rawJSON.title)
 
   const fetchModules = async () => {
     const modules = await Promise.all(
@@ -93,7 +53,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
     try {
       await p2p.set({
         url: profile.rawJSON.url,
-        title: titleRef.current.value,
+        title,
         description
       })
     } catch (_) {
@@ -119,27 +79,21 @@ const Profile = ({ p2p, profile, setProfile }) => {
     <>
       <form onSubmit={onSubmit}>
         <TopRow>
-          <Title>
-            <Indicator
+          <TitleCell>
+            <StyledTitle
               isEditing={isEditing}
               isSaving={isSaving}
               isSaved={isSaved}
               isInvalid={isTitleInvalid}
+              value={title}
+              onChange={e => {
+                setTitle(e.target.value)
+                setIsTitleInvalid(
+                  e.target.value.length === 0 || e.target.value.length > 300
+                )
+              }}
             />
-            {isEditing ? (
-              <Input
-                ref={titleRef}
-                defaultValue={profile.rawJSON.title}
-                onChange={e => {
-                  setIsTitleInvalid(
-                    e.target.value.length === 0 || e.target.value.length > 300
-                  )
-                }}
-              />
-            ) : (
-              profile.rawJSON.title
-            )}
-          </Title>
+          </TitleCell>
           {isEditing ? (
             <>
               <Button color={green} disabled={isTitleInvalid}>
@@ -149,6 +103,7 @@ const Profile = ({ p2p, profile, setProfile }) => {
                 color={red}
                 onClick={() => {
                   setDescription(profile.rawJSON.description)
+                  setTitle(profile.rawJSON.title)
                   setIsEditing(false)
                   setIsTitleInvalid(false)
                 }}

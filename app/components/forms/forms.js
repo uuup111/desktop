@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { purple, black, white } from '../../lib/colors'
 import CaretDown from '../icons/caret-down-1rem.svg'
 import CaretDownLarge from '../icons/caret-down-2rem.svg'
-import { Title } from '../layout/grid'
 import TextareaAutosize from 'react-textarea-autosize'
 
 export const Label = styled.label`
@@ -23,16 +22,7 @@ export const Input = styled.input`
   box-sizing: border-box;
   font-family: Roboto;
   letter-spacing: 0.05rem;
-
-  ${Title} > & {
-    border: 0;
-    display: inline-block;
-    font-size: 40px;
-    padding: 0;
-    outline: 0;
-  }
 `
-
 const SelectContainer = styled.div`
   position: relative;
 `
@@ -62,6 +52,7 @@ const SelectCaretLarge = styled(CaretDownLarge)`
   right: 16.37px;
   top: 10px;
 `
+
 export const Select = ({ large, ...props }) => (
   <SelectContainer>
     <SelectElement large={large} {...props} />

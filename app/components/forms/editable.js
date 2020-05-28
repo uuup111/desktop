@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useEffect } from 'react'
 import styled, { css, keyframes } from 'styled-components'
-import { gray, yellow, green } from '../../lib/colors'
-import { Textarea } from './forms'
+import { gray, yellow, green, red } from '../../lib/colors'
+import { Textarea, Input } from './forms'
 
 const saved = keyframes`
   0% {
@@ -109,3 +109,70 @@ export const Description = ({
     </StyledDescription>
   )
 }
+
+const Indicator = styled.div`
+  border-left: 2px solid transparent;
+  height: 1.125em;
+  display: inline-block;
+  position: relative;
+  left: -0.5rem;
+  top: 0.5rem;
+  margin-left: -2px;
+  transition: border-left-color 1s;
+
+  ${props =>
+    props.isEditing &&
+    css`
+      border-left-color: ${yellow};
+    `}
+  ${props =>
+    props.isInvalid &&
+    css`
+      border-left-color: ${red};
+    `}
+  ${props =>
+    props.isSaving &&
+    css`
+      border-left-color: transparent;
+    `}
+  ${props =>
+    props.isSaved &&
+    css`
+      animation: ${saved} 2s linear;
+    `}
+`
+const StyledTitle = styled.div`
+  font-size: 2rem;
+`
+const StyledInput = styled(Input)`
+  border: 0;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  font-size: inherit;
+`
+
+export const Title = ({
+  isEditing,
+  isSaving,
+  isSaved,
+  isInvalid,
+  value,
+  onChange,
+  ...props
+}) => (
+  <StyledTitle {...props}>
+    <Indicator
+      isEditing={isEditing}
+      isSaving={isSaving}
+      isSaved={isSaved}
+      isInvalid={isInvalid}
+    />
+    {isEditing ? (
+      <StyledInput defaultValue={value} onChange={onChange} />
+    ) : (
+      value
+    )}
+  </StyledTitle>
+)

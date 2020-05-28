@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { purple, white, green, yellow, red, gray } from '../../lib/colors'
 import { encode } from 'dat-encoding'
-import { Button, Title } from '../layout/grid'
+import { Button, Title as TitleCell } from '../layout/grid'
 import { useHistory, Link } from 'react-router-dom'
 import Arrow from '../arrow.svg'
 import { remote } from 'electron'
@@ -10,7 +10,7 @@ import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
-import { Description } from '../forms/editable'
+import { Description, Title } from '../forms/editable'
 
 const Container = styled.div`
   margin: 2rem;
@@ -33,8 +33,7 @@ const Parent = styled(Link)`
     cursor: pointer;
   }
 `
-const ModuleTitle = styled.div`
-  font-size: 2rem;
+const ModuleTitle = styled(Title)`
   line-height: 1.25;
   margin-bottom: 2rem;
 `
@@ -126,6 +125,8 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [isSaved, setIsSaved] = useState()
   const [description, setDescription] = useState(content.rawJSON.description)
   const [isPopulatingDescription, setIsPopulatingDescription] = useState()
+  const [title, setTitle] = useState(content.rawJSON.title)
+  const [isTitleInvalid, setIsTitleInvalid] = useState()
   const history = useHistory()
 
   const dir = modDirectory(content)
@@ -174,7 +175,9 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
     <>
       {renderRow(
         <>
-          <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
+          <TitleCell>
+            {subtypes[content.rawJSON.subtype] || 'Content'}
+          </TitleCell>
           {isEditing ? (
             <>
               <Button
@@ -183,6 +186,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
                   setIsSaving(true)
                   await p2p.set({
                     url: content.rawJSON.url,
+                    title,
                     description
                   })
                   content.rawJSON.description = description
@@ -198,6 +202,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
                 color={red}
                 onClick={() => {
                   setDescription(content.rawJSON.description)
+                  setTitle(content.rawJSON.title)
                   setIsEditing(false)
                 }}
               >
@@ -225,7 +230,19 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
             {parent.rawJSON.title}
           </Parent>
         ))}
-        <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
+        <ModuleTitle
+          isEditing={isEditing}
+          isSaving={isSaving}
+          isSaved={isSaved}
+          isInvalid={isTitleInvalid}
+          value={title}
+          onChange={e => {
+            setTitle(e.target.value)
+            setIsTitleInvalid(
+              e.target.value.length === 0 || e.target.value.length > 300
+            )
+          }}
+        />
         {authors.map(author =>
           isPublished ? (
             <PublishedAuthor key={author} to='/profile'>
