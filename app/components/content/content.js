@@ -8,7 +8,7 @@ import Arrow from '../arrow.svg'
 import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
-import { Label } from '../forms/forms'
+import { Label, Select } from '../forms/forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import { Description, Title } from '../forms/editable'
 
@@ -82,6 +82,15 @@ const File = styled.div`
     background-color: inherit;
   }
 `
+const StyledSelect = styled(Select)`
+  border: 0;
+  padding-left: 0;
+  font-size: 2.5rem;
+  margin-top: -1px;
+  :focus {
+    outline: 0;
+  }
+`
 
 const modDirectory = mod =>
   `${remote.app.getPath('home')}/.p2pcommons/${encode(mod.rawJSON.url)}`
@@ -127,6 +136,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [isPopulatingDescription, setIsPopulatingDescription] = useState()
   const [title, setTitle] = useState(content.rawJSON.title)
   const [isTitleInvalid, setIsTitleInvalid] = useState()
+  const [subtype, setSubtype] = useState(content.rawJSON.subtype)
   const history = useHistory()
 
   const dir = modDirectory(content)
@@ -176,7 +186,21 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
       {renderRow(
         <>
           <TitleCell>
-            {subtypes[content.rawJSON.subtype] || 'Content'}
+            {isEditing ? (
+              <StyledSelect
+                large
+                defaultValue={subtype}
+                onChange={e => setSubtype(e.target.value)}
+              >
+                {Object.entries(subtypes).map(([id, text]) => (
+                  <option value={id} key={id}>
+                    {text}
+                  </option>
+                ))}
+              </StyledSelect>
+            ) : (
+              subtypes[content.rawJSON.subtype] || 'Content'
+            )}
           </TitleCell>
           {isEditing ? (
             <>
@@ -187,10 +211,12 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
                   await p2p.set({
                     url: content.rawJSON.url,
                     title,
-                    description
+                    description,
+                    subtype
                   })
                   content.rawJSON.description = description
                   content.rawJSON.title = title
+                  content.rawJSON.subtype = subtype
                   setIsSaving(false)
                   setIsEditing(false)
                   setIsSaved(true)
@@ -204,6 +230,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
                 onClick={() => {
                   setDescription(content.rawJSON.description)
                   setTitle(content.rawJSON.title)
+                  setSubtype(content.rawJSON.subtype)
                   setIsEditing(false)
                 }}
               >

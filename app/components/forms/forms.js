@@ -41,7 +41,7 @@ const SelectElement = styled.select`
   margin-bottom: 1rem;
   font-family: Roboto;
   padding-left: 19px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.05rem;
 `
 const SelectCaret = styled(CaretDown)`
   position: absolute;
