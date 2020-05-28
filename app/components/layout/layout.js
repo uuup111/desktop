@@ -34,6 +34,12 @@ const GlobalStyle = createGlobalStyle`
   button, svg, input, textarea {
     -webkit-app-region: no-drag;
   }
+  #chatra.chatra--pos-right {
+    right: 16px !important;
+  }
+  #chatra.chatra--side-bottom {
+    bottom: 16px !important;
+  }
 `
 const Content = styled.div`
   margin-left: 8rem;
