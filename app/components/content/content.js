@@ -10,6 +10,7 @@ import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
+import Anchor from '../anchor'
 
 const Container = styled.div`
   margin: 2rem;
@@ -37,18 +38,11 @@ const ModuleTitle = styled.div`
   line-height: 1.25;
   margin-bottom: 2rem;
 `
-const AuthorOfListedContent = styled(Link)`
-  text-decoration: none;
-  color: ${white};
-  border-bottom: 2px solid ${purple};
+const AuthorOfListedContent = styled(Anchor).attrs({
+  as: Link
+})`
   display: inline-block;
-  -webkit-app-region: no-drag;
   font-size: 1.5rem;
-
-  :hover {
-    background-color: ${purple};
-    cursor: pointer;
-  }
 `
 const AuthorOfUnlistedContent = styled.span`
   color: ${gray};

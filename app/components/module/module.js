@@ -7,6 +7,7 @@ import HexIndicatorIsUnlisted from './hex-indicator-is-unlisted.svg'
 import { useHistory, Link } from 'react-router-dom'
 import Plus from './plus.svg'
 import { encode } from 'dat-encoding'
+import Anchor from '../anchor'
 
 const AddContentWithParent = styled(Plus)`
   position: absolute;
@@ -66,18 +67,11 @@ const Title = styled.div`
   font-size: 1.5rem;
   line-height: 1.75rem;
 `
-const AuthorOfListedContent = styled(Link)`
-  text-decoration: none;
-  color: ${white};
-  border-bottom: 2px solid ${purple};
+const AuthorOfListedContent = styled(Anchor).attrs({
+  as: Link
+})`
   margin: 1rem 0;
   display: inline-block;
-  -webkit-app-region: no-drag;
-
-  :hover {
-    background-color: ${purple};
-    cursor: pointer;
-  }
 `
 const AuthorOfUnlistedContent = styled.span`
   color: ${gray};
