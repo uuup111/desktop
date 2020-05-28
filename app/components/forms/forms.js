@@ -22,6 +22,7 @@ export const Input = styled.input`
   box-sizing: border-box;
   font-family: Roboto;
   letter-spacing: 0.05rem;
+  font-kerning: normal;
 `
 const SelectContainer = styled.div`
   position: relative;
@@ -74,4 +75,5 @@ export const Textarea = styled(TextareaAutosize)`
   font-family: Roboto;
   letter-spacing: inherit;
   line-height: inherit;
+  font-kerning: normal;
 `
