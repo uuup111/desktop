@@ -184,7 +184,9 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
               {author}
             </AuthorOfListedContent>
           ) : (
-            <AuthorOfUnlistedContent key={author}>{author}</AuthorOfUnlistedContent>
+            <AuthorOfUnlistedContent key={author}>
+              {author}
+            </AuthorOfUnlistedContent>
           )
         )}
         <Description>{content.rawJSON.description}</Description>

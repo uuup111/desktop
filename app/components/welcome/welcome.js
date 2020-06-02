@@ -84,9 +84,9 @@ const dialogs = [
       </Illustration>
       <Heading>Welcome to Hypergraph</Heading>
       <p>
-        We aim to reinvent the publication process in a way that empowers you to do
-        better science. Science that is transparent and accessible to everyone, free from
-        time-consuming bureaucracy and centralized control.
+        We aim to reinvent the publication process in a way that empowers you to
+        do better science. Science that is transparent and accessible to
+        everyone, free from time-consuming bureaucracy and centralized control.
       </p>
       <p>
         Let us explain some of the basic concepts of Hypergraph before you get
@@ -107,14 +107,14 @@ const dialogs = [
       </Illustration>
       <Heading>As-you-go, not after-the-fact</Heading>
       <p>
-        You are probably used to doing research, writing a full paper and then going
-        through the laborious process of finding a journal. With Hypergraph, we support
-        publishing each step of your research as-you-go.
+        You are probably used to doing research, writing a full paper and then
+        going through the laborious process of finding a journal. With
+        Hypergraph, we support publishing each step of your research as-you-go.
       </p>
       <p>
-        As-you-go publishing increases the value of your work by making it available to
-        others as soon as you feel ready. It also breaks down the research process into
-        bite-size chunks 🍰
+        As-you-go publishing increases the value of your work by making it
+        available to others as soon as you feel ready. It also breaks down the
+        research process into bite-size chunks 🍰
       </p>
       <Form onSubmit={next}>
         <Button emphasis='top' autoFocus>
@@ -131,14 +131,14 @@ const dialogs = [
       </Illustration>
       <Heading>How Hypergraph works</Heading>
       <p>
-        Each part of your research, whether it's a proposal, a literature study,  a data set
-        or a conclusion, is its own publication. You link them together as you go along,
-        to create a connected body of work.
+        Each part of your research, whether it's a proposal, a literature study,
+        a data set or a conclusion, is its own publication. You link them
+        together as you go along, to create a connected body of work.
       </p>
       <p>
-        This makes it much easier to do replications or multiple interpretations with the
-        same source material. Even if someone else created it. You just link your content
-        to the existing content and there you go 🌈
+        This makes it much easier to do replications or multiple interpretations
+        with the same source material. Even if someone else created it. You just
+        link your content to the existing content and there you go 🌈
       </p>
       <Form onSubmit={next}>
         <Button emphasis='top' autoFocus color={green}>
@@ -159,9 +159,9 @@ const dialogs = [
         </Illustration>
         <Heading>What should we call you?</Heading>
         <p>
-          Time to create a profile! This is where your published work is displayed. Right
-          now, your profile is just for you. In later versions, your profile and your content
-          can be shared with others.
+          Time to create a profile! This is where your published work is
+          displayed. Right now, your profile is just for you. In later versions,
+          your profile and your content can be shared with others.
         </p>
         <Form
           onSubmit={e => {
@@ -196,9 +196,9 @@ const dialogs = [
         </Illustration>
         <Heading>Introducing the Vault</Heading>
         <p>
-          We'll be launching this soon! Consider this our hosting service, to make sure
-          your content stays available to everyone. Pay once and your work stays safe 
-          forever 🎉
+          We'll be launching this soon! Consider this our hosting service, to
+          make sure your content stays available to everyone. Pay once and your
+          work stays safe forever 🎉
         </p>
         <Form
           onSubmit={async e => {
