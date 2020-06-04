@@ -135,6 +135,7 @@ const Create = ({ p2p, profile }) => {
             reimport the files into Hypergraph when you’re done.
           </Info>
           <Button
+            type='button'
             onClick={async e => {
               e.preventDefault()
               const opts = {
