@@ -9,7 +9,7 @@ const Container = styled.div`
 const CharacterCounter = styled.div`
   text-align: right;
   color: ${props => props.color};
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 `
 const TitleInput = styled(Input).attrs({
   required: true,
@@ -17,7 +17,7 @@ const TitleInput = styled(Input).attrs({
   type: 'text',
   name: 'title'
 })`
-  margin-bottom: 8px;
+  margin-bottom: .25rem;
 `
 export default ({ onIsValid = () => {}, ...props }) => {
   const [charCount, setCharCount] = useState(0)

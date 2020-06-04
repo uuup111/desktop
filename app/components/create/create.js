@@ -16,7 +16,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import Store from 'electron-store'
 
 const Container = styled.div`
-  margin: 2rem 4rem;
+  margin: 2rem;
   max-width: 40rem;
 `
 const BackArrow = styled(Arrow)`
@@ -32,7 +32,7 @@ const File = styled.div`
   width: 100%;
   border: 2px solid ${purple};
   line-height: 2;
-  padding-left: 1rem;
+  padding-left: .5rem;
   margin-top: 1em;
   position: relative;
   box-sizing: border-box;
@@ -51,7 +51,8 @@ const Parent = styled.p`
   margin-bottom: 2rem;
 `
 const Info = styled.p`
-  margin-bottom: 2rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 `
 
 const store = new Store()
@@ -135,6 +136,7 @@ const Create = ({ p2p, profile }) => {
             reimport the files into Hypergraph when you’re done.
           </Info>
           <Button
+            type='button'
             onClick={async e => {
               e.preventDefault()
               const opts = {
@@ -187,7 +189,7 @@ const Create = ({ p2p, profile }) => {
           <Button emphasis='top' isLoading={isCreating} disabled={!isValid}>
             Add content
           </Button>
-          <Button color={red} onClick={() => history.push('/')}>
+          <Button color={red} onClick={() => history.push('/')} type='reset'>
             Cancel
           </Button>
         </Form>

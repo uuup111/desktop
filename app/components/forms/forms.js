@@ -2,19 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import { purple, black, white } from '../../lib/colors'
 import CaretDown from '../icons/caret-down-1rem.svg'
-import CaretDownLarge from '../icons/caret-down-2rem.svg'
 import { Title } from '../layout/grid'
 
 export const Label = styled.label`
   font-weight: bold;
   margin-bottom: 0.5rem;
   display: block;
+  line-height: 1;
 `
 export const Input = styled.input`
   border: 2px solid ${purple};
   background-color: ${black};
   font-size: 2rem;
-  padding: 11px 17px;
+  padding: 11px .5rem;
   margin-bottom: 1rem;
   color: ${white};
   display: block;
@@ -40,25 +40,23 @@ const SelectElement = styled.select`
   background-color: ${black};
   color: ${white};
   border: 2px solid ${purple};
-  font-size: ${props => (props.large ? 2 : 1)}rem;
+  font-size: ${props => (props.large ? 1.5 : 1)}rem;
   width: 100%;
   max-width: 661px;
-  height: ${props => (props.large ? 4 : 2)}rem;
+  height: ${props => (props.large ? 2.5 : 2)}rem;
   border-radius: 0;
   appearance: none;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-family: Roboto;
-  padding-left: 19px;
-  letter-spacing: 0.05em;
+  padding-left: .5rem;
+  letter-spacing: .05em;
 `
 const SelectCaret = styled(CaretDown)`
   position: absolute;
-  right: 16.37px;
+  right: .5rem;
   top: 5px;
 `
-const SelectCaretLarge = styled(CaretDownLarge)`
-  position: absolute;
-  right: 16.37px;
+const SelectCaretLarge = styled(SelectCaret)`
   top: 10px;
 `
 export const Select = ({ large, ...props }) => (
@@ -72,8 +70,8 @@ export const Textarea = styled.textarea`
   border: 2px solid ${purple};
   background-color: ${black};
   font-size: 1rem;
-  padding: 7px 17px;
-  margin-bottom: 1rem;
+  padding: .5rem;
+  margin-bottom: 2rem;
   color: ${white};
   display: block;
   width: 100%;
