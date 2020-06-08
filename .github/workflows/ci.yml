@@ -1,7 +1,13 @@
 name: CI
 on: push
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: npx standard
   build:
+    needs: lint
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -26,10 +32,10 @@ jobs:
             ${{ runner.os }}-node-
       - name: npm install
         run: npm ci
-      - name: npm test
+      - name: run integration tests
         uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: npm test
+          run: npm run test:integration
       - name: prepare for notarization
         if: startsWith(matrix.os, 'macos')
         run: |

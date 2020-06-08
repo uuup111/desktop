@@ -35,10 +35,10 @@ const GlobalStyle = createGlobalStyle`
     -webkit-app-region: no-drag;
   }
   #chatra.chatra--pos-right {
-    right: 16px !important;
+    right: 1rem !important;
   }
   #chatra.chatra--side-bottom {
-    bottom: 16px !important;
+    bottom: 1rem !important;
   }
 `
 const Content = styled.div`

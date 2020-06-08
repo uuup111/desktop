@@ -11,6 +11,7 @@ import AdmZip from 'adm-zip'
 import { Label, Select } from '../forms/forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import { Description, Title } from '../forms/editable'
+import Anchor from '../anchor'
 
 const Container = styled.div`
   margin: 2rem;
@@ -38,20 +39,13 @@ const ModuleTitle = styled(Title)`
   line-height: 1.25;
   margin-bottom: 2rem;
 `
-const PublishedAuthor = styled(Link)`
-  text-decoration: none;
-  color: ${white};
-  border-bottom: 2px solid ${purple};
+const AuthorOfListedContent = styled(Anchor).attrs({
+  as: Link
+})`
   display: inline-block;
-  -webkit-app-region: no-drag;
   font-size: 1.5rem;
-
-  :hover {
-    background-color: ${purple};
-    cursor: pointer;
-  }
 `
-const UnpublishedAuthor = styled.span`
+const AuthorOfUnlistedContent = styled.span`
   color: ${gray};
   display: inline-block;
   font-size: 1.5rem;
@@ -127,7 +121,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [authors, setAuthors] = useState()
   const [parents, setParents] = useState()
   const [files, setFiles] = useState()
-  const [isPublished, setIsPublished] = useState()
+  const [isListed, setIsListed] = useState()
   const [isDeleting, setIsDeleting] = useState()
   const [isEditing, setIsEditing] = useState()
   const [isSaving, setIsSaving] = useState()
@@ -164,13 +158,13 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
 
   useEffect(() => {
     ;(async () => {
-      const isPublished = Boolean(
+      const isListed = Boolean(
         profile.rawJSON.contents.find(url => {
           const [otherKey] = url.split('+')
           return encode(content.rawJSON.url) === encode(otherKey)
         })
       )
-      setIsPublished(isPublished)
+      setIsListed(isListed)
     })()
   }, [content.rawJSON.url, profile])
 
@@ -272,12 +266,14 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
           }}
         />
         {authors.map(author =>
-          isPublished ? (
-            <PublishedAuthor key={author} to='/profile'>
+          isListed ? (
+            <AuthorOfListedContent key={author} to='/profile'>
               {author}
-            </PublishedAuthor>
+            </AuthorOfListedContent>
           ) : (
-            <UnpublishedAuthor key={author}>{author}</UnpublishedAuthor>
+            <AuthorOfUnlistedContent key={author}>
+              {author}
+            </AuthorOfUnlistedContent>
           )
         )}
         <StyledDescription
@@ -310,7 +306,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
             </Files>
           </>
         )}
-        {isPublished ? (
+        {isListed ? (
           <Button
             color={yellow}
             onClick={async () => {
@@ -324,7 +320,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
               history.replace(`/content/${encode(content.rawJSON.url)}`)
             }}
           >
-            Unpublish
+            Remove from profile
           </Button>
         ) : (
           <Button
@@ -339,7 +335,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
               setProfile(await p2p.get(profile.rawJSON.url))
             }}
           >
-            Publish
+            Add to profile
           </Button>
         )}
         <Button

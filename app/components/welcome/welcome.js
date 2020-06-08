@@ -84,10 +84,9 @@ const dialogs = [
       </Illustration>
       <Heading>Welcome to Hypergraph</Heading>
       <p>
-        With Hypergraph, we aim to reinvent the publication process in a way
-        that empowers you to do better science. Science that is transparent,
-        accessible to everyone and free from publication bias, time-consuming
-        bureaucracy and centralized control.
+        We aim to reinvent the publication process in a way that empowers you to
+        do better science. Science that is transparent and accessible to
+        everyone, free from time-consuming bureaucracy and centralized control.
       </p>
       <p>
         Let us explain some of the basic concepts of Hypergraph before you get
@@ -106,16 +105,16 @@ const dialogs = [
       <Illustration>
         <IllustrationAsYouGo />
       </Illustration>
-      <Heading>As-you-go, not all-at-once</Heading>
+      <Heading>As-you-go, not after-the-fact</Heading>
       <p>
         You are probably used to doing research, writing a full paper and then
-        going through the laborious process of finding a journal. At Hypergraph,
-        we support publishing each step of your research as-you-go.
+        going through the laborious process of finding a journal. With
+        Hypergraph, we support publishing each step of your research as-you-go.
       </p>
       <p>
-        That makes it much easier to manage your research projects and increases
-        the value of your work by making it available to others as soon as you
-        feel ready.
+        As-you-go publishing increases the value of your work by making it
+        available to others as soon as you feel ready. It also breaks down the
+        research process into bite-size chunks 🍰
       </p>
       <Form onSubmit={next}>
         <Button emphasis='top' autoFocus>
@@ -130,17 +129,16 @@ const dialogs = [
       <Illustration>
         <IllustrationAsYouGo2 />
       </Illustration>
-      <Heading>As-you-go, not all-at-once</Heading>
+      <Heading>How Hypergraph works</Heading>
       <p>
         Each part of your research, whether it's a proposal, a literature study,
         a data set or a conclusion, is its own publication. You link them
         together as you go along, to create a connected body of work.
       </p>
       <p>
-        This also makes it much easier to do replications or multiple studies
-        with the same data set or underlying theory, even if someone else
-        created it. You just link your content to the existing content and there
-        you go!
+        This makes it much easier to do replications or multiple interpretations
+        with the same source material. Even if someone else created it. You just
+        link your content to the existing content and there you go 🌈
       </p>
       <Form onSubmit={next}>
         <Button emphasis='top' autoFocus color={green}>
@@ -162,7 +160,7 @@ const dialogs = [
         <Heading>What should we call you?</Heading>
         <p>
           Time to create a profile! This is where your published work is
-          collected. Right now, your profile is just for you. In later versions,
+          displayed. Right now, your profile is just for you. In later versions,
           your profile and your content can be shared with others.
         </p>
         <Form
@@ -199,8 +197,8 @@ const dialogs = [
         <Heading>Introducing the Vault</Heading>
         <p>
           We'll be launching this soon! Consider this our hosting service, to
-          make sure your content stays available to everyone. Pay once and
-          you're set. No subscriptions 🎉
+          make sure your content stays available to everyone. Pay once and your
+          work stays safe forever 🎉
         </p>
         <Form
           onSubmit={async e => {

@@ -5,9 +5,8 @@ import Module from '../module/module'
 import Footer from '../footer/footer'
 import { encode } from 'dat-encoding'
 import { Title as TitleCell, StickyRow, TopRow, Button } from '../layout/grid'
-import { green, red, yellow, gray } from '../../lib/colors'
+import { green, red } from '../../lib/colors'
 import { Description, Title } from '../forms/editable'
-import { Input } from '../forms/forms'
 
 const Header = styled.div`
   position: relative;
