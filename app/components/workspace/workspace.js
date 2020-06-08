@@ -33,7 +33,7 @@ export default ({ p2p }) => {
         <Button
           color={green}
           onClick={() => history.push('/create')}
-          id='first-step'
+          id='tour-create'
         >
           Add content +
         </Button>
@@ -62,11 +62,15 @@ export default ({ p2p }) => {
       <StyledTour
         steps={[
           {
-            selector: '#first-step',
+            selector: '#tour-create',
             content: 'Sharing your latest work is always just one click away 🖱'
           },
           {
-            selector: '#second-step',
+            selector: '#tour-workspace',
+            content: 'Want to get to work? 🔬🧪Find all your unfinished research in one place and focus on doing your research instead of managing it.'
+          },
+          {
+            selector: '#tour-profile',
             content: 'Your profile collects your work and serves as your portfolio 👩‍🔬'
           },
           {

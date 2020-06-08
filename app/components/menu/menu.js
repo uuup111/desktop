@@ -60,10 +60,10 @@ const Menu = () => {
       <StyledLogo onClick={() => history.push('/')} />
       <StyledRow>
         <StyledNavLink to='/' isActive={(_, location) => isWorkbench(location)}>
-          <StyledButton>Workspace</StyledButton>
+          <StyledButton id='tour-workspace'>Workspace</StyledButton>
         </StyledNavLink>
         <StyledNavLink to='/profile'>
-          <StyledButton id='second-step'>Profile</StyledButton>
+          <StyledButton id='tour-profile'>Profile</StyledButton>
         </StyledNavLink>
       </StyledRow>
     </Container>

@@ -130,7 +130,7 @@ const Create = ({ p2p, profile }) => {
             </>
           )}
           <Label htmlFor='subtype'>Content type</Label>
-          <Select large name='subtype' id='first-step'>
+          <Select large name='subtype' id='tour-subtype'>
             {Object.entries(subtypes).map(([id, text]) => (
               <option value={id} key={id}>
                 {text}
@@ -205,7 +205,7 @@ const Create = ({ p2p, profile }) => {
       <StyledTour
         steps={[
           {
-            selector: '#first-step',
+            selector: '#tour-subtype',
             content: 'No matter what you are working on right now, you can start documenting and share your work with your peers 😊'
           }
         ]}
