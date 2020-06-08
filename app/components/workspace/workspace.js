@@ -33,7 +33,7 @@ export default ({ p2p }) => {
         <Button
           color={green}
           onClick={() => history.push('/create')}
-          className='first-step'
+          id='first-step'
         >
           Add content +
         </Button>
