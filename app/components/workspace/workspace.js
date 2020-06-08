@@ -68,6 +68,10 @@ export default ({ p2p }) => {
           {
             selector: '#second-step',
             content: 'And afterwards take a look at your profile!'
+          },
+          {
+            selector: '#chatra',
+            content: 'Missing something or want to talk to a human? We are here and willing to listen if you want to share 👋'
           }
         ]}
         isOpen={isTourOpen}
