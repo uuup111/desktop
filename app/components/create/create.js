@@ -206,7 +206,8 @@ const Create = ({ p2p, profile }) => {
         steps={[
           {
             selector: '#tour-subtype',
-            content: 'No matter what you are working on right now, you can start documenting and share your work with your peers 😊'
+            content:
+              'No matter what you are working on right now, you can start documenting and share your work with your peers 😊'
           }
         ]}
         isOpen={isTourOpen}

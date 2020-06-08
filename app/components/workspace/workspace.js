@@ -67,15 +67,18 @@ export default ({ p2p }) => {
           },
           {
             selector: '#tour-workspace',
-            content: 'Want to get to work? 🔬🧪Find all your unfinished research in one place and focus on doing your research instead of managing it.'
+            content:
+              'Want to get to work? 🔬🧪Find all your unfinished research in one place and focus on doing your research instead of managing it.'
           },
           {
             selector: '#tour-profile',
-            content: 'Your profile collects your work and serves as your portfolio 👩‍🔬'
+            content:
+              'Your profile collects your work and serves as your portfolio 👩‍🔬'
           },
           {
             selector: '#chatra',
-            content: 'Missing something or want to talk to a human? We are here and willing to listen if you want to share 👋'
+            content:
+              'Missing something or want to talk to a human? We are here and willing to listen if you want to share 👋'
           }
         ]}
         isOpen={isTourOpen}
