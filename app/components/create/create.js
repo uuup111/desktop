@@ -13,6 +13,7 @@ import X from '../icons/x-1rem.svg'
 import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
 import { useHistory, useParams } from 'react-router-dom'
+import Store from 'electron-store'
 
 const Container = styled.div`
   margin: 2rem 4rem;
@@ -52,6 +53,8 @@ const Parent = styled.p`
 const Info = styled.p`
   margin-bottom: 2rem;
 `
+
+const store = new Store()
 
 const Create = ({ p2p, profile }) => {
   const [files, setFiles] = useState([])
@@ -132,13 +135,21 @@ const Create = ({ p2p, profile }) => {
             reimport the files into Hypergraph when you’re done.
           </Info>
           <Button
+            type='button'
             onClick={async e => {
               e.preventDefault()
+              const opts = {
+                properties: ['multiSelections', 'openFile']
+              }
+              if (!store.get('create open dialog displayed')) {
+                // set the default path on first launch, so it's not the
+                // app's directory
+                opts.defaultPath = remote.app.getPath('documents')
+                store.set('create open dialog displayed', true)
+              }
               const { filePaths } = await remote.dialog.showOpenDialog(
                 remote.getCurrentWindow(),
-                {
-                  properties: ['multiSelections', 'openFile']
-                }
+                opts
               )
               setFiles([...files, ...filePaths])
             }}

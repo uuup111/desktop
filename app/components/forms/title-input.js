@@ -37,13 +37,15 @@ export default ({ onIsValid = () => {}, ...props }) => {
     <Container>
       <TitleInput
         {...props}
-        onChange={({
-          target: {
-            value: { length: count }
-          }
-        }) => {
+        onChange={e => {
+          const {
+            target: {
+              value: { length: count }
+            }
+          } = e
           setCharCount(count)
           onIsValid(count > 0 && count <= 300)
+          if (props.onChange) props.onChange(e)
         }}
       />
       <CharacterCounter color={color}>{charCount}/300</CharacterCounter>

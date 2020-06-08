@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Title, StickyRow, TopRow } from '../layout/grid'
 import { useParams } from 'react-router-dom'
-import subtypes from '@hypergraph-xyz/wikidata-identifiers'
-import Content, { OpenFolder, ExportZip } from '../content/content'
+import Content from '../content/content'
 
 const ProfileContent = ({ p2p, profile, setProfile }) => {
   const { key } = useParams()
@@ -19,21 +18,17 @@ const ProfileContent = ({ p2p, profile, setProfile }) => {
       <TopRow>
         <Title>{profile.rawJSON.title}</Title>
       </TopRow>
-      <StickyRow top={116} noBorderTop>
-        {content && (
-          <>
-            <Title>{subtypes[content.rawJSON.subtype] || 'Content'}</Title>
-            <OpenFolder mod={content} />
-            <ExportZip mod={content} />
-          </>
-        )}
-      </StickyRow>
       {content && (
         <Content
           p2p={p2p}
           content={content}
           profile={profile}
           setProfile={setProfile}
+          renderRow={children => (
+            <StickyRow top={116} noBorderTop>
+              {children}
+            </StickyRow>
+          )}
         />
       )}
     </>

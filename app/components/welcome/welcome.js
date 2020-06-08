@@ -6,6 +6,11 @@ import { Button } from '../layout/grid'
 import Arrow from '../arrow.svg'
 import { Label } from '../forms/forms'
 import TitleInput from '../forms/title-input'
+import IllustrationWelcome from './illustrations/welcome.svg'
+import IllustrationAsYouGo from './illustrations/as-you-go.svg'
+import IllustrationAsYouGo2 from './illustrations/as-you-go-2.svg'
+import IllustrationProfileCreation from './illustrations/profile-creation.svg'
+import IllustrationVault from './illustrations/vault.svg'
 
 const Overlay = styled.div`
   position: absolute;
@@ -32,9 +37,12 @@ const Dialog = styled.div`
 const Illustration = styled.div`
   margin-top: 22px;
   margin-bottom: 32px;
-  background-color: rgba(255, 255, 255, 0.1);
   width: 100%;
   height: 188px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 const Heading = styled.div`
   font-size: 32px;
@@ -51,18 +59,34 @@ const Form = styled.form`
   left: 32px;
   right: 32px;
 `
+const Initials = styled.div`
+  position: absolute;
+  top: 4rem;
+  color: black;
+  font-size: 40px;
+`
+
+const toInitials = name => {
+  if (!name || !name.length) return '?'
+  const initials = name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .filter(Boolean)
+  return [initials.shift(), initials.pop()].filter(Boolean).join('')
+}
 
 const dialogs = [
   ({ page, next }) => (
     <Dialog>
       <Back page={page} />
-      <Illustration />
+      <Illustration>
+        <IllustrationWelcome />
+      </Illustration>
       <Heading>Welcome to Hypergraph</Heading>
       <p>
-        With Hypergraph, we aim to reinvent the publication process in a way
-        that empowers you to do better science. Science that is transparent,
-        accessible to everyone and free from publication bias, time-consuming
-        bureaucracy and centralized control.
+        We aim to reinvent the publication process in a way that empowers you to
+        do better science. Science that is transparent and accessible to
+        everyone, free from time-consuming bureaucracy and centralized control.
       </p>
       <p>
         Let us explain some of the basic concepts of Hypergraph before you get
@@ -78,17 +102,19 @@ const dialogs = [
   ({ page, next, previous }) => (
     <Dialog>
       <Back page={page} onClick={previous} />
-      <Illustration />
-      <Heading>As-you-go, not all-at-once</Heading>
+      <Illustration>
+        <IllustrationAsYouGo />
+      </Illustration>
+      <Heading>As-you-go, not after-the-fact</Heading>
       <p>
         You are probably used to doing research, writing a full paper and then
-        going through the laborious process of finding a journal. At Hypergraph,
-        we support publishing each step of your research as-you-go.
+        going through the laborious process of finding a journal. With
+        Hypergraph, we support publishing each step of your research as-you-go.
       </p>
       <p>
-        That makes it much easier to manage your research projects and increases
-        the value of your work by making it available to others as soon as you
-        feel ready.
+        As-you-go publishing increases the value of your work by making it
+        available to others as soon as you feel ready. It also breaks down the
+        research process into bite-size chunks 🍰
       </p>
       <Form onSubmit={next}>
         <Button emphasis='top' autoFocus>
@@ -100,18 +126,19 @@ const dialogs = [
   ({ page, next, previous }) => (
     <Dialog>
       <Back page={page} onClick={previous} />
-      <Illustration />
-      <Heading>As-you-go, not all-at-once</Heading>
+      <Illustration>
+        <IllustrationAsYouGo2 />
+      </Illustration>
+      <Heading>How Hypergraph works</Heading>
       <p>
         Each part of your research, whether it's a proposal, a literature study,
         a data set or a conclusion, is its own publication. You link them
         together as you go along, to create a connected body of work.
       </p>
       <p>
-        This also makes it much easier to do replications or multiple studies
-        with the same data set or underlying theory, even if someone else
-        created it. You just link your content to the existing content and there
-        you go!
+        This makes it much easier to do replications or multiple interpretations
+        with the same source material. Even if someone else created it. You just
+        link your content to the existing content and there you go 🌈
       </p>
       <Form onSubmit={next}>
         <Button emphasis='top' autoFocus color={green}>
@@ -122,14 +149,18 @@ const dialogs = [
   ),
   ({ page, next, previous, name, setName }) => {
     const [isValid, setIsValid] = useState(Boolean(name))
+    const [initials, setInitials] = useState(toInitials(name))
     return (
       <Dialog>
         <Back page={page} onClick={previous} />
-        <Illustration />
+        <Illustration>
+          <IllustrationProfileCreation />
+          <Initials>{initials}</Initials>
+        </Illustration>
         <Heading>What should we call you?</Heading>
         <p>
           Time to create a profile! This is where your published work is
-          collected. Right now, your profile is just for you. In later versions,
+          displayed. Right now, your profile is just for you. In later versions,
           your profile and your content can be shared with others.
         </p>
         <Form
@@ -145,6 +176,7 @@ const dialogs = [
             onIsValid={setIsValid}
             autoFocus
             defaultValue={name}
+            onChange={e => setInitials(toInitials(e.target.value))}
           />
           <Button emphasis='top' autoFocus disabled={!isValid}>
             Next
@@ -159,12 +191,14 @@ const dialogs = [
     return (
       <Dialog>
         <Back page={page} onClick={() => !isLoading && previous()} />
-        <Illustration />
+        <Illustration>
+          <IllustrationVault />
+        </Illustration>
         <Heading>Introducing the Vault</Heading>
         <p>
           We'll be launching this soon! Consider this our hosting service, to
-          make sure your content stays available to everyone. Pay once and
-          you're set. No subscriptions 🎉
+          make sure your content stays available to everyone. Pay once and your
+          work stays safe forever 🎉
         </p>
         <Form
           onSubmit={async e => {

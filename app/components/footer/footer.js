@@ -1,7 +1,9 @@
+import { shell } from 'electron'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Arrow from '../arrow.svg'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
+import Anchor from '../anchor'
 
 const Container = styled.div`
   text-align: center;
@@ -40,7 +42,10 @@ const Footer = ({ title }) => {
   return (
     <Container>
       <Title>{title}</Title>
-      Cooperatively made with 💜 in Berlin by Liberate Science GmbH
+      Cooperatively made with 💜 in Berlin by{' '}
+      <Anchor onClick={() => shell.openExternal('https://libscie.org')}>
+        Liberate Science GmbH
+      </Anchor>
       {upArrowVisible && <UpArrow onClick={scrollToTop} />}
     </Container>
   )

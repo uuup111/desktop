@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
-import HexPublished from './published.svg'
-import HexUnpublished from './unpublished.svg'
+import HexIndicatorIsListed from './hex-indicator-is-listed.svg'
+import HexIndicatorIsUnlisted from './hex-indicator-is-unlisted.svg'
 import { useHistory, Link } from 'react-router-dom'
 import Plus from './plus.svg'
 import { encode } from 'dat-encoding'
+import Anchor from '../anchor'
 
 const AddContentWithParent = styled(Plus)`
   position: absolute;
@@ -66,20 +67,13 @@ const Title = styled.div`
   font-size: 1.5rem;
   line-height: 1.75rem;
 `
-const PublishedAuthor = styled(Link)`
-  text-decoration: none;
-  color: ${white};
-  border-bottom: 2px solid ${purple};
+const AuthorOfListedContent = styled(Anchor).attrs({
+  as: Link
+})`
   margin: 1rem 0;
   display: inline-block;
-  -webkit-app-region: no-drag;
-
-  :hover {
-    background-color: ${purple};
-    cursor: pointer;
-  }
 `
-const UnpublishedAuthor = styled.span`
+const AuthorOfUnlistedContent = styled.span`
   color: ${gray};
   margin: 1rem 0;
   display: inline-block;
@@ -117,7 +111,7 @@ const ToggleParentArrow = styled.span`
 
 const Module = ({ p2p, mod, pad, to, isParent }) => {
   const history = useHistory()
-  const [isPublished, setIsPublished] = useState(false)
+  const [isListed, setIsListed] = useState(false)
   const [authors, setAuthors] = useState([])
   const [showParent, setShowParent] = useState(false)
   const [parent, setParent] = useState()
@@ -126,7 +120,7 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
     ;(async () => {
       const profiles = await p2p.listProfiles()
 
-      setIsPublished(
+      setIsListed(
         Boolean(
           profiles.find(profile =>
             Boolean(
@@ -171,20 +165,20 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
         <Attributes>
           <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
           <AttributeIcon>
-            {isPublished ? <HexPublished /> : <HexUnpublished />}
+            {isListed ? <HexIndicatorIsListed /> : <HexIndicatorIsUnlisted />}
           </AttributeIcon>
         </Attributes>
         <Content pad={pad}>
           <Title>{mod.rawJSON.title}</Title>
           {authors.map(author =>
-            isPublished ? (
-              <PublishedAuthor key={author.rawJSON.url} to='/profile'>
+            isListed ? (
+              <AuthorOfListedContent key={author.rawJSON.url} to='/profile'>
                 {author.rawJSON.title}
-              </PublishedAuthor>
+              </AuthorOfListedContent>
             ) : (
-              <UnpublishedAuthor key={author.rawJSON.url}>
+              <AuthorOfUnlistedContent key={author.rawJSON.url}>
                 {author.rawJSON.title}
-              </UnpublishedAuthor>
+              </AuthorOfUnlistedContent>
             )
           )}
           {!isParent && <Description>{mod.rawJSON.description}</Description>}
