@@ -63,7 +63,7 @@ const Menu = () => {
           <StyledButton>Workspace</StyledButton>
         </StyledNavLink>
         <StyledNavLink to='/profile'>
-          <StyledButton className='second-step'>Profile</StyledButton>
+          <StyledButton id='second-step'>Profile</StyledButton>
         </StyledNavLink>
       </StyledRow>
     </Container>

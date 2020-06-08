@@ -62,11 +62,11 @@ export default ({ p2p }) => {
       <StyledTour
         steps={[
           {
-            selector: '.first-step',
+            selector: '#first-step',
             content: 'Sharing your latest work is always just one click away 🖱'
           },
           {
-            selector: '.second-step',
+            selector: '#second-step',
             content: 'And afterwards take a look at your profile!'
           }
         ]}
