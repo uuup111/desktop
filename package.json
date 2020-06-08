@@ -13,7 +13,8 @@
     "release": "np --no-publish --no-yarn",
     "start": "webpack-dev-server",
     "start:main": "electron .",
-    "test": "prettier-standard && standard && tap --no-cov",
+    "test": "prettier-standard && standard && npm run test:integration",
+    "test:integration": "tap --no-cov",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
