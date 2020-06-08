@@ -14,6 +14,14 @@ import { promises as fs } from 'fs'
 import { encode } from 'dat-encoding'
 import { useHistory, useParams } from 'react-router-dom'
 import Store from 'electron-store'
+import Tour from 'reactour'
+
+const StyledTour = styled(Tour)`
+  color: black;
+  button:focus {
+    outline: 0;
+  }
+`
 
 const Container = styled.div`
   margin: 2rem 4rem;
@@ -63,6 +71,7 @@ const Create = ({ p2p, profile }) => {
   const [isValid, setIsValid] = useState(false)
   const history = useHistory()
   const { parentUrl } = useParams()
+  const [isTourOpen, setIsTourOpen] = useState(true)
 
   if (parentUrl) {
     useEffect(() => {
@@ -121,7 +130,7 @@ const Create = ({ p2p, profile }) => {
             </>
           )}
           <Label htmlFor='subtype'>Content type</Label>
-          <Select large name='subtype'>
+          <Select large name='subtype' id='first-step'>
             {Object.entries(subtypes).map(([id, text]) => (
               <option value={id} key={id}>
                 {text}
@@ -193,6 +202,17 @@ const Create = ({ p2p, profile }) => {
           </Button>
         </Form>
       </Container>
+      <StyledTour
+        steps={[
+          {
+            selector: '#first-step',
+            content: 'No matter what you are working on right now, you can start documenting and share your work with your peers 😊'
+          }
+        ]}
+        isOpen={isTourOpen}
+        onRequestClose={() => setIsTourOpen(false)}
+        accentColor={purple}
+      />
     </>
   )
 }
