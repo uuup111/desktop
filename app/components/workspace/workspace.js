@@ -63,7 +63,7 @@ export default ({ p2p }) => {
         steps={[
           {
             selector: '.first-step',
-            content: 'Here you can create your first content module.'
+            content: 'Sharing your latest work is always just one click away 🖱'
           },
           {
             selector: '.second-step',
