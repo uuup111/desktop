@@ -9,8 +9,7 @@ import { remote } from 'electron'
 import { promises as fs } from 'fs'
 import AdmZip from 'adm-zip'
 import { Label, Select } from '../forms/forms'
-import subtypes from '@hypergraph-xyz/wikidata-identifiers'
-import { Description, Title } from '../forms/editable'
+import { Description, Title, Subtype } from '../forms/editable'
 import Anchor from '../anchor'
 
 const Container = styled.div`
@@ -76,7 +75,7 @@ const File = styled.div`
     background-color: inherit;
   }
 `
-const StyledSelect = styled(Select)`
+const StyledSubtype = styled(Subtype)`
   border: 0;
   padding-left: 0;
   font-size: 2.5rem;
@@ -180,21 +179,14 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
       {renderRow(
         <>
           <TitleCell>
-            {isEditing ? (
-              <StyledSelect
-                large
-                defaultValue={subtype}
-                onChange={e => setSubtype(e.target.value)}
-              >
-                {Object.entries(subtypes).map(([id, text]) => (
-                  <option value={id} key={id}>
-                    {text}
-                  </option>
-                ))}
-              </StyledSelect>
-            ) : (
-              subtypes[content.rawJSON.subtype] || 'Content'
-            )}
+            <StyledSubtype
+              large
+              value={subtype}
+              onChange={e => setSubtype(e.target.value)}
+              isEditing={isEditing}
+              isSaving={isSaving}
+              isSaved={isSaved}
+            />
           </TitleCell>
           {isEditing ? (
             <>
@@ -214,7 +206,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
                   setIsSaving(false)
                   setIsEditing(false)
                   setIsSaved(true)
-                  setTimeout(() => setIsSaved(false), 2000)
+                  //setTimeout(() => setIsSaved(false), 2000)
                 }}
               >
                 Save

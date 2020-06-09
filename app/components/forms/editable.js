@@ -1,45 +1,29 @@
 import React, { Fragment, useRef, useEffect } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { gray, yellow, green, red } from '../../lib/colors'
-import { Textarea, Input } from './forms'
+import { Textarea, Input, Select } from './forms'
+import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 
 const saved = keyframes`
   0% {
-    border-left-color: transparent;
+    border-left-color: transparent !important;
   }
   50% {
-    border-left-color: ${green};
+    border-left-color: ${green} !important;
   }
   100% {
-    border-left-color: transparent;
+    border-left-color: transparent !important;
   }
 `
-const StyledDescription = styled.div`
-  ${props =>
-    props.maxRows &&
-    css`
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: ${props.maxRows};
-    `}
-  border-left: 2px solid transparent;
+const indicatorBorder = css`
+  border-left: 2px solid transparent !important;
   padding-left: 0.5rem !important;
   margin-left: calc(-0.5rem - 2px) !important;
-  transition: border-left-color 1s;
-  ${props =>
-    props.isEmpty &&
-    css`
-      color: ${gray};
-      :hover {
-        cursor: text;
-      }
-    `}
+  transition: border-left-color 1s !important;
   ${props =>
     props.isEditing &&
     css`
-      border-left-color: ${yellow};
+      border-left-color: ${yellow} !important;
     `}
   ${props =>
     props.isSaving &&
@@ -51,6 +35,26 @@ const StyledDescription = styled.div`
     css`
       animation: ${saved} 2s linear;
     `}
+`
+const StyledDescription = styled.div`
+  ${props =>
+    props.maxRows &&
+    css`
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: ${props.maxRows};
+    `}
+  ${props =>
+    props.isEmpty &&
+    css`
+      color: ${gray};
+      :hover {
+        cursor: text;
+      }
+    `}
+  ${indicatorBorder};
 `
 const StyledTextarea = styled(Textarea)`
   /*height: 4.5rem;*/
@@ -152,6 +156,9 @@ const StyledInput = styled(Input)`
   outline: 0;
   font-size: inherit;
 `
+const SubtypeContainer = styled.div`
+  ${indicatorBorder};
+`
 
 export const Title = ({
   isEditing,
@@ -175,4 +182,35 @@ export const Title = ({
       value
     )}
   </StyledTitle>
+)
+
+export const Subtype = ({
+  isEditing,
+  isSaving,
+  isSaved,
+  value,
+  onChange,
+  ...props
+}) => (
+  <SubtypeContainer
+    isEditing={isEditing}
+    isSaving={isSaving}
+    isSaved={isSaved}
+  >
+    {isEditing ? (
+      <Select
+        defaultValue={value}
+        onChange={onChange}
+        {...props}
+      >
+        {Object.entries(subtypes).map(([id, text]) => (
+          <option value={id} key={id}>
+            {text}
+          </option>
+        ))}
+      </Select>
+    ) : (
+      subtypes[value] || 'Content'
+    )}
+  </SubtypeContainer>
 )
