@@ -25,7 +25,7 @@ const ProfileContent = ({ p2p, profile, setProfile }) => {
           profile={profile}
           setProfile={setProfile}
           renderRow={children => (
-            <StickyRow top={116} noBorderTop>
+            <StickyRow top='116px' noBorderTop>
               {children}
             </StickyRow>
           )}

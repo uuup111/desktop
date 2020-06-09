@@ -104,6 +104,10 @@ const StyledTextarea = styled(Textarea)`
   outline: 0;
   resize: none;
 `
+const Form = styled.form`
+  display: flex;
+  width: 100%;
+`
 
 const Profile = ({ p2p, profile, setProfile }) => {
   const [modules, setModules] = useState()
@@ -162,8 +166,8 @@ const Profile = ({ p2p, profile, setProfile }) => {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <TopRow>
+      <TopRow>
+        <Form onSubmit={onSubmit}>
           <Title>
             <Indicator
               isEditing={isEditing}
@@ -205,40 +209,40 @@ const Profile = ({ p2p, profile, setProfile }) => {
               Edit profile
             </Button>
           )}
-        </TopRow>
-        <Header>
-          <Avatar />
-          <Description
-            isEditing={isEditing}
-            isSaving={isSaving}
-            isSaved={isSaved}
-            isEmpty={profile.rawJSON.description.length === 0}
-            onClick={() => {
-              if (profile.rawJSON.description.length === 0 && !isEditing) {
-                setIsEditing(true)
-                setIsPopulatingDescription(true)
-              }
-            }}
-          >
-            {isEditing ? (
-              <StyledTextarea
-                ref={descriptionRef}
-                defaultValue={profile.rawJSON.description}
-              />
-            ) : profile.rawJSON.description ? (
-              profile.rawJSON.description.split('\n').map((line, index) => (
-                <Fragment key={index}>
-                  {line}
-                  <br />
-                </Fragment>
-              ))
-            ) : (
-              'Add a description…'
-            )}
-          </Description>
-        </Header>
-      </form>
-      <StickyRow top={114}>
+        </Form>
+      </TopRow>
+      <Header>
+        <Avatar />
+        <Description
+          isEditing={isEditing}
+          isSaving={isSaving}
+          isSaved={isSaved}
+          isEmpty={profile.rawJSON.description.length === 0}
+          onClick={() => {
+            if (profile.rawJSON.description.length === 0 && !isEditing) {
+              setIsEditing(true)
+              setIsPopulatingDescription(true)
+            }
+          }}
+        >
+          {isEditing ? (
+            <StyledTextarea
+              ref={descriptionRef}
+              defaultValue={profile.rawJSON.description}
+            />
+          ) : profile.rawJSON.description ? (
+            profile.rawJSON.description.split('\n').map((line, index) => (
+              <Fragment key={index}>
+                {line}
+                <br />
+              </Fragment>
+            ))
+          ) : (
+            'Add a description…'
+          )}
+        </Description>
+      </Header>
+      <StickyRow top='114px'>
         <Title>Content</Title>
       </StickyRow>
       {modules && (

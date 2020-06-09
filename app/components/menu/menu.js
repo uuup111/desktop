@@ -35,15 +35,19 @@ const StyledButton = styled(Button)`
     background-color: ${purple};
   }
   display: block;
+  border-right-width: 2px !important;
+  border-bottom-width: 2px !important;
 
   .active > & {
     background-color: ${purple};
     :active {
       background-color: ${purple};
+      color: ${white};
     }
   }
   :active {
     background-color: ${black};
+    color: ${white} !important;
   }
 `
 const StyledNavLink = styled(NavLink)`

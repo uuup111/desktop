@@ -22,7 +22,7 @@ export const Cell = styled.div`
   text-align: center;
   text-align: left;
 
-  ${Row} > & {
+  ${Row} & {
     border-right-width: 0;
   }
 `
@@ -74,7 +74,7 @@ const StyledButton = styled(Cell).attrs({
     outline: none;
   }
 
-  ${Row} > & {
+  ${Row} & {
     border-right-width: 0px;
     border-top-width: 0px;
     border-bottom-width: 0px;
@@ -114,13 +114,13 @@ export const Button = ({ isLoading, children, ...props }) => (
 )
 export const StickyRow = styled(Row)`
   position: sticky;
-  top: ${props => props.top}px;
+  top: ${props => props.top};
   background-color: ${black};
   z-index: 1;
 `
-export const TopRow = styled(StickyRow)`
-  top: 3rem;
-
+export const TopRow = styled(StickyRow).attrs({
+  top: '3rem'
+})`
   :before {
     content: '';
     position: absolute;
