@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { TopRow, Title, Button } from '../layout/grid'
+import { TopRow, Title } from '../layout/grid'
 import Module from '../module/module'
 import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
-import { green } from '../../lib/colors'
-import { useHistory } from 'react-router-dom'
+import AddContent from '../icons/add-content.svg'
+import styled from 'styled-components'
+
+const StyledAddContent = styled(AddContent)`
+  vertical-align: middle;
+  transform: scale(0.75);
+  position: relative;
+  top: -2px;
+`
 
 export default ({ p2p }) => {
   const [modules, setModules] = useState()
-  const history = useHistory()
 
   useEffect(() => {
     ;(async () => {
@@ -20,9 +26,6 @@ export default ({ p2p }) => {
     <>
       <TopRow>
         <Title>Workspace</Title>
-        <Button color={green} onClick={() => history.push('/create')}>
-          Add content +
-        </Button>
       </TopRow>
       {modules && (
         <>
@@ -38,9 +41,15 @@ export default ({ p2p }) => {
           })}
           <Footer
             title={
-              modules.length
-                ? 'You’ve reached the end! ✌️'
-                : "Nothing here yet! Click the 'Add content' button above to get started ☝️ "
+              <>
+                {modules.length ? (
+                  'You’ve reached the end! ✌️'
+                ) : (
+                  <>
+                    Nothing here yet! Click <StyledAddContent /> to get started
+                  </>
+                )}
+              </>
             }
           />
         </>

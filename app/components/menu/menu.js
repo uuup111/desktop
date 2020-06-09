@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import Logo from './logo.svg'
 import { white, purple, black } from '../../lib/colors'
 import { Row, Button } from '../layout/grid'
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink, useHistory, Link } from 'react-router-dom'
+import AddContent from '../icons/add-content.svg'
 
 const Container = styled.div`
   width: 8rem;
@@ -53,8 +54,25 @@ const StyledButton = styled(Button)`
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 `
-const isWorkbench = location =>
-  /^\/$|^\/(content\/|create)/.test(location.pathname)
+const AddContentLink = styled(Link)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 8rem;
+  width: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :hover {
+    background-color: ${purple};
+    cursor: default;
+  }
+  :active {
+    background-color: inherit;
+  }
+`
+const isWorkbench = location => /^\/$|^\/content\//.test(location.pathname)
 
 const Menu = () => {
   const history = useHistory()
@@ -70,6 +88,9 @@ const Menu = () => {
           <StyledButton>Profile</StyledButton>
         </StyledNavLink>
       </StyledRow>
+      <AddContentLink to='/create'>
+        <AddContent />
+      </AddContentLink>
     </Container>
   )
 }

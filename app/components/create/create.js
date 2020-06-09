@@ -83,7 +83,7 @@ const Create = ({ p2p, profile }) => {
         <Title>Add Content</Title>
       </TopRow>
       <Container>
-        <BackArrow onClick={() => history.push('/')} />
+        <BackArrow onClick={() => history.go(-1)} />
         <Form
           onSubmit={async e => {
             e.preventDefault()
