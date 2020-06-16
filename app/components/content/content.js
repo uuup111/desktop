@@ -38,13 +38,13 @@ const ModuleTitle = styled.div`
   line-height: 1.25;
   margin-bottom: 2rem;
 `
-const AuthorOfListedContent = styled(Anchor).attrs({
+const AuthorOfRegisteredContent = styled(Anchor).attrs({
   as: Link
 })`
   display: inline-block;
   font-size: 1.5rem;
 `
-const AuthorOfUnlistedContent = styled.span`
+const AuthorOfUnregisteredContent = styled.span`
   color: ${gray};
   display: inline-block;
   font-size: 1.5rem;
@@ -112,7 +112,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   const [authors, setAuthors] = useState()
   const [parents, setParents] = useState()
   const [files, setFiles] = useState()
-  const [isListed, setIsListed] = useState()
+  const [isRegistered, setIsRegistered] = useState()
   const [isDeleting, setIsDeleting] = useState(false)
   const history = useHistory()
 
@@ -141,13 +141,13 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
 
   useEffect(() => {
     ;(async () => {
-      const isListed = Boolean(
+      const isRegistered = Boolean(
         profile.rawJSON.contents.find(url => {
           const [otherKey] = url.split('+')
           return encode(content.rawJSON.url) === encode(otherKey)
         })
       )
-      setIsListed(isListed)
+      setIsRegistered(isRegistered)
     })()
   }, [content.rawJSON.url, profile])
 
@@ -179,14 +179,14 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
         ))}
         <ModuleTitle>{content.rawJSON.title}</ModuleTitle>
         {authors.map(author =>
-          isListed ? (
-            <AuthorOfListedContent key={author} to='/profile'>
+          isRegistered ? (
+            <AuthorOfRegisteredContent key={author} to='/profile'>
               {author}
-            </AuthorOfListedContent>
+            </AuthorOfRegisteredContent>
           ) : (
-            <AuthorOfUnlistedContent key={author}>
+            <AuthorOfUnregisteredContent key={author}>
               {author}
-            </AuthorOfUnlistedContent>
+            </AuthorOfUnregisteredContent>
           )
         )}
         <Description>{content.rawJSON.description}</Description>
@@ -206,7 +206,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
             </Files>
           </>
         )}
-        {isListed ? (
+        {isRegistered ? (
           <Button
             color={yellow}
             onClick={async () => {

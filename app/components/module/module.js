@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
-import isModuleListed from '../../lib/is-module-listed'
+import isModuleRegistered from '../../lib/is-module-registered'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
-import HexIndicatorIsListed from './hex-indicator-is-listed.svg'
-import HexIndicatorIsUnlisted from './hex-indicator-is-unlisted.svg'
+import HexIndicatorIsRegistered from './hex-indicator-is-registered.svg'
+import HexIndicatorIsUnregistered from './hex-indicator-is-unregistered.svg'
 import { useHistory, Link } from 'react-router-dom'
 import Plus from './plus.svg'
 import { encode } from 'dat-encoding'
@@ -68,13 +68,13 @@ const Title = styled.div`
   font-size: 1.5rem;
   line-height: 1.75rem;
 `
-const AuthorOfListedContent = styled(Anchor).attrs({
+const AuthorOfRegisteredContent = styled(Anchor).attrs({
   as: Link
 })`
   margin: 1rem 0;
   display: inline-block;
 `
-const AuthorOfUnlistedContent = styled.span`
+const AuthorOfUnregisteredContent = styled.span`
   color: ${gray};
   margin: 1rem 0;
   display: inline-block;
@@ -112,7 +112,7 @@ const ToggleParentArrow = styled.span`
 
 const Module = ({ p2p, mod, pad, to, isParent }) => {
   const history = useHistory()
-  const [isListed, setIsListed] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false)
   const [authors, setAuthors] = useState([])
   const [showParent, setShowParent] = useState(false)
   const [parent, setParent] = useState()
@@ -121,9 +121,9 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
     ;(async () => {
       const profiles = await p2p.listProfiles()
 
-      setIsListed(
+      setIsRegistered(
         Boolean(
-          profiles.find(profile => isModuleListed(mod, profile))
+          profiles.find(profile => isModuleRegistered(mod, profile))
         )
       )
 
@@ -156,20 +156,20 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
         <Attributes>
           <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
           <AttributeIcon>
-            {isListed ? <HexIndicatorIsListed /> : <HexIndicatorIsUnlisted />}
+            {isRegistered ? <HexIndicatorIsRegistered /> : <HexIndicatorIsUnregistered />}
           </AttributeIcon>
         </Attributes>
         <Content pad={pad}>
           <Title>{mod.rawJSON.title}</Title>
           {authors.map(author =>
-            isListed ? (
-              <AuthorOfListedContent key={author.rawJSON.url} to='/profile'>
+            isRegistered ? (
+              <AuthorOfRegisteredContent key={author.rawJSON.url} to='/profile'>
                 {author.rawJSON.title}
-              </AuthorOfListedContent>
+              </AuthorOfRegisteredContent>
             ) : (
-              <AuthorOfUnlistedContent key={author.rawJSON.url}>
+              <AuthorOfUnregisteredContent key={author.rawJSON.url}>
                 {author.rawJSON.title}
-              </AuthorOfUnlistedContent>
+              </AuthorOfUnregisteredContent>
             )
           )}
           {!isParent && <Description>{mod.rawJSON.description}</Description>}

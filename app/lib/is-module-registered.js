@@ -1,6 +1,6 @@
 import { encode } from 'dat-encoding'
 
-export default function isModuleListed (mod, profile) {
+export default function isModuleRegistered (mod, profile) {
   return (
     Boolean(
       profile.rawJSON.contents.find(contentUrl => {

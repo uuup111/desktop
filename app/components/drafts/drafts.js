@@ -5,7 +5,7 @@ import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
 import AddContent from '../icons/add-content.svg'
 import styled from 'styled-components'
-import isModuleListed from '../../lib/is-module-listed'
+import isModuleRegistered from '../../lib/is-module-registered'
 
 const StyledAddContent = styled(AddContent)`
   vertical-align: middle;
@@ -16,12 +16,12 @@ const StyledAddContent = styled(AddContent)`
 
 export default ({ p2p, profile }) => {
   const [drafts, setDrafts] = useState()
-  const hasListedContent = profile.rawJSON.contents.length > 0
+  const hasRegisteredContent = profile.rawJSON.contents.length > 0
 
   useEffect(() => {
     ;(async () => {
       const modules = await p2p.listContent()
-      const drafts = modules.filter(mod => !isModuleListed(mod, profile))
+      const drafts = modules.filter(mod => !isModuleRegistered(mod, profile))
       setDrafts(drafts)
     })()
   }, [])
@@ -48,7 +48,7 @@ export default ({ p2p, profile }) => {
               <>
                 {drafts.length ? (
                   'You’ve reached the end! ✌️'
-                ) : hasListedContent ? (
+                ) : hasRegisteredContent ? (
                   <>
                     No drafts! All your work is now on your profile 😎
                   </>
