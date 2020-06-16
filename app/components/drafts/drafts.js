@@ -5,6 +5,7 @@ import { encode } from 'dat-encoding'
 import Footer from '../footer/footer'
 import AddContent from '../icons/add-content.svg'
 import styled from 'styled-components'
+import isModuleListed from '../../lib/is-module-listed'
 
 const StyledAddContent = styled(AddContent)`
   vertical-align: middle;
@@ -13,23 +14,26 @@ const StyledAddContent = styled(AddContent)`
   top: -2px;
 `
 
-export default ({ p2p }) => {
-  const [modules, setModules] = useState()
+export default ({ p2p, profile }) => {
+  const [drafts, setDrafts] = useState()
+  const hasListedContent = profile.rawJSON.contents.length > 0
 
   useEffect(() => {
     ;(async () => {
-      setModules(await p2p.listContent())
+      const modules = await p2p.listContent()
+      const drafts = modules.filter(mod => !isModuleListed(mod, profile))
+      setDrafts(drafts)
     })()
   }, [])
 
   return (
     <>
       <TopRow>
-        <Title>Workspace</Title>
+        <Title>Drafts</Title>
       </TopRow>
-      {modules && (
+      {drafts && (
         <>
-          {modules.map(mod => {
+          {drafts.map(mod => {
             return (
               <Module
                 key={mod.rawJSON.url}
@@ -42,8 +46,12 @@ export default ({ p2p }) => {
           <Footer
             title={
               <>
-                {modules.length ? (
+                {drafts.length ? (
                   'You’ve reached the end! ✌️'
+                ) : hasListedContent ? (
+                  <>
+                    No drafts! All your work is now on your profile 😎
+                  </>
                 ) : (
                   <>
                     Nothing here yet! Click <StyledAddContent /> to get started

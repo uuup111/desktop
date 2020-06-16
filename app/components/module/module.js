@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { purple, black, white, gray } from '../../lib/colors'
+import isModuleListed from '../../lib/is-module-listed'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import HexIndicatorIsListed from './hex-indicator-is-listed.svg'
 import HexIndicatorIsUnlisted from './hex-indicator-is-unlisted.svg'
@@ -122,17 +123,7 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
 
       setIsListed(
         Boolean(
-          profiles.find(profile =>
-            Boolean(
-              profile.rawJSON.contents.find(contentUrl => {
-                const [key, version] = contentUrl.split('+')
-                return (
-                  encode(mod.rawJSON.url) === encode(key) &&
-                  mod.metadata.version === Number(version)
-                )
-              })
-            )
-          )
+          profiles.find(profile => isModuleListed(mod, profile))
         )
       )
 

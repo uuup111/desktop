@@ -3,7 +3,7 @@ import { TopRow } from '../layout/grid'
 import { useParams } from 'react-router-dom'
 import Content from '../content/content'
 
-const WorkspaceContent = ({ p2p, profile, setProfile }) => {
+const DraftContent = ({ p2p, profile, setProfile }) => {
   const { key } = useParams()
   const [content, setContent] = useState()
 
@@ -24,4 +24,4 @@ const WorkspaceContent = ({ p2p, profile, setProfile }) => {
   ) : null
 }
 
-export default WorkspaceContent
+export default DraftContent

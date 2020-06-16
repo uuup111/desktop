@@ -209,7 +209,7 @@ const dialogs = [
           }}
         >
           <Button emphasis='top' autoFocus isLoading={isLoading}>
-            Go to workspace
+            Get started!
           </Button>
         </Form>
       </Dialog>

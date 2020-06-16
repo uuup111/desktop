@@ -72,7 +72,7 @@ const AddContentLink = styled(Link)`
     background-color: inherit;
   }
 `
-const isWorkbench = location => /^\/$|^\/content\//.test(location.pathname)
+const isDrafts = location => /^\/$|^\/content\//.test(location.pathname)
 
 const Menu = () => {
   const history = useHistory()
@@ -81,8 +81,8 @@ const Menu = () => {
     <Container>
       <StyledLogo onClick={() => history.push('/')} />
       <StyledRow>
-        <StyledNavLink to='/' isActive={(_, location) => isWorkbench(location)}>
-          <StyledButton>Workspace</StyledButton>
+        <StyledNavLink to='/' isActive={(_, location) => isDrafts(location)}>
+          <StyledButton>Drafts</StyledButton>
         </StyledNavLink>
         <StyledNavLink to='/profile'>
           <StyledButton>Profile</StyledButton>
