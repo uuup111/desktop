@@ -61,11 +61,7 @@ const App = () => {
           <Drafts p2p={p2p} profile={profile} />
         </Route>
         <Route path='/content/:key'>
-          <DraftContent
-            p2p={p2p}
-            profile={profile}
-            setProfile={setProfile}
-          />
+          <DraftContent p2p={p2p} profile={profile} setProfile={setProfile} />
         </Route>
         <Route path='/create/:parentUrl?'>
           <Create p2p={p2p} profile={profile} />

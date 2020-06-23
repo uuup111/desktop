@@ -49,9 +49,7 @@ export default ({ p2p, profile }) => {
                 {drafts.length ? (
                   'You’ve reached the end! ✌️'
                 ) : hasRegisteredContent ? (
-                  <>
-                    No drafts! All your work is now on your profile 😎
-                  </>
+                  <>No drafts! All your work is now on your profile 😎</>
                 ) : (
                   <>
                     Nothing here yet! Click <StyledAddContent /> to get started

@@ -122,9 +122,7 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
       const profiles = await p2p.listProfiles()
 
       setIsRegistered(
-        Boolean(
-          profiles.find(profile => isModuleRegistered(mod, profile))
-        )
+        Boolean(profiles.find(profile => isModuleRegistered(mod, profile)))
       )
 
       const authors = []
@@ -156,7 +154,11 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
         <Attributes>
           <Attribute>{subtypes[mod.rawJSON.subtype] || 'Unknown'}</Attribute>
           <AttributeIcon>
-            {isRegistered ? <HexIndicatorIsRegistered /> : <HexIndicatorIsUnregistered />}
+            {isRegistered ? (
+              <HexIndicatorIsRegistered />
+            ) : (
+              <HexIndicatorIsUnregistered />
+            )}
           </AttributeIcon>
         </Attributes>
         <Content pad={pad}>
