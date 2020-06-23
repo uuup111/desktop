@@ -1,6 +1,6 @@
 'use strict'
 
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, shell } = require('electron')
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS
@@ -23,7 +23,26 @@ const createMainWindow = async () => {
     },
     titleBarStyle: 'hiddenInset'
   })
-  Menu.setApplicationMenu(null)
+  const isMac = process.platform === 'darwin'
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate([
+      ...(isMac ? [{ role: 'appMenu' }] : []),
+      { role: 'fileMenu' },
+      { role: 'editMenu' },
+      { role: 'viewMenu' },
+      { role: 'windowMenu' },
+      {
+        role: 'help',
+        submenu: [
+          {
+            label: 'Learn More',
+            click: () =>
+              shell.openExternal('https://github.com/hypergraph-xyz/desktop')
+          }
+        ]
+      }
+    ])
+  )
 
   win.on('ready-to-show', () => win.show())
   win.on('closed', () => (mainWindow = undefined))
