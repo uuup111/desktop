@@ -11,6 +11,7 @@ import AdmZip from 'adm-zip'
 import { Label } from '../forms/forms'
 import subtypes from '@hypergraph-xyz/wikidata-identifiers'
 import Anchor from '../anchor'
+import newlinesToBr from '../../lib/newlines-to-br'
 
 const Container = styled.div`
   margin: 2rem;
@@ -189,7 +190,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
             </AuthorOfUnregisteredContent>
           )
         )}
-        <Description>{content.rawJSON.description}</Description>
+        <Description>{newlinesToBr(content.rawJSON.description)}</Description>
         {files && files.length > 0 && (
           <>
             <Label>Files</Label>

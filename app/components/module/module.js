@@ -9,6 +9,7 @@ import { useHistory, Link } from 'react-router-dom'
 import Plus from './plus.svg'
 import { encode } from 'dat-encoding'
 import Anchor from '../anchor'
+import newlinesToBr from '../../lib/newlines-to-br'
 
 const AddContentWithParent = styled(Plus)`
   position: absolute;
@@ -174,7 +175,9 @@ const Module = ({ p2p, mod, pad, to, isParent }) => {
               </AuthorOfUnregisteredContent>
             )
           )}
-          {!isParent && <Description>{mod.rawJSON.description}</Description>}
+          {!isParent && (
+            <Description>{newlinesToBr(mod.rawJSON.description)}</Description>
+          )}
           {!isParent && mod.rawJSON.parents[0] && (
             <ToggleParent
               onClick={e => {
