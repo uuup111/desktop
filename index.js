@@ -1,14 +1,17 @@
 'use strict'
 
-const { app, BrowserWindow, Menu, shell } = require('electron')
+const { app, BrowserWindow, Menu, shell, dialog } = require('electron')
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS
 } = require('electron-devtools-installer')
 const debug = require('electron-debug')
+const del = require('del')
+const { once } = require('events')
 
 debug({ isEnabled: true, showDevTools: false })
 let mainWindow
+let restarting = false
 
 const createMainWindow = async () => {
   const win = new BrowserWindow({
@@ -30,6 +33,29 @@ const createMainWindow = async () => {
       { role: 'fileMenu' },
       { role: 'editMenu' },
       { role: 'viewMenu' },
+      {
+        label: 'Database',
+        submenu: [
+          {
+            label: 'Reset database',
+            click: async () => {
+              const { response } = await dialog.showMessageBox(win, {
+                type: 'warning',
+                buttons: ['Reset database', 'Cancel'],
+                message:
+                  'Are you sure you want to reset your p2pcommons database? This will delete your profile and content from your computer and cannot be undone.'
+              })
+              if (response === 1) return
+              restarting = true
+              mainWindow.close()
+              await once(mainWindow, 'closed')
+              await del(`${app.getPath('home')}/.p2pcommons`, { force: true })
+              mainWindow = await createMainWindow()
+              restarting = false
+            }
+          }
+        ]
+      },
       { role: 'windowMenu' },
       {
         role: 'help',
@@ -64,7 +90,7 @@ app.on('second-instance', () => {
 })
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin' || process.env.CI) {
+  if (!restarting && (process.platform !== 'darwin' || process.env.CI)) {
     app.quit()
   }
 })
