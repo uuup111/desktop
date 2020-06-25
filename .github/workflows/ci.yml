@@ -1,5 +1,8 @@
 name: CI
-on: push
+on:
+  push:
+    branches_ignore:
+      - 'gh-pages'
 jobs:
   lint:
     runs-on: ubuntu-latest

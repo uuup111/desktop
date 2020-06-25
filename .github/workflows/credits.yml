@@ -1,0 +1,42 @@
+name: Credits
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Set up dependencies cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-credits-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-credits-
+      - name: Install dependencies
+        run: NODE_ENV=production npm ci --ignore-scripts
+      - name: Download testers.json
+        run: curl https://raw.githubusercontent.com/hypergraph-xyz/testing/main/testers.json > /tmp/testers.json
+      - name: Generate credit roll
+        run: npx credit-roll /tmp/testers.json > /tmp/credits.md
+      - name: Check out gh-pages
+        uses: actions/checkout@v1
+        with:
+          ref: gh-pages
+      - name: Copy over credit roll
+        run: mv /tmp/credits.md credits.md
+      - name: Commit credit roll
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: credits.md
+          message: 'Update credits'
+          ref: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
