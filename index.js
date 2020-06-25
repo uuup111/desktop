@@ -61,6 +61,13 @@ const createMainWindow = async () => {
         role: 'help',
         submenu: [
           {
+            label: 'Credits',
+            click: () =>
+              shell.openExternal(
+                'https://github.com/hypergraph-xyz/desktop/blob/gh-pages/credits.md'
+              )
+          },
+          {
             label: 'Learn More',
             click: () =>
               shell.openExternal('https://github.com/hypergraph-xyz/desktop')
