@@ -20,6 +20,8 @@ This project is made possible by the community surrounding it and especially the
   - Mandi Astola
   - Marino van Zelst
   - Vinodh Ilangovan
+  - Neha Moopen
+  - Lisa Hehnke
 
 ## Libraries
 
