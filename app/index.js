@@ -45,6 +45,14 @@ const App = () => {
     })()
   }, [])
 
+  useEffect(() => {
+    window.Chatra('updateIntegrationData', {
+      name: profile
+        ? profile.rawJSON.title
+        : null
+    })
+  }, [profile])
+
   if (loading) return <Container />
   if (!profile) {
     return (
