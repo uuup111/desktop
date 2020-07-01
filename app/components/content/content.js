@@ -155,7 +155,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
   useEffect(() => {
     ;(async () => {
       const files = await fs.readdir(dir)
-      setFiles(files.filter(path => path !== 'dat.json'))
+      setFiles(files.filter(path => path !== 'index.json'))
     })()
   }, [content.rawJSON.url])
 
@@ -211,7 +211,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
           <Button
             color={yellow}
             onClick={async () => {
-              await p2p.unpublish(
+              await p2p.deregister(
                 `dat://${encode(content.rawJSON.url)}+${
                   content.metadata.version
                 }`,
@@ -227,7 +227,7 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
           <Button
             color={green}
             onClick={async () => {
-              await p2p.publish(
+              await p2p.register(
                 `dat://${encode(content.rawJSON.url)}+${
                   content.metadata.version
                 }`,
@@ -244,7 +244,6 @@ const Content = ({ p2p, content, profile, setProfile, renderRow }) => {
           isLoading={isDeleting}
           onClick={async () => {
             setIsDeleting(true)
-            await p2p.unpublish(content.rawJSON.url, profile.rawJSON.url)
             await p2p.delete(content.rawJSON.url)
             setProfile(await p2p.get(profile.rawJSON.url))
             history.push('/')

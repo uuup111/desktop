@@ -47,9 +47,7 @@ const App = () => {
 
   useEffect(() => {
     window.Chatra('updateIntegrationData', {
-      name: profile
-        ? profile.rawJSON.title
-        : null
+      name: profile ? profile.rawJSON.title : null
     })
   }, [profile])
 
